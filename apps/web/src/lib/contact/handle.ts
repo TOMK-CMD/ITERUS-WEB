@@ -11,6 +11,8 @@ export type ContactEnv = {
 };
 
 export const DEFAULT_FROM = "Iterus web <noreply@iterus.cz>";
+/** Client key used when no x-forwarded-for header is present (never sent to Turnstile). */
+export const UNKNOWN_CLIENT = "unknown";
 
 export type ContactErrorCode =
   | "invalid_body"
@@ -65,7 +67,8 @@ export async function handleContact(
 
   if (submission.company.trim() !== "") {
     // A bot filled the honeypot: pretend success, send nothing, do not consume the mail quota.
-    log("contact.honeypot", { clientKey });
+    // No client key in the log — an IP address is personal data (CLAUDE.md → GDPR).
+    log("contact.honeypot");
     return { status: 200, body: { ok: true } };
   }
 
@@ -82,11 +85,20 @@ export async function handleContact(
     return { status: 503, body: { ok: false, error: "not_configured" } };
   }
 
-  const turnstile = await verify({
-    token: submission.turnstileToken,
-    secret: env.TURNSTILE_SECRET_KEY!,
-    remoteIp: clientKey,
-  });
+  let turnstile: Awaited<ReturnType<typeof verify>>;
+  try {
+    turnstile = await verify({
+      token: submission.turnstileToken,
+      secret: env.TURNSTILE_SECRET_KEY!,
+      remoteIp: clientKey === UNKNOWN_CLIENT ? undefined : clientKey,
+    });
+  } catch (error) {
+    // Transport failure towards Cloudflare (DNS, timeout): keep the JSON contract, no 500.
+    log("contact.turnstile_unreachable", {
+      message: error instanceof Error ? error.message : String(error),
+    });
+    return { status: 502, body: { ok: false, error: "turnstile_failed" } };
+  }
   if (!turnstile.success) {
     log("contact.turnstile_failed", { errorCodes: turnstile.errorCodes });
     return { status: 400, body: { ok: false, error: "turnstile_failed" } };

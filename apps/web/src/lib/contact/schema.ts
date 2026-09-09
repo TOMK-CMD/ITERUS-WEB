@@ -3,11 +3,18 @@ import { routing } from "@/i18n/routing";
 
 /** Server-side contract of POST /api/contact. The client mirrors it, but only this one counts. */
 export const contactSchema = z.object({
-  name: z.string().trim().min(2).max(100),
-  email: z.email().trim().max(200),
+  /** Single line — it ends up in the mail subject, so CR/LF must never pass. */
+  name: z
+    .string()
+    .trim()
+    .regex(/^[^\r\n]+$/, "single line expected")
+    .min(2)
+    .max(100),
+  /** Trim before the format check: API clients do not strip whitespace the way browsers do. */
+  email: z.string().trim().max(200).pipe(z.email()),
   message: z.string().trim().min(10).max(5000),
   /** Honeypot: humans never see it, bots fill it. Any content → accepted silently, not sent. */
-  company: z.string().max(200).optional().default(""),
+  company: z.string().optional().default(""),
   /** Cloudflare Turnstile response token (hidden input `cf-turnstile-response`). */
   turnstileToken: z.string().min(1).max(4096),
   locale: z.enum(routing.locales).default(routing.defaultLocale),

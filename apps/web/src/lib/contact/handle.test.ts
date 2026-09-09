@@ -112,3 +112,56 @@ describe("handleContact", () => {
     });
   });
 });
+
+describe("handleContact — review round 1 regressions", () => {
+  it("answers 502 turnstile_failed when the Turnstile request itself throws", async () => {
+    const d = deps({
+      verify: vi.fn(async () => {
+        throw new Error("getaddrinfo ENOTFOUND challenges.cloudflare.com");
+      }),
+    });
+    expect(await handleContact(validBody, "ip", d)).toEqual({
+      status: 502,
+      body: { ok: false, error: "turnstile_failed" },
+    });
+    expect(d.send).not.toHaveBeenCalled();
+  });
+
+  it("rejects a name with line breaks (it becomes the mail subject)", async () => {
+    const d = deps();
+    const result = await handleContact({ ...validBody, name: "Jana\r\nBcc: x@y.z" }, "ip", d);
+    expect(result).toMatchObject({ status: 400, body: { error: "invalid_input" } });
+    expect(d.send).not.toHaveBeenCalled();
+  });
+
+  it("trims the e-mail before validating it", async () => {
+    const d = deps();
+    expect(
+      (await handleContact({ ...validBody, email: "  jana@example.com  " }, "ip", d)).status,
+    ).toBe(200);
+    expect(d.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        submission: expect.objectContaining({ email: "jana@example.com" }),
+      }),
+    );
+  });
+
+  it("keeps the fake success for an oversized honeypot value", async () => {
+    const d = deps();
+    expect(await handleContact({ ...validBody, company: "x".repeat(5000) }, "ip", d)).toEqual({
+      status: 200,
+      body: { ok: true },
+    });
+    expect(d.send).not.toHaveBeenCalled();
+  });
+
+  it("does not forward the unknown client key to Turnstile", async () => {
+    const d = deps();
+    await handleContact(validBody, "unknown", d);
+    expect(d.verify).toHaveBeenCalledWith({
+      token: "token-123",
+      secret: "secret",
+      remoteIp: undefined,
+    });
+  });
+});

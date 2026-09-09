@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { defaultLimiter, handleContact } from "@/lib/contact/handle";
+import { defaultLimiter, handleContact, UNKNOWN_CLIENT } from "@/lib/contact/handle";
 import { sendContactMail } from "@/lib/contact/mail";
 import { verifyTurnstile } from "@/lib/contact/turnstile";
 
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     body = null;
   }
 
-  const clientKey = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const clientKey = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || UNKNOWN_CLIENT;
 
   const result = await handleContact(body, clientKey, {
     env: {
