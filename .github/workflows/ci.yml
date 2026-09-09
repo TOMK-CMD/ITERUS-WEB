@@ -66,7 +66,8 @@ jobs:
         if: steps.detect.outputs.ready == 'true'
         env:
           NEXT_TELEMETRY_DISABLED: "1"
-      - run: pnpm exec playwright install --with-deps chromium
+      # Playwright is a dependency of apps/web, not of the workspace root.
+      - run: pnpm --filter web exec playwright install --with-deps chromium
         if: steps.detect.outputs.ready == 'true'
       - run: pnpm run test:e2e
         if: steps.detect.outputs.ready == 'true'
@@ -104,6 +105,8 @@ jobs:
         if: steps.detect.outputs.ready == 'true'
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+          # Lighthouse audits canonical/hreflang against the served host; production URLs would fail on localhost.
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
       - run: pnpm exec lhci autorun --config=lighthouserc.json
         if: steps.detect.outputs.ready == 'true'
       - uses: actions/upload-artifact@v4

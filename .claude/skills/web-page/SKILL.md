@@ -9,12 +9,14 @@ A page is done only when both locales exist, search engines and LLMs can read it
 reachable from navigation and sitemap, and CI proves it renders and is accessible.
 
 ## Inputs to collect first
+
 1. Purpose in one sentence (what question does the page answer, for whom).
 2. Content source: `docs/CONTENT-MAP.md` (keyword/answer plan) if the page is listed there; otherwise
    ask Tomas for a brief (goal, key facts from `content/facts.json`, CTA).
 3. Page type → JSON-LD type (see `docs/CONTENT-GUIDE.md` § Schema map).
 
 ## Workflow
+
 1. **Spec**: if the page is not covered by an approved spec, write `specs/NNNN-page-<slug>.md`
    from `specs/_template.md` and get approval.
 2. **Slugs**: cs slug and en slug (e.g. `/sluzby` ↔ `/en/services`). Register the pair in the
@@ -23,9 +25,13 @@ reachable from navigation and sitemap, and CI proves it renders and is accessibl
    frontmatter keys (`title`, `description`, `updated`, `type`). Follow answer-first: the first
    paragraph answers the page's question. Keep the mandatory footer line out of MDX — the layout
    renders it.
-4. **Route**: `apps/web/src/app/[locale]/(site)/<segment>/page.tsx` with
-   `generateMetadata` (title ≤ 60 chars, description 120–155 chars, `alternates.languages`
-   incl. `x-default` → cs, canonical), OG image via the OG route.
+4. **Route**: `apps/web/src/app/[locale]/<segment>/page.tsx` (English-internal segment name,
+   the Czech slug comes from `pathnames`) — load the MDX with `readPage`/`loadPage`
+   (`src/lib/content/loader.ts`, see `contact/page.tsx` as the template) and register the slug
+   in `PAGE_ROUTES` (`src/lib/seo/paths.ts`) so sitemap and `llms.txt` pick it up; then
+   `generateMetadata` via `buildMetadata()` — it produces the title with the " | Iterus" suffix
+   (frontmatter title ≤ 51 chars), description 120–155 chars, `alternates.languages` incl.
+   `x-default` → cs, canonical, OG/Twitter image via the `/og` route.
 5. **JSON-LD** component for the page type; validate with `pnpm check:schema`.
 6. **Navigation + sitemap**: add to nav config (both labels); `sitemap.ts` picks it up from routing.
 7. **Tests**: unit test for the content loader/frontmatter; Playwright smoke: page renders in both
@@ -36,6 +42,7 @@ reachable from navigation and sitemap, and CI proves it renders and is accessibl
    any `TODO(facts:*)` left for Tomas. Ask the `reviewer` subagent for a review first.
 
 ## Checklist (paste into the PR)
+
 - [ ] cs and en exist, structure identical, meaning equivalent
 - [ ] answer-first first paragraph; headings as questions where natural
 - [ ] metadata + hreflang + canonical + OG
@@ -44,6 +51,7 @@ reachable from navigation and sitemap, and CI proves it renders and is accessibl
 - [ ] no invented facts; `content/facts.json` referenced
 
 ## Anti-patterns
+
 - Writing English first and machine-translating to Czech; Czech is the primary audience.
 - Hard-coding company data in JSX (use `content/facts.json`).
 - Adding a page to navigation without the sitemap/hreflang pair (silent SEO damage).

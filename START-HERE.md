@@ -5,22 +5,22 @@ Nakopíruj obsah do prázdného repa, commitni a Claude Code od toho převezme S
 
 ## Co je uvnitř
 
-| Soubor / složka | K čemu |
-|---|---|
-| `CLAUDE.md` | Pravidla pro Claude Code: jak pracujeme, stack, příkazy, dokumentace, zákazy. Importuje `docs/DEFINITION-OF-DONE.md`. |
-| `AGENTS.md` | Totéž ve zkratce pro Codex (ukazuje na `CLAUDE.md`). |
-| `.claude/settings.json` | Oprávnění (co smí Claude spouštět bez ptaní, co nikdy) a hooky (formátování po editaci, kontrola před ukončením). |
-| `.claude/skills/*` | Pět projektových skills: `web-page`, `case-study`, `i18n`, `seo-geo`, `release`. Spouští se samy podle popisu. |
-| `.claude/agents/reviewer.md` | Nezávislý reviewer (subagent), který každé PR zkontroluje před tebou. |
-| `.mcp.json` | MCP servery: Linear, Vercel, GitHub, Playwright. Přihlášení přes `/mcp` (GitHub přes env `GITHUB_PAT`). |
-| `.github/workflows/ci.yml` | CI brány: typecheck, lint, testy, parita CZ/EN, build, Playwright e2e, Lighthouse, schema.org, odkazy. |
-| `.github/ISSUE_TEMPLATE/spec.md`, `PULL_REQUEST_TEMPLATE.md` | Šablona zadání a šablona PR (checklist DoD). |
-| `docs/` | Architektura, RUNBOOK (provoz), BRAND, CONTENT-GUIDE (pravidla obsahu a GEO), AGENT-OPS, ADR. |
-| `specs/_template.md` | Šablona specifikace. |
-| `specs/0001-sprint-0-bootstrap.md` | **První úkol pro Claude Code** – kompletní Sprint 0. |
-| `content/facts.json` | Jediný zdroj pravdy pro fakta a čísla (doplníš ty). |
-| `scripts/hooks/*.mjs` | Skripty hooků (multiplatformní, Node). |
-| `lighthouserc.json` | Prahy kvality pro Lighthouse CI. |
+| Soubor / složka                                              | K čemu                                                                                                                |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `CLAUDE.md`                                                  | Pravidla pro Claude Code: jak pracujeme, stack, příkazy, dokumentace, zákazy. Importuje `docs/DEFINITION-OF-DONE.md`. |
+| `AGENTS.md`                                                  | Totéž ve zkratce pro Codex (ukazuje na `CLAUDE.md`).                                                                  |
+| `.claude/settings.json`                                      | Oprávnění (co smí Claude spouštět bez ptaní, co nikdy) a hooky (formátování po editaci, kontrola před ukončením).     |
+| `.claude/skills/*`                                           | Pět projektových skills: `web-page`, `case-study`, `i18n`, `seo-geo`, `release`. Spouští se samy podle popisu.        |
+| `.claude/agents/reviewer.md`                                 | Nezávislý reviewer (subagent), který každé PR zkontroluje před tebou.                                                 |
+| `.mcp.json`                                                  | MCP servery: Linear, Vercel, GitHub, Playwright. Přihlášení přes `/mcp` (GitHub přes env `GITHUB_PAT`).               |
+| `.github/workflows/ci.yml`                                   | CI brány: typecheck, lint, testy, parita CZ/EN, build, Playwright e2e, Lighthouse, schema.org, odkazy.                |
+| `.github/ISSUE_TEMPLATE/spec.md`, `PULL_REQUEST_TEMPLATE.md` | Šablona zadání a šablona PR (checklist DoD).                                                                          |
+| `docs/`                                                      | Architektura, RUNBOOK (provoz), BRAND, CONTENT-GUIDE (pravidla obsahu a GEO), AGENT-OPS, ADR.                         |
+| `specs/_template.md`                                         | Šablona specifikace.                                                                                                  |
+| `specs/0001-sprint-0-bootstrap.md`                           | **První úkol pro Claude Code** – kompletní Sprint 0.                                                                  |
+| `content/facts.json`                                         | Jediný zdroj pravdy pro fakta a čísla (doplníš ty).                                                                   |
+| `scripts/hooks/*.mjs`                                        | Skripty hooků (multiplatformní, Node).                                                                                |
+| `lighthouserc.json`                                          | Prahy kvality pro Lighthouse CI.                                                                                      |
 
 ## Jak to použít (5 kroků)
 

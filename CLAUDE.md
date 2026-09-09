@@ -58,19 +58,22 @@ scripts/             cross-platform Node tooling (hooks, checks, generators)
 
 ## Commands (root)
 
-| Command | Purpose |
-|---|---|
-| `pnpm dev` | local dev server |
-| `pnpm build` / `pnpm start` | production build / serve |
-| `pnpm check` | typecheck + lint + unit tests + i18n parity — must pass before any PR |
-| `pnpm check:quick` | fast subset used by the Stop hook (typecheck + lint) |
-| `pnpm test` / `pnpm test:e2e` | Vitest / Playwright (+ axe) |
-| `pnpm check:i18n` | message-key and content parity cs ↔ en |
-| `pnpm check:schema` | validate JSON-LD on built pages |
-| `pnpm check:links` | broken-link check on built site |
-| `pnpm format` / `pnpm lint` / `pnpm typecheck` | formatting / ESLint / tsc |
+| Command                             | Purpose                                                               |
+| ----------------------------------- | --------------------------------------------------------------------- |
+| `pnpm dev`                          | local dev server                                                      |
+| `pnpm build` / `pnpm start`         | production build / serve                                              |
+| `pnpm check`                        | typecheck + lint + unit tests + i18n parity — must pass before any PR |
+| `pnpm check:quick`                  | fast subset used by the Stop hook (typecheck + lint)                  |
+| `pnpm test` / `pnpm test:e2e`       | Vitest / Playwright (+ axe)                                           |
+| `pnpm check:i18n`                   | message-key and content parity cs ↔ en                                |
+| `pnpm check:schema`                 | validate JSON-LD on built pages                                       |
+| `pnpm check:links`                  | broken-link check on built site                                       |
+| `pnpm format` / `pnpm format:check` | Prettier write / verify                                               |
+| `pnpm lint` / `pnpm typecheck`      | ESLint / `next typegen` + tsc in every workspace package              |
 
-Sprint 0 creates these scripts; keep this table in sync when scripts change.
+All of these exist since Sprint 0 (`package.json` at the root delegates to `apps/web` and
+`scripts/*.mjs`); keep this table in sync when scripts change. `check:schema` and `check:links`
+start `next start` themselves — run `pnpm build` first (or pass `--base <url>`).
 
 ## Quality gates
 
@@ -91,8 +94,9 @@ Sprint 0 creates these scripts; keep this table in sync when scripts change.
 - **How we describe our way of working (approved):** "AI-native studio", "vývoj akcelerovaný AI
   nástroji (Claude Code, Codex) s lidským dohledem, automatizovanými testy a specialisty na
   vyžádání". Never state that Tomas is a programmer, and never state or imply that he is not one.
-- **Mandatory footer line** on every page: `Iterus je značka společnosti SUN Professionals s.r.o.,
-  IČO 27159884` / `Iterus is a brand of SUN Professionals s.r.o., Company ID 27159884`.
+- **Mandatory footer line** on every page:
+  `Iterus je značka společnosti SUN Professionals s.r.o., IČO 27159884` /
+  `Iterus is a brand of SUN Professionals s.r.o., Company ID 27159884`.
 - **AI transparency.** Any chat or AI feature must tell the user it is an AI at the start of the
   interaction (EU AI Act, Art. 50). Not negotiable.
 - No superlatives without evidence, no fake testimonials, no logos of companies we have not
@@ -121,8 +125,8 @@ Subagent `reviewer` (`.claude/agents/reviewer.md`) reviews PRs independently.
 Linear (issues, status), Vercel (projects, deployments, preview URLs), GitHub (PRs, reviews),
 Playwright (browser checks, screenshots). First use: `/mcp` to authenticate Linear and Vercel;
 GitHub needs `GITHUB_PAT` in the environment (`docs/RUNBOOK.md` → Access).
-Linear workflow: pick issue → set *In Progress* → branch `feat/<issue-id>-slug` → PR links the
-issue → *In Review* when the PR is ready for Tomas → he moves it to *Done* after merge.
+Linear workflow: pick issue → set _In Progress_ → branch `feat/<issue-id>-slug` → PR links the
+issue → _In Review_ when the PR is ready for Tomas → he moves it to _Done_ after merge.
 
 ## Don'ts
 

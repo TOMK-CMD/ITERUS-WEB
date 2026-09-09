@@ -1,0 +1,55 @@
+/*
+ * Iterus design tokens — PROVISIONAL.
+ * Values come from docs/BRAND.md ("Visual direction (proposal)"). When Tomas picks the final
+ * direction in Claude Design, replace the brand values below and in docs/BRAND.md together.
+ * The semantic variables (--background, --primary, …) are what shadcn/ui components and the
+ * Tailwind theme consume; keep them mapped to brand tokens, never hard-code colours elsewhere.
+ */
+:root {
+  /* brand palette */
+  --iterus-bg: #0b0d12;
+  --iterus-surface: #12151c;
+  --iterus-text: #e6e8ee;
+  --iterus-muted: #9aa3b2;
+  --iterus-accent: #3b82f6;
+  --iterus-accent-alt: #b6f35b;
+  --iterus-border: color-mix(in oklab, var(--iterus-text) 12%, transparent);
+
+  /* shape and motion */
+  --radius: 0.75rem; /* 12 px; small controls derive 8 px via --radius-md */
+  --iterus-motion-fast: 150ms;
+  --iterus-motion-base: 250ms;
+
+  /* semantic mapping consumed by @theme inline in globals.css */
+  --background: var(--iterus-bg);
+  --foreground: var(--iterus-text);
+  --card: var(--iterus-surface);
+  --card-foreground: var(--iterus-text);
+  --popover: var(--iterus-surface);
+  --popover-foreground: var(--iterus-text);
+  --primary: var(--iterus-accent);
+  --primary-foreground: #ffffff;
+  --secondary: var(--iterus-surface);
+  --secondary-foreground: var(--iterus-text);
+  --muted: var(--iterus-surface);
+  --muted-foreground: var(--iterus-muted);
+  --accent: color-mix(in oklab, var(--iterus-accent) 18%, var(--iterus-surface));
+  --accent-foreground: var(--iterus-text);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: var(--iterus-border);
+  --input: color-mix(in oklab, var(--iterus-text) 15%, transparent);
+  --ring: var(--iterus-accent);
+  --chart-1: var(--iterus-accent);
+  --chart-2: var(--iterus-accent-alt);
+  --chart-3: var(--iterus-muted);
+  --chart-4: var(--iterus-text);
+  --chart-5: var(--iterus-surface);
+  --sidebar: var(--iterus-surface);
+  --sidebar-foreground: var(--iterus-text);
+  --sidebar-primary: var(--iterus-accent);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--iterus-text);
+  --sidebar-border: var(--iterus-border);
+  --sidebar-ring: var(--iterus-accent);
+}
