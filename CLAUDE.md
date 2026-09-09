@@ -58,19 +58,22 @@ scripts/             cross-platform Node tooling (hooks, checks, generators)
 
 ## Commands (root)
 
-| Command                                        | Purpose                                                               |
-| ---------------------------------------------- | --------------------------------------------------------------------- |
-| `pnpm dev`                                     | local dev server                                                      |
-| `pnpm build` / `pnpm start`                    | production build / serve                                              |
-| `pnpm check`                                   | typecheck + lint + unit tests + i18n parity — must pass before any PR |
-| `pnpm check:quick`                             | fast subset used by the Stop hook (typecheck + lint)                  |
-| `pnpm test` / `pnpm test:e2e`                  | Vitest / Playwright (+ axe)                                           |
-| `pnpm check:i18n`                              | message-key and content parity cs ↔ en                                |
-| `pnpm check:schema`                            | validate JSON-LD on built pages                                       |
-| `pnpm check:links`                             | broken-link check on built site                                       |
-| `pnpm format` / `pnpm lint` / `pnpm typecheck` | formatting / ESLint / tsc                                             |
+| Command                             | Purpose                                                               |
+| ----------------------------------- | --------------------------------------------------------------------- |
+| `pnpm dev`                          | local dev server                                                      |
+| `pnpm build` / `pnpm start`         | production build / serve                                              |
+| `pnpm check`                        | typecheck + lint + unit tests + i18n parity — must pass before any PR |
+| `pnpm check:quick`                  | fast subset used by the Stop hook (typecheck + lint)                  |
+| `pnpm test` / `pnpm test:e2e`       | Vitest / Playwright (+ axe)                                           |
+| `pnpm check:i18n`                   | message-key and content parity cs ↔ en                                |
+| `pnpm check:schema`                 | validate JSON-LD on built pages                                       |
+| `pnpm check:links`                  | broken-link check on built site                                       |
+| `pnpm format` / `pnpm format:check` | Prettier write / verify                                               |
+| `pnpm lint` / `pnpm typecheck`      | ESLint / `next typegen` + tsc in every workspace package              |
 
-Sprint 0 creates these scripts; keep this table in sync when scripts change.
+All of these exist since Sprint 0 (`package.json` at the root delegates to `apps/web` and
+`scripts/*.mjs`); keep this table in sync when scripts change. `check:schema` and `check:links`
+start `next start` themselves — run `pnpm build` first (or pass `--base <url>`).
 
 ## Quality gates
 

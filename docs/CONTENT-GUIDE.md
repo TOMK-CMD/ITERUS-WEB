@@ -62,6 +62,22 @@ Keep both lists in sync with `content/facts.json`; the page text must not drift 
 | contact                      | `ContactPage`                                                              |
 | blog post (Phase 3)          | `Article` / `BlogPosting`, `FAQPage` if applicable                         |
 
+## Frontmatter (enforced by `apps/web/src/lib/content/schema.ts`)
+
+Every `content/<locale>/<slug>.mdx` starts with the same keys in both locales
+(`pnpm check:i18n` compares them):
+
+| Key           | Rule                                                                               |
+| ------------- | ---------------------------------------------------------------------------------- |
+| `title`       | ≤ 51 characters; the app appends "                                                 | Iterus" (total ≤ 60) |
+| `description` | 120–155 characters, phrased as the answer to the page's question                   |
+| `updated`     | `YYYY-MM-DD` of the last meaningful change (sitemap `lastmod`)                     |
+| `type`        | `home`, `page`, `contact` or `legal` (drives JSON-LD and sitemap priorities)       |
+| `status`      | `published` (default) or `draft` — drafts get `noindex`, a banner, no sitemap/llms |
+
+Facts and numbers never live in MDX: use the components map (`<ServicesList />`,
+`<HowWeWork />`, …) which reads `content/facts.json`.
+
 ## Metadata
 
 Title ≤ 60 chars, ends with " | Iterus"; description 120–155 chars phrased as the answer;

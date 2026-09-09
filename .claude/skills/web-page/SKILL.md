@@ -25,9 +25,13 @@ reachable from navigation and sitemap, and CI proves it renders and is accessibl
    frontmatter keys (`title`, `description`, `updated`, `type`). Follow answer-first: the first
    paragraph answers the page's question. Keep the mandatory footer line out of MDX — the layout
    renders it.
-4. **Route**: `apps/web/src/app/[locale]/(site)/<segment>/page.tsx` with
-   `generateMetadata` (title ≤ 60 chars, description 120–155 chars, `alternates.languages`
-   incl. `x-default` → cs, canonical), OG image via the OG route.
+4. **Route**: `apps/web/src/app/[locale]/<segment>/page.tsx` (English-internal segment name,
+   the Czech slug comes from `pathnames`) — load the MDX with `readPage`/`loadPage`
+   (`src/lib/content/loader.ts`, see `contact/page.tsx` as the template) and register the slug
+   in `PAGE_ROUTES` (`src/lib/seo/paths.ts`) so sitemap and `llms.txt` pick it up; then
+   `generateMetadata` via `buildMetadata()` — it produces the title with the " | Iterus" suffix
+   (frontmatter title ≤ 51 chars), description 120–155 chars, `alternates.languages` incl.
+   `x-default` → cs, canonical, OG/Twitter image via the `/og` route.
 5. **JSON-LD** component for the page type; validate with `pnpm check:schema`.
 6. **Navigation + sitemap**: add to nav config (both labels); `sitemap.ts` picks it up from routing.
 7. **Tests**: unit test for the content loader/frontmatter; Playwright smoke: page renders in both
