@@ -106,3 +106,17 @@ test("unknown paths render the localized 404 with the legal footer", async ({ pa
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.locator("footer")).toContainText(facts.brand.legal_line_en);
 });
+
+test("responses set no cookies (no locale cookie, CDN-cacheable)", async ({ request }) => {
+  for (const path of ["/", "/en", "/kontakt", "/en/does-not-exist"]) {
+    const response = await request.get(path);
+    expect(response.headers()["set-cookie"], path).toBeUndefined();
+  }
+});
+
+test("paths that merely start with og/api/icon stay localized", async ({ page }) => {
+  const response = await page.goto("/ogloop");
+  expect(response?.status()).toBe(404);
+  await expect(page.locator("html")).toHaveAttribute("lang", "cs");
+  await expect(page.locator("footer")).toContainText(facts.brand.legal_line_cs);
+});

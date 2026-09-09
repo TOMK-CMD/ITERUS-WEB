@@ -9,6 +9,7 @@ describe("routing", () => {
 
   it("never redirects based on Accept-Language or cookies (URL is the source of truth)", () => {
     expect(routing.localeDetection).toBe(false);
+    expect(routing.localeCookie).toBe(false);
   });
 
   it("defines every localized pathname for every locale", () => {

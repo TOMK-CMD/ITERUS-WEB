@@ -15,8 +15,9 @@ decided yet. The app uses Next.js 16 App Router with `next-intl` 4.14.
 
 1. **Czech at the root, other locales prefixed (`/`, `/en`, later `/de`) — chosen.** Clean Czech
    URLs for the main market, one host, `localePrefix: 'as-needed'`. Cons: the default locale has
-   no explicit prefix, so the proxy must redirect `/cs/…` → `/…` and the cookie-based locale
-   switch always goes through a prefixed URL first (handled by next-intl).
+   no explicit prefix, so the proxy must redirect `/cs/…` → `/…` and switching the language goes
+   through a prefixed URL first (`/cs/kontakt` → 307 → `/kontakt`, handled by next-intl). No
+   locale cookie is set (`localeCookie: false`) — nothing would read it.
 2. Every locale prefixed (`/cs`, `/en`) with `/` redirecting by `Accept-Language`. Symmetric and
    simple, but the root URL is never canonical and every Czech link carries `/cs`, which is
    unusual for a Czech company site.

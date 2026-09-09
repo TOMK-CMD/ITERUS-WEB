@@ -46,7 +46,13 @@ export async function LegalArticle({ params, slug }: { params: Params; slug: Leg
       <article className="prose-iterus">
         <h1>{page.frontmatter.title}</h1>
         <p className="text-muted-foreground text-sm">
-          {t("updated", { date: page.frontmatter.updated })}
+          <time dateTime={page.frontmatter.updated}>
+            {t("updated", {
+              date: new Intl.DateTimeFormat(locale === "cs" ? "cs-CZ" : "en-GB", {
+                dateStyle: "long",
+              }).format(new Date(page.frontmatter.updated)),
+            })}
+          </time>
         </p>
         {page.content}
       </article>

@@ -10,6 +10,9 @@ export const routing = defineRouting({
   // The URL is the only source of truth: no Accept-Language or cookie based redirects. Otherwise
   // an English browser (or Googlebot) requesting "/" or "/kontakt" would be bounced to /en.
   localeDetection: false,
+  // No NEXT_LOCALE cookie either: it would never be read, it would need a privacy-policy
+  // paragraph, and Set-Cookie responses are excluded from CDN caching.
+  localeCookie: false,
   pathnames: {
     "/": "/",
     "/contact": { cs: "/kontakt", en: "/contact" },
