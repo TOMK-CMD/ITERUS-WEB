@@ -70,8 +70,12 @@ export async function readPage(
   let raw: string;
   try {
     raw = await fs.readFile(absolute, "utf8");
-  } catch {
-    throw new ContentError(file, "page not found");
+  } catch (error) {
+    // Only a missing file is "not found"; permission or disk errors must surface as themselves.
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      throw new ContentError(file, "page not found");
+    }
+    throw error;
   }
   return parse(locale, slug, file, raw);
 }

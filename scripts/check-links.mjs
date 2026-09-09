@@ -5,7 +5,7 @@
 // Usage: node scripts/check-links.mjs [--base https://preview.example] [--external]
 import { startServer } from "./lib/serve.mjs";
 
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://iterus.cz").replace(/\/+$/, "");
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || "https://iterus.cz").replace(/\/+$/, "");
 const args = process.argv.slice(2);
 const baseArg = args.indexOf("--base");
 const external = baseArg !== -1 ? args[baseArg + 1]?.replace(/\/+$/, "") : null;
@@ -19,24 +19,29 @@ function extractLinks(html) {
   let match;
   while ((match = re.exec(html))) {
     const href = match[1].replace(/&amp;/g, "&");
-    if (SKIP_PREFIXES.some((prefix) => href.startsWith(prefix))) continue;
+    const lower = href.toLowerCase();
+    if (SKIP_PREFIXES.some((prefix) => lower.startsWith(prefix))) continue;
     links.add(href);
   }
   return [...links];
 }
 
-/** Maps a href to a crawlable path; returns null for external URLs (unless requested). */
-function toTarget(href, base) {
-  if (href.startsWith("/")) return { path: href.split("#")[0], external: false };
+/**
+ * Resolves a href against the page it was found on. Returns an internal path, an external URL
+ * (only with --external) or null (skipped).
+ */
+function toTarget(href, base, currentPath) {
+  let url;
   try {
-    const url = new URL(href);
-    if (url.origin === base || url.origin === SITE) {
-      return { path: url.pathname + url.search, external: false };
-    }
-    return checkExternal ? { path: href, external: true } : null;
+    // Relative links ("kontakt", "../x", "//host/x") resolve against the current page.
+    url = new URL(href, base + currentPath);
   } catch {
     return null;
   }
+  if (url.origin === base || url.origin === SITE) {
+    return { path: url.pathname + url.search, external: false };
+  }
+  return checkExternal ? { path: url.href, external: true } : null;
 }
 
 const problems = [];
@@ -46,36 +51,41 @@ let checkedCount = 0;
 
 async function crawl(base, start) {
   const queue = [start];
+  seen.add(start);
   while (queue.length) {
     const current = queue.shift();
-    if (seen.has(current)) continue;
-    seen.add(current);
     checkedCount += 1;
+    const isExternal = current.startsWith("http");
 
     let response;
     try {
-      response = await fetch(current.startsWith("http") ? current : base + current, {
+      response = await fetch(isExternal ? current : base + current, {
         redirect: "follow",
         headers: { "user-agent": "iterus-check-links/1.0" },
+        signal: AbortSignal.timeout(15_000),
       });
     } catch (error) {
       problems.push(`${current}: ${error.message}`);
       continue;
     }
-    if (response.redirected) redirects.push(`${current} → ${new URL(response.url).pathname}`);
+    if (response.redirected) {
+      const final = new URL(response.url);
+      redirects.push(`${current} → ${final.origin === base ? final.pathname : final.href}`);
+    }
     if (response.status !== 200) {
       problems.push(`${current}: HTTP ${response.status}`);
       continue;
     }
-    if (current.startsWith("http")) continue; // external: status only
+    // Only parse pages that are really ours (an internal path may have redirected elsewhere).
+    if (isExternal || new URL(response.url).origin !== base) continue;
     const type = response.headers.get("content-type") ?? "";
     if (!type.includes("text/html")) continue;
     const html = await response.text();
     for (const href of extractLinks(html)) {
-      const target = toTarget(href, base);
-      if (!target) continue;
-      const key = target.path;
-      if (!seen.has(key)) queue.push(key);
+      const target = toTarget(href, base, current);
+      if (!target || seen.has(target.path)) continue;
+      seen.add(target.path);
+      queue.push(target.path);
     }
   }
 }
@@ -94,7 +104,9 @@ if (!base) {
 }
 try {
   const starts = ["/", "/en", ...(await sitemapPaths(base))];
-  for (const start of starts) await crawl(base, start);
+  for (const start of starts) {
+    if (!seen.has(start)) await crawl(base, start);
+  }
 } finally {
   stop();
 }
@@ -103,8 +115,9 @@ for (const redirect of redirects) console.log(`  ↪ ${redirect}`);
 if (problems.length) {
   console.error(`check:links — ${problems.length} broken link(s):`);
   for (const problem of problems) console.error(`  - ${problem}`);
-  process.exit(1);
+  process.exitCode = 1;
+} else {
+  console.log(
+    `check:links — OK (${checkedCount} URLs checked, ${redirects.length} redirect(s), base ${base})`,
+  );
 }
-console.log(
-  `check:links — OK (${checkedCount} URLs checked, ${redirects.length} redirect(s), base ${base})`,
-);

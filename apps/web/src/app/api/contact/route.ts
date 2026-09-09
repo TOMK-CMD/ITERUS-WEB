@@ -14,7 +14,11 @@ export async function POST(request: Request) {
     body = null;
   }
 
-  const clientKey = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || UNKNOWN_CLIENT;
+  // Vercel sets both headers to the connecting client; x-real-ip cannot be extended by a client.
+  const clientKey =
+    request.headers.get("x-real-ip")?.trim() ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    UNKNOWN_CLIENT;
 
   const result = await handleContact(body, clientKey, {
     env: {

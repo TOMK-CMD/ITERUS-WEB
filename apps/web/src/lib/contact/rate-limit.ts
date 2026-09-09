@@ -29,6 +29,8 @@ export function createRateLimiter({ limit, windowMs, now = Date.now }: Options):
     check(key) {
       const current = now();
       if (hits.size > 1000) prune(current);
+      // Hard cap: a flood from many addresses must not grow memory without bound.
+      if (hits.size > 10_000) hits.clear();
       const entry = hits.get(key);
       if (!entry || entry.resetAt <= current) {
         hits.set(key, { count: 1, resetAt: current + windowMs });

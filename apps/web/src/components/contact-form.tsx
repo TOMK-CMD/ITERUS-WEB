@@ -22,6 +22,7 @@ type Turnstile = {
     },
   ) => string;
   reset: (widgetId?: string) => void;
+  remove: (widgetId?: string) => void;
 };
 
 declare global {
@@ -68,9 +69,16 @@ export function ContactForm({ siteKey }: Props) {
     });
   }, [siteKey]);
 
-  // The script may already be loaded from a previous client-side navigation.
+  // The script may already be loaded from a previous client-side navigation. Remove the widget
+  // on unmount so a remount does not leave a zombie iframe behind.
   useEffect(() => {
     renderWidget();
+    return () => {
+      if (widgetIdRef.current) {
+        window.turnstile?.remove(widgetIdRef.current);
+        widgetIdRef.current = null;
+      }
+    };
   }, [renderWidget]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -89,7 +97,7 @@ export function ContactForm({ siteKey }: Props) {
           name: data.get("name"),
           email: data.get("email"),
           message: data.get("message"),
-          company: data.get("company") ?? "",
+          company: data.get("contact_extra") ?? "",
           turnstileToken: token,
           locale,
         }),
@@ -129,7 +137,7 @@ export function ContactForm({ siteKey }: Props) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <Script src={TURNSTILE_SCRIPT} strategy="afterInteractive" onLoad={renderWidget} />
 
       <div className="flex flex-col gap-1.5">
@@ -176,8 +184,16 @@ export function ContactForm({ siteKey }: Props) {
 
       {/* Honeypot: hidden from people and assistive tech; bots tend to fill every field. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor="contact-company">Company</label>
-        <input id="contact-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+        {/* Non-semantic field name on purpose: browsers autofill "company"/"organization" even
+            when autoComplete="off", which would silently drop real submissions. */}
+        <label htmlFor="contact-extra">Leave this field empty</label>
+        <input
+          id="contact-extra"
+          name="contact_extra"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
 
       <div ref={widgetRef} className="min-h-16" />

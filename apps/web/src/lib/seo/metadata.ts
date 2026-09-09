@@ -7,12 +7,12 @@ const BRAND = "Iterus";
 const TITLE_SUFFIX = ` | ${BRAND}`;
 
 /** Canonical origin of the site (no trailing slash). Overridable per environment. */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://iterus.cz").replace(
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://iterus.cz").replace(
   /\/+$/,
   "",
 );
 
-const OG_LOCALES: Record<Locale, string> = { cs: "cs_CZ", en: "en_US" };
+const OG_LOCALES: Record<Locale, string> = { cs: "cs_CZ", en: "en_GB" };
 
 /** Absolute URL of an internal pathname in the given locale (respects the as-needed prefix). */
 export function localizedUrl(locale: Locale, href: AppPathname): string {
@@ -65,7 +65,9 @@ export function buildMetadata({
       url,
       title: fullTitle,
       description,
-      images: [{ url: ogImageUrl(locale, title), width: OG_WIDTH, height: OG_HEIGHT, alt: fullTitle }],
+      images: [
+        { url: ogImageUrl(locale, title), width: OG_WIDTH, height: OG_HEIGHT, alt: fullTitle },
+      ],
     },
     twitter: { card: "summary_large_image", title: fullTitle, description },
     ...(noindex ? { robots: { index: false, follow: false } } : {}),

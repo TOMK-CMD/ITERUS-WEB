@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Validates the JSON-LD of the built site: starts `next start`, fetches the pages, parses every
-// <script type="application/ld+json"> block and checks required fields per @type. Also refuses
-// any "TODO" placeholder that leaked from content/facts.json.
+// <script type="application/ld+json"> block and checks required fields per @type — including
+// entities nested in properties (mainEntity, publisher, …). Also refuses any "TODO" placeholder
+// that leaked from content/facts.json.
 // Usage: node scripts/check-schema.mjs [--base https://preview.example]  (default: local server)
 import { startServer } from "./lib/serve.mjs";
 
@@ -11,10 +12,13 @@ const REQUIRED = {
   Organization: ["name", "legalName", "identifier", "url", "address"],
   WebSite: ["name", "url", "inLanguage", "publisher"],
   ProfessionalService: ["name", "url", "address", "areaServed"],
+  PostalAddress: ["addressLocality", "addressCountry"],
   ContactPage: ["name", "url"],
   WebPage: ["name", "url"],
   Article: ["headline", "datePublished", "author"],
   FAQPage: ["mainEntity"],
+  Question: ["name", "acceptedAnswer"],
+  Answer: ["text"],
   Service: ["name", "provider"],
   Person: ["name"],
 };
@@ -30,11 +34,25 @@ function extractBlocks(html) {
   return blocks;
 }
 
-function flatten(node) {
-  if (Array.isArray(node)) return node.flatMap(flatten);
-  if (node && typeof node === "object" && "@graph" in node) return flatten(node["@graph"]);
-  return [node];
+/** Every object carrying @type anywhere in the graph (arrays, @graph, nested properties). */
+function entities(node, found = []) {
+  if (Array.isArray(node)) {
+    for (const item of node) entities(item, found);
+  } else if (node && typeof node === "object") {
+    if ("@type" in node) found.push(node);
+    for (const [key, value] of Object.entries(node)) {
+      if (key === "@context") continue;
+      entities(value, found);
+    }
+  }
+  return found;
 }
+
+const isMissing = (value) =>
+  value === undefined ||
+  value === null ||
+  value === "" ||
+  (Array.isArray(value) && value.length === 0);
 
 const problems = [];
 let checked = 0;
@@ -45,8 +63,7 @@ async function checkPage(base, page) {
     problems.push(`${page}: HTTP ${response.status}`);
     return;
   }
-  const html = await response.text();
-  const blocks = extractBlocks(html);
+  const blocks = extractBlocks(await response.text());
   if (blocks.length === 0) {
     problems.push(`${page}: no JSON-LD block found`);
     return;
@@ -60,19 +77,16 @@ async function checkPage(base, page) {
       problems.push(`${page}: JSON-LD is not valid JSON (${error.message})`);
       continue;
     }
-    for (const entity of flatten(data)) {
-      const type = entity?.["@type"];
-      if (!type) {
+    for (const entity of entities(data)) {
+      const types = [entity["@type"]].flat().filter(Boolean);
+      if (types.length === 0) {
         problems.push(`${page}: entity without @type`);
         continue;
       }
       checked += 1;
-      const required = REQUIRED[type];
-      if (!required) continue;
-      for (const field of required) {
-        const value = entity[field];
-        if (value === undefined || value === null || value === "") {
-          problems.push(`${page}: ${type} is missing "${field}"`);
+      for (const type of types) {
+        for (const field of REQUIRED[type] ?? []) {
+          if (isMissing(entity[field])) problems.push(`${page}: ${type} is missing "${field}"`);
         }
       }
     }
@@ -95,6 +109,7 @@ try {
 if (problems.length) {
   console.error(`check:schema — ${problems.length} problem(s):`);
   for (const problem of problems) console.error(`  - ${problem}`);
-  process.exit(1);
+  process.exitCode = 1;
+} else {
+  console.log(`check:schema — OK (${checked} entities across ${PAGES.length} pages, base ${base})`);
 }
-console.log(`check:schema — OK (${checked} entities across ${PAGES.length} pages, base ${base})`);

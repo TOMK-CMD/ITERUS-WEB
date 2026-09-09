@@ -50,6 +50,7 @@ export async function LegalArticle({ params, slug }: { params: Params; slug: Leg
             {t("updated", {
               date: new Intl.DateTimeFormat(locale === "cs" ? "cs-CZ" : "en-GB", {
                 dateStyle: "long",
+                timeZone: "UTC", // frontmatter dates are calendar days, not instants
               }).format(new Date(page.frontmatter.updated)),
             })}
           </time>

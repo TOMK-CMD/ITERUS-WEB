@@ -10,10 +10,12 @@ async function fetchInter(): Promise<ArrayBuffer | null> {
   try {
     const css = await fetch(INTER_CSS, {
       headers: { "user-agent": "Mozilla/5.0 (compatible; IterusOG/1.0)" },
-    }).then((response) => response.text());
+    }).then((response) => (response.ok ? response.text() : ""));
     const url = css.match(/src: url\((https:[^)]+\.(?:ttf|woff))\)/)?.[1];
     if (!url) return null;
-    const buffer: ArrayBuffer = await fetch(url).then((response) => response.arrayBuffer());
+    const fontResponse = await fetch(url);
+    if (!fontResponse.ok) return null;
+    const buffer: ArrayBuffer = await fontResponse.arrayBuffer();
     return buffer;
   } catch {
     return null;
@@ -26,7 +28,11 @@ async function fetchInter(): Promise<ArrayBuffer | null> {
  */
 let interPromise: Promise<ArrayBuffer | null> | undefined;
 function loadInter(): Promise<ArrayBuffer | null> {
-  interPromise ??= fetchInter();
+  interPromise ??= fetchInter().then((font) => {
+    // Do not cache a failure for the lifetime of the instance — try again on the next request.
+    if (!font) interPromise = undefined;
+    return font;
+  });
   return interPromise;
 }
 

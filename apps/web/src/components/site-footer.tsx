@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Locale } from "@/i18n/routing";
 import { legalLine, tagline } from "@/lib/facts";
 
@@ -27,12 +28,12 @@ export function SiteFooter({ locale, navLabel, links }: Props) {
           <ul className="flex gap-4">
             {links.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   className="hover:text-foreground focus-visible:outline-ring rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const WEB_DIR = path.join(ROOT, "apps", "web");
 
+const OUTPUT_KEEP = 8_000; // characters of server output kept for error messages
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
@@ -21,23 +22,38 @@ export async function startServer({ port = 3100, timeoutMs = 90_000 } = {}) {
     env: { ...process.env, PORT: String(port), NEXT_TELEMETRY_DISABLED: "1" },
   });
   let output = "";
-  child.stdout.on("data", (chunk) => (output += chunk));
-  child.stderr.on("data", (chunk) => (output += chunk));
+  const keep = (chunk) => {
+    output = (output + chunk.toString("utf8")).slice(-OUTPUT_KEEP);
+  };
+  child.stdout.on("data", keep);
+  child.stderr.on("data", keep);
+
+  // Never leave the server behind if the calling script crashes or is interrupted.
+  const stop = () => {
+    if (child.exitCode === null && child.signalCode === null) child.kill();
+  };
+  process.once("exit", stop);
+  process.once("SIGINT", () => {
+    stop();
+    process.exit(130);
+  });
 
   const base = `http://localhost:${port}`;
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
-    if (child.exitCode !== null) {
-      throw new Error(`next start exited with code ${child.exitCode}\n${output}`);
+    if (child.exitCode !== null || child.signalCode !== null) {
+      throw new Error(
+        `next start exited (code ${child.exitCode}, signal ${child.signalCode})\n${output}`,
+      );
     }
     try {
-      const response = await fetch(`${base}/robots.txt`);
-      if (response.ok) return { base, stop: () => child.kill() };
+      const response = await fetch(`${base}/robots.txt`, { signal: AbortSignal.timeout(2_000) });
+      if (response.ok) return { base, stop };
     } catch {
       // not up yet
     }
     await sleep(500);
   }
-  child.kill();
+  stop();
   throw new Error(`next start did not become ready within ${timeoutMs} ms\n${output}`);
 }

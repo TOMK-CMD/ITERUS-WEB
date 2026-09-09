@@ -10,7 +10,7 @@ import matter from "gray-matter";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CONTENT_DIR = path.join(ROOT, "content");
 const OUTPUT = path.join(ROOT, "apps", "web", "public", "llms.txt");
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://iterus.cz").replace(/\/+$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://iterus.cz").replace(/\/+$/, "");
 
 const importTs = (relative) => import(pathToFileURL(path.join(ROOT, relative)).href);
 const [{ routing }, { PAGE_ROUTES, localizedPath }, facts] = await Promise.all([

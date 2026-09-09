@@ -45,10 +45,15 @@ describe("buildMetadata", () => {
   it("fills Open Graph with the locale-specific values", () => {
     const og = buildMetadata(input).openGraph as Record<string, unknown>;
     expect(og.url).toBe(`${SITE_URL}/en/contact`);
-    expect(og.locale).toBe("en_US");
+    expect(og.locale).toBe("en_GB");
     expect(og.siteName).toBe("Iterus");
     expect(og.images).toEqual([
-      { url: `${SITE_URL}/og?title=Contact&locale=en`, width: 1200, height: 630, alt: "Contact | Iterus" },
+      {
+        url: `${SITE_URL}/og?title=Contact&locale=en`,
+        width: 1200,
+        height: 630,
+        alt: "Contact | Iterus",
+      },
     ]);
     expect(buildMetadata(input).twitter).toMatchObject({ card: "summary_large_image" });
   });
