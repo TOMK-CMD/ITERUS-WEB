@@ -15,9 +15,9 @@
     "city": "Praha",
     "country": "CZ",
     "founded_year": 2005,
-    "software_since": "TODO(potvrdit rok, kdy začaly softwarové projekty — návrh: 2025)",
-    "origin_note_cs": "Iterus je softwarová značka společnosti SUN Professionals s.r.o. Firma působí na trhu od roku 2005, dosud v oboru stínicí techniky.",
-    "origin_note_en": "Iterus is the software brand of SUN Professionals s.r.o. The company has traded since 2005, until now in the shading-technology sector.",
+    "software_since": 2025,
+    "origin_note_cs": "Iterus je softwarová značka společnosti SUN Professionals s.r.o. Firma působí na trhu od roku 2005, dosud v oboru stínicí techniky. Software pod značkou Iterus stavíme od roku 2025.",
+    "origin_note_en": "Iterus is the software brand of SUN Professionals s.r.o. The company has traded since 2005, until now in the shading-technology sector. Software under the Iterus brand has been built since 2025.",
     "founder_name": "TODO(jméno zakladatele, jak má být uvedeno na webu)",
     "founder_title_cs": "zakladatel",
     "founder_title_en": "founder",
@@ -176,11 +176,7 @@
       "tests": 2520,
       "tables": 27,
       "integrations": 16,
-      "stack": [
-        "Electron",
-        "TypeScript",
-        "SQLite"
-      ],
+      "stack": ["Electron", "TypeScript", "SQLite"],
       "note": "Numbers as stated by Tomas; confirm before publishing.",
       "publish": false,
       "publish_note": "Tomas decides whether to publish; the recorded numbers are not verified."
@@ -188,16 +184,8 @@
     "innea": {
       "name": "Innea",
       "type": "own-product",
-      "stack": [
-        "Claude API",
-        "Next.js",
-        "Supabase",
-        "AWS eu-central-1"
-      ],
-      "compliance": [
-        "GDPR",
-        "EU AI Act transparency layer"
-      ],
+      "stack": ["Claude API", "Next.js", "Supabase", "AWS eu-central-1"],
+      "compliance": ["GDPR", "EU AI Act transparency layer"],
       "publish": "case-study",
       "status_cs": "v provozu",
       "status_en": "live",
@@ -209,10 +197,7 @@
     "stamiq": {
       "name": "STAMIQ",
       "type": "own-product",
-      "stack": [
-        "web-first",
-        "Paddle"
-      ],
+      "stack": ["web-first", "Paddle"],
       "note": "pre-launch; publish only what Tomas approves",
       "publish": "card",
       "status_cs": "před spuštěním",
@@ -252,12 +237,7 @@
     "nt8-optimizer": {
       "name": "NT8-Optimizer",
       "type": "own-product",
-      "stack": [
-        "NinjaScript",
-        "C#",
-        "ZeroMQ",
-        "Python"
-      ],
+      "stack": ["NinjaScript", "C#", "ZeroMQ", "Python"],
       "publish": "card",
       "status_cs": "ve vývoji",
       "status_en": "in development",
@@ -273,11 +253,7 @@
       "publish": "case-study",
       "status_cs": "v provozu",
       "status_en": "live",
-      "stack": [
-        "Next.js",
-        "Supabase",
-        "Claude API"
-      ],
+      "stack": ["Next.js", "Supabase", "Claude API"],
       "hook_cs": "Verze pro odborné praxe — analytika praxe, správa týmu a auditní log nad stejným jádrem.",
       "hook_en": "The version for professional practices — practice analytics, team management and an audit log on the same core.",
       "claims_source": "project README, read 2026-09-09",
@@ -289,11 +265,7 @@
       "publish": "case-study",
       "status_cs": "před spuštěním",
       "status_en": "pre-launch",
-      "stack": [
-        "Next.js",
-        "React Native / Expo",
-        "Supabase"
-      ],
+      "stack": ["Next.js", "React Native / Expo", "Supabase"],
       "hook_cs": "Platforma pro odkaz blízkým, navržená pro seniory: ovládání hlasem, velké dotykové cíle a přihlášení bez hesla.",
       "hook_en": "A platform for leaving messages to loved ones, designed senior-first: voice control, large touch targets and passwordless sign-in.",
       "claims_source": "project README, read 2026-09-09",
@@ -305,10 +277,7 @@
       "publish": false,
       "status_cs": "ve vývoji",
       "status_en": "in development",
-      "stack": [
-        "TypeScript",
-        "DataForSEO API"
-      ],
+      "stack": ["TypeScript", "DataForSEO API"],
       "hook_cs": "Měří, jak často AI enginy zmiňují značku proti konkurenci — každé číslo s 95% Wilsonovým intervalem spolehlivosti.",
       "hook_en": "Measures how often AI engines mention a brand against its competitors — every number with a 95% Wilson confidence interval.",
       "publish_note": "Approved by Tomas as a card on 2026-09-09, but the project has no public name yet; flip back to \"card\" once name is filled in."
@@ -319,11 +288,7 @@
       "publish": "card",
       "status_cs": "ve vývoji",
       "status_en": "in development",
-      "stack": [
-        "Garmin Connect IQ",
-        "Python",
-        "ML"
-      ],
+      "stack": ["Garmin Connect IQ", "Python", "ML"],
       "hook_cs": "Aplikace pro nositelné zařízení Garmin: surová data z inerciální jednotky na 25 Hz a strojové rozpoznání chodů koně.",
       "hook_en": "A Garmin wearable app: raw 25 Hz inertial capture and machine classification of a horse's gaits.",
       "claims_source": "project README, read 2026-09-09",

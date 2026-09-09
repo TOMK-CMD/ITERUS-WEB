@@ -134,7 +134,6 @@ NT8-Optimizer as proof on `/sluzby/ninjatrader`. What remains:
 | Item                                                                                              | Blocks                             | Owner |
 | ------------------------------------------------------------------------------------------------- | ---------------------------------- | ----- |
 | `facts.json`: `dic`, `registered_address`, `founder_name`, `email`, `phone`, LinkedIn URLs        | `/o-nas`, `/kontakt`, JSON-LD      | Tomas |
-| `organization.software_since` — the year software work began (proposed 2025)                      | `/o-nas`                           | Tomas |
 | Confirm the provisional card name "Koordinační kalendář" (`name_provisional: true`)               | `/reference` cards                 | Tomas |
 | Does `not_offered: "embedded/firmware"` still hold with a Garmin Connect IQ app on `/reference`?  | `/sluzby`, `/reference`            | Tomas |
 | Whether Iterus Platform may be published, and with which numbers                                  | `/reference` (a fourth case study) | Tomas |
