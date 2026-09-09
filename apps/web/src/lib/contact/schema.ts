@@ -7,7 +7,7 @@ export const contactSchema = z.object({
   name: z
     .string()
     .trim()
-    .regex(/^[^\p{Cc}]+$/u, "no control characters (single line) expected")
+    .regex(/^[^\p{Cc}]*$/u, "no control characters (single line) expected")
     .min(2)
     .max(100),
   /** Trim before the format check: API clients do not strip whitespace the way browsers do. */

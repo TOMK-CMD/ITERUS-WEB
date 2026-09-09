@@ -77,12 +77,16 @@ async function crawl(base, start) {
       continue;
     }
     // Only parse pages that are really ours (an internal path may have redirected elsewhere).
-    if (isExternal || new URL(response.url).origin !== base) continue;
+    const finalUrl = new URL(response.url);
+    if (isExternal || finalUrl.origin !== base) continue;
+    // Resolve relative links against the page actually served, and never re-crawl it.
+    const finalPath = finalUrl.pathname + finalUrl.search;
+    seen.add(finalPath);
     const type = response.headers.get("content-type") ?? "";
     if (!type.includes("text/html")) continue;
     const html = await response.text();
     for (const href of extractLinks(html)) {
-      const target = toTarget(href, base, current);
+      const target = toTarget(href, base, finalPath);
       if (!target || seen.has(target.path)) continue;
       seen.add(target.path);
       queue.push(target.path);

@@ -77,7 +77,9 @@ async function checkPage(base, page) {
       problems.push(`${page}: JSON-LD is not valid JSON (${error.message})`);
       continue;
     }
-    for (const entity of entities(data)) {
+    const found = entities(data);
+    if (found.length === 0) problems.push(`${page}: JSON-LD block without any typed entity`);
+    for (const entity of found) {
       const types = [entity["@type"]].flat().filter(Boolean);
       if (types.length === 0) {
         problems.push(`${page}: entity without @type`);

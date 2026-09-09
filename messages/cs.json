@@ -39,7 +39,8 @@
         "turnstile_failed": "Ověření, že nejste robot, neprošlo. Zkuste to prosím znovu.",
         "mail_failed": "Zprávu se nepodařilo doručit. Zkuste to prosím později.",
         "network": "Spojení se nezdařilo. Zkontrolujte připojení a zkuste to znovu."
-      }
+      },
+      "heading": "Kontaktní formulář"
     },
     "calcom": {
       "title": "Raději rovnou hovor?",

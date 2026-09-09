@@ -34,7 +34,7 @@ export async function LegalArticle({ params, slug }: { params: Params; slug: Leg
   const t = await getTranslations("legal");
 
   return (
-    <main id="main" className="mx-auto max-w-5xl px-4 py-12">
+    <main id="main" tabIndex={-1} className="mx-auto max-w-5xl px-4 py-12">
       {page.frontmatter.status === "draft" ? (
         <p
           role="status"

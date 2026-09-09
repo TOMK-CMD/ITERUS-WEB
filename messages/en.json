@@ -39,7 +39,8 @@
         "turnstile_failed": "The human verification did not pass. Please try again.",
         "mail_failed": "The message could not be delivered. Please try again later.",
         "network": "The connection failed. Check your network and try again."
-      }
+      },
+      "heading": "Contact form"
     },
     "calcom": {
       "title": "Prefer a call?",

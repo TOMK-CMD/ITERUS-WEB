@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { CalcomCta } from "@/components/calcom-cta";
 import { ContactForm } from "@/components/contact-form";
@@ -28,9 +29,10 @@ export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   const page = await loadPage(locale, "contact", mdxComponents);
+  const t = await getTranslations({ locale, namespace: "contact.form" });
 
   return (
-    <main id="main" className="mx-auto max-w-5xl px-4 py-12">
+    <main id="main" tabIndex={-1} className="mx-auto max-w-5xl px-4 py-12">
       <article className="prose-iterus">
         <h1>{page.frontmatter.title}</h1>
         {page.content}
@@ -38,7 +40,7 @@ export default async function ContactPage({ params }: Props) {
       <div className="mt-10 grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section aria-labelledby="contact-form-heading" className="relative">
           <h2 id="contact-form-heading" className="sr-only">
-            {page.frontmatter.title}
+            {t("heading")}
           </h2>
           <ContactForm siteKey={factOrNull(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)} />
         </section>

@@ -27,7 +27,7 @@ export default async function HomePage({ params }: Props) {
   const page = await loadPage(locale, "home", mdxComponents);
 
   return (
-    <main id="main" className="mx-auto max-w-5xl px-4 py-12">
+    <main id="main" tabIndex={-1} className="mx-auto max-w-5xl px-4 py-12">
       <article className="prose-iterus">
         <h1>{page.frontmatter.title}</h1>
         {page.content}
