@@ -48,7 +48,7 @@ LinkedIn company page, GitHub org, Wikidata item, Clutch — status: TODO each.
 ## Access
 | System | Owner | Access for agents |
 |---|---|---|
-| GitHub org `iterus` | Tomas | Claude Code via `gh` + GitHub MCP; Codex via GitHub app |
+| GitHub repo `TOMK-CMD/ITERUS-WEB` | Tomas | Claude Code via `gh` + GitHub MCP; Codex via GitHub app |
 | Vercel | Tomas | Vercel MCP (read/deploy) |
 | Linear | Tomas | Linear MCP |
 | Cloudflare / Resend / Plausible | Tomas | none (env vars only) |

@@ -1,7 +1,7 @@
 # 0001 — Sprint 0: bootstrap the Iterus web repository
 
 - Status: approved
-- Linear: (create issue "Sprint 0 bootstrap" and link it)
+- Linear: [CRE-33](https://linear.app/innea/issue/CRE-33/sprint-0-bootstrap)
 - Owner: Tomas · Agent: Claude Code
 - Skills to use: none yet (this sprint creates the ground the skills stand on)
 

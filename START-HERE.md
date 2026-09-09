@@ -24,7 +24,7 @@ Nakopíruj obsah do prázdného repa, commitni a Claude Code od toho převezme S
 
 ## Jak to použít (5 kroků)
 
-1. Založ prázdný repozitář (GitHub org `iterus`, repo `web`), naklonuj ho do `C:\Dev\projects\iterus-web`.
+1. Založ prázdný repozitář (GitHub `TOMK-CMD/ITERUS-WEB`), naklonuj ho do `C:\Dev\projects\ITERUS-WEB`.
 2. Nakopíruj do něj **celý obsah** této složky včetně skrytých souborů (`.claude`, `.github`, `.mcp.json`, `.gitignore`, `.gitattributes`, `.editorconfig`).
 3. `git add -A && git commit -m "chore: bootstrap agent operating manual" && git push`.
 4. V repu spusť `claude`. Při prvním použití MCP dej `/mcp` a přihlas Linear, Vercel a GitHub.
