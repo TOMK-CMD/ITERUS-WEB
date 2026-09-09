@@ -89,7 +89,7 @@ branch is unit-tested with injected dependencies; e2e covers the HTTP contract.
 
 ## Quality architecture
 
-Vitest (unit, 51 tests), Playwright + axe (e2e, desktop + mobile), Lighthouse CI budgets
+Vitest (unit), Playwright + axe (e2e, desktop + mobile), Lighthouse CI budgets
 (perf ≥ 0.90, a11y ≥ 0.95, SEO ≥ 0.95, BP ≥ 0.90 — currently 1.0 across the board on `/` and
 `/en`), parity/schema/link scripts, release-please (manifest mode). Hooks in
 `.claude/settings.json` run Prettier after edits and `check:quick` before an agent turn ends.

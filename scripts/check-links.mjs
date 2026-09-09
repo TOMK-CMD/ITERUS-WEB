@@ -74,7 +74,7 @@ async function crawl(base, start) {
     for (const href of extractLinks(html)) {
       const target = toTarget(href, base);
       if (!target) continue;
-      const key = target.external ? target.path : target.path;
+      const key = target.path;
       if (!seen.has(key)) queue.push(key);
     }
   }

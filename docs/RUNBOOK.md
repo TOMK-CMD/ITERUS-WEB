@@ -58,7 +58,8 @@ file** from this table when variables change; agents keep the table current.
 
 ## Local development (native Windows, PowerShell)
 
-- Node 22 (`.node-version`), pnpm 10 (`packageManager`, installed globally or via corepack).
+- Node ≥ 22.18 (`.node-version`; `scripts/generate-llms-txt.mjs` relies on native TypeScript type
+  stripping, unflagged since 22.18), pnpm 10 (`packageManager`, installed globally or via corepack).
 - `pnpm install` at the root, then `pnpm dev` (http://localhost:3000). Local secrets go to
   `apps/web/.env.local`.
 - Full gate before a PR: `pnpm check` (typecheck, lint, unit, i18n parity), `pnpm build`,

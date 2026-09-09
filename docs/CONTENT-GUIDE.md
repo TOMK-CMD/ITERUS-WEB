@@ -69,7 +69,7 @@ Every `content/<locale>/<slug>.mdx` starts with the same keys in both locales
 
 | Key           | Rule                                                                               |
 | ------------- | ---------------------------------------------------------------------------------- |
-| `title`       | ≤ 51 characters; the app appends "                                                 | Iterus" (total ≤ 60) |
+| `title`       | ≤ 51 characters; the app appends " \| Iterus" (total ≤ 60)                         |
 | `description` | 120–155 characters, phrased as the answer to the page's question                   |
 | `updated`     | `YYYY-MM-DD` of the last meaningful change (sitemap `lastmod`)                     |
 | `type`        | `home`, `page`, `contact` or `legal` (drives JSON-LD and sitemap priorities)       |

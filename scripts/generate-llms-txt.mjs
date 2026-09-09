@@ -32,12 +32,14 @@ async function publishedPages(locale) {
     const href = PAGE_ROUTES[slug];
     if (!href) throw new Error(`generate-llms-txt: no route registered for content slug "${slug}"`);
     pages.push({
+      slug,
       title: data.title,
       description: data.description,
       url: SITE_URL + localizedPath(locale, href),
     });
   }
-  return pages;
+  const order = Object.keys(PAGE_ROUTES);
+  return pages.sort((a, b) => order.indexOf(a.slug) - order.indexOf(b.slug));
 }
 
 const sections = [];

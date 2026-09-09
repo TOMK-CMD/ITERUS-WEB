@@ -94,8 +94,9 @@ start `next start` themselves — run `pnpm build` first (or pass `--base <url>`
 - **How we describe our way of working (approved):** "AI-native studio", "vývoj akcelerovaný AI
   nástroji (Claude Code, Codex) s lidským dohledem, automatizovanými testy a specialisty na
   vyžádání". Never state that Tomas is a programmer, and never state or imply that he is not one.
-- **Mandatory footer line** on every page: `Iterus je značka společnosti SUN Professionals s.r.o.,
-IČO 27159884` / `Iterus is a brand of SUN Professionals s.r.o., Company ID 27159884`.
+- **Mandatory footer line** on every page:
+  `Iterus je značka společnosti SUN Professionals s.r.o., IČO 27159884` /
+  `Iterus is a brand of SUN Professionals s.r.o., Company ID 27159884`.
 - **AI transparency.** Any chat or AI feature must tell the user it is an AI at the start of the
   interaction (EU AI Act, Art. 50). Not negotiable.
 - No superlatives without evidence, no fake testimonials, no logos of companies we have not

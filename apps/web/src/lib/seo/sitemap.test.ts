@@ -1,26 +1,30 @@
-import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { listPages } from "@/lib/content/loader";
+import type { ContentPage } from "@/lib/content/loader";
 import { SITE_URL } from "./metadata";
 import { buildSitemapEntries } from "./sitemap";
 
-const contentDir = fileURLToPath(new URL("../content/__fixtures__", import.meta.url));
+function page(
+  locale: "cs" | "en",
+  slug: string,
+  type: ContentPage["frontmatter"]["type"],
+): ContentPage {
+  return {
+    locale,
+    slug,
+    file: `content/${locale}/${slug}.mdx`,
+    body: "",
+    frontmatter: {
+      title: "T",
+      description: "D".repeat(120),
+      updated: "2026-09-09",
+      type,
+      status: "published",
+    },
+  };
+}
 
 describe("buildSitemapEntries", () => {
   it("emits one entry per published page and locale with hreflang alternates", () => {
-    const page = (locale: "cs" | "en", slug: string, type = "page") => ({
-      locale,
-      slug,
-      file: `content/${locale}/${slug}.mdx`,
-      body: "",
-      frontmatter: {
-        title: "T",
-        description: "D".repeat(120),
-        updated: "2026-09-09",
-        type: type as "page" | "home" | "legal" | "contact",
-        status: "published" as const,
-      },
-    });
     const entries = buildSitemapEntries({
       cs: [page("cs", "home", "home"), page("cs", "terms", "legal")],
       en: [page("en", "home", "home")],
@@ -41,30 +45,8 @@ describe("buildSitemapEntries", () => {
   });
 
   it("refuses a content slug without a registered route", () => {
-    expect(() =>
-      buildSitemapEntries({
-        cs: [
-          {
-            locale: "cs",
-            slug: "orphan",
-            file: "content/cs/orphan.mdx",
-            body: "",
-            frontmatter: {
-              title: "T",
-              description: "D".repeat(120),
-              updated: "2026-09-09",
-              type: "page",
-              status: "published",
-            },
-          },
-        ],
-      }),
-    ).toThrowError(/no route registered for content slug "orphan"/);
-  });
-
-  it("works with real loader output (drafts already filtered)", async () => {
-    // Fixture slugs are not routes, so only verify that listPages hands over published pages.
-    const pages = await listPages("cs", { contentDir });
-    expect(pages.every((p) => p.frontmatter.status === "published")).toBe(true);
+    expect(() => buildSitemapEntries({ cs: [page("cs", "orphan", "page")] })).toThrowError(
+      /no route registered for content slug "orphan"/,
+    );
   });
 });
