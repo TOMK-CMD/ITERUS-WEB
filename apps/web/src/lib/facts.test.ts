@@ -33,3 +33,123 @@ describe("brand facts", () => {
     }
   });
 });
+
+describe("pricing facts", () => {
+  const { pricing } = facts;
+
+  it("keeps every band internally consistent and free of placeholders", () => {
+    expect(pricing.bands.length).toBeGreaterThan(0);
+    for (const band of pricing.bands) {
+      expect(isTodo(band.cs)).toBe(false);
+      expect(isTodo(band.en)).toBe(false);
+      expect(isTodo(band.includes_cs)).toBe(false);
+      expect(isTodo(band.includes_en)).toBe(false);
+      expect(band.from_czk).toBeGreaterThan(0);
+      if (band.to_czk !== null) expect(band.to_czk).toBeGreaterThan(band.from_czk);
+      expect(band.weeks_min).toBeGreaterThan(0);
+      expect(band.weeks_max).toBeGreaterThanOrEqual(band.weeks_min);
+      if ("on_prem_from_czk" in band) {
+        const onPrem = (band as { on_prem_from_czk: unknown }).on_prem_from_czk;
+        expect(typeof onPrem, `${band.key}.on_prem_from_czk`).toBe("number");
+        expect(onPrem as number).toBeGreaterThanOrEqual(band.from_czk);
+      }
+    }
+  });
+
+  it("pins the entry prices Tomas approved, so changing one has to be deliberate", () => {
+    const entries = Object.fromEntries(pricing.bands.map((band) => [band.key, band.from_czk]));
+    expect(entries).toStrictEqual({ pilot: 90000, production: 250000, ai: 180000 });
+  });
+
+  it("keeps the day rate consistent with the hourly rate", () => {
+    expect(pricing.reference_rate_czk_day).toBe(pricing.reference_rate_czk_hour * 8);
+  });
+
+  it("records what each band's entry price buys at the reference rate", () => {
+    for (const band of pricing.bands) {
+      const hours = band.implied_hours_at_reference_rate;
+      expect(hours).toBeGreaterThan(0);
+      expect(hours * pricing.reference_rate_czk_hour).toBe(band.from_czk);
+    }
+  });
+
+  it("does not let the two scope bands overlap", () => {
+    const byKey = Object.fromEntries(pricing.bands.map((band) => [band.key, band]));
+    // Pinned so that adding a band forces someone to decide where it sits: `pilot` and
+    // `production` are scope bands on one axis, `ai` is priced on a different one.
+    expect(Object.keys(byKey).sort()).toStrictEqual(["ai", "pilot", "production"]);
+    expect(byKey.pilot.to_czk).toBeLessThanOrEqual(byKey.production.from_czk);
+  });
+
+  it("states VAT, the free call and the paid discovery in both locales", () => {
+    expect(isTodo(pricing.vat_note_cs)).toBe(false);
+    expect(isTodo(pricing.vat_note_en)).toBe(false);
+    expect(pricing.consultation.free_minutes).toBeGreaterThan(0);
+    expect(isTodo(pricing.consultation.cs)).toBe(false);
+    expect(isTodo(pricing.consultation.en)).toBe(false);
+    expect(pricing.discovery.czk).toBeGreaterThan(0);
+    expect(isTodo(pricing.discovery.cs)).toBe(false);
+    expect(isTodo(pricing.discovery.en)).toBe(false);
+  });
+});
+
+describe("project publication flags", () => {
+  const publishable = Object.entries(facts.projects).filter(
+    ([, project]) => (project as { publish?: unknown }).publish,
+  );
+
+  it("has something to publish", () => {
+    expect(publishable.length).toBeGreaterThan(0);
+  });
+
+  it("never marks a project for publication without a name, a status label and a hook", () => {
+    for (const [key, project] of publishable) {
+      const record = project as Record<string, unknown>;
+      for (const field of ["name", "status_cs", "status_en", "hook_cs", "hook_en"]) {
+        expect(isTodo(record[field]), `${key}.${field}`).toBe(false);
+      }
+    }
+  });
+
+  it("makes a hook that states a measurement name where the measurement came from", () => {
+    for (const [key, project] of publishable) {
+      const record = project as Record<string, unknown>;
+      const statesNumber = [record.hook_cs, record.hook_en].some(
+        (hook) => typeof hook === "string" && /\d/.test(hook),
+      );
+      if (statesNumber) expect(isTodo(record.claims_source), `${key}.claims_source`).toBe(false);
+      expect(typeof record.claims_confirmed, `${key}.claims_confirmed`).toBe("boolean");
+    }
+  });
+});
+
+describe("bilingual facts", () => {
+  // Keys where the Czech and English text is legitimately identical (proper nouns, stack names).
+  // Empty today; add a key here rather than weakening the assertion below.
+  const IDENTICAL_BY_DESIGN: string[] = [];
+
+  it("pairs every _cs value with a different _en value, in both directions", () => {
+    const seen: string[] = [];
+    const walk = (node: unknown, path: string) => {
+      if (Array.isArray(node)) return node.forEach((item, i) => walk(item, `${path}[${i}]`));
+      if (!node || typeof node !== "object") return;
+      const record = node as Record<string, unknown>;
+      for (const [key, value] of Object.entries(record)) {
+        const suffix = key.endsWith("_cs") ? "_cs" : key.endsWith("_en") ? "_en" : null;
+        if (suffix) {
+          const base = key.slice(0, -3);
+          const twin = `${base}${suffix === "_cs" ? "_en" : "_cs"}`;
+          seen.push(`${path}.${key}`);
+          expect(record, `${path}.${twin} missing`).toHaveProperty(twin);
+          const identicalAllowed = IDENTICAL_BY_DESIGN.includes(base);
+          if (suffix === "_cs" && !identicalAllowed && !isTodo(value) && !isTodo(record[twin])) {
+            expect(record[twin], `${path}.${twin} repeats the Czech text`).not.toBe(value);
+          }
+        }
+        walk(value, `${path}.${key}`);
+      }
+    };
+    walk(facts, "facts");
+    expect(seen.length).toBeGreaterThan(10);
+  });
+});

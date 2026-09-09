@@ -58,6 +58,7 @@ Keep both lists in sync with `content/facts.json`; the page text must not drift 
 | services / service detail    | `Service`, `FAQPage` (if FAQ block)                                        |
 | references list / case study | `CollectionPage` / `Article` (+ `about: SoftwareApplication` for products) |
 | process                      | `HowTo`                                                                    |
+| pricing                      | `Service` with `offers` (`AggregateOffer`), `FAQPage` if FAQ block         |
 | about / founder              | `Person` (founder), `AboutPage`                                            |
 | contact                      | `ContactPage`                                                              |
 | blog post (Phase 3)          | `Article` / `BlogPosting`, `FAQPage` if applicable                         |
