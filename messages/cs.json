@@ -20,5 +20,35 @@
   },
   "footer": {
     "navLabel": "Navigace v patičce"
+  },
+  "contact": {
+    "form": {
+      "name": "Jméno",
+      "email": "E-mail",
+      "message": "Zpráva",
+      "submit": "Odeslat zprávu",
+      "sending": "Odesílám…",
+      "success": "Děkujeme, zpráva dorazila. Ozveme se e-mailem.",
+      "notConfigured": "Kontaktní formulář zatím není zapnutý. Napište nám prosím e-mailem.",
+      "privacyNote": "Údaje použijeme jen k odpovědi na vaši zprávu.",
+      "privacyLink": "Ochrana osobních údajů",
+      "errors": {
+        "invalid_input": "Zkontrolujte prosím vyplněné údaje (jméno, platný e-mail a zpráva o délce alespoň 10 znaků).",
+        "rate_limited": "Příliš mnoho pokusů. Zkuste to prosím za chvíli.",
+        "not_configured": "Formulář zatím není zapnutý. Napište nám prosím e-mailem.",
+        "turnstile_failed": "Ověření, že nejste robot, neprošlo. Zkuste to prosím znovu.",
+        "mail_failed": "Zprávu se nepodařilo doručit. Zkuste to prosím později.",
+        "network": "Spojení se nezdařilo. Zkontrolujte připojení a zkuste to znovu."
+      }
+    },
+    "calcom": {
+      "title": "Raději rovnou hovor?",
+      "text": "Vyberte si termín krátkého úvodního hovoru.",
+      "cta": "Rezervovat termín"
+    }
+  },
+  "legal": {
+    "draftBanner": "Návrh — text čeká na schválení a ještě se může změnit.",
+    "updated": "Aktualizováno {date}"
   }
 }

@@ -20,5 +20,35 @@
   },
   "footer": {
     "navLabel": "Footer navigation"
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "E-mail",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Thank you, your message has arrived. We will reply by e-mail.",
+      "notConfigured": "The contact form is not enabled yet. Please write to us by e-mail.",
+      "privacyNote": "We use your details only to reply to your message.",
+      "privacyLink": "Privacy policy",
+      "errors": {
+        "invalid_input": "Please check the details (name, a valid e-mail and a message of at least 10 characters).",
+        "rate_limited": "Too many attempts. Please try again in a moment.",
+        "not_configured": "The form is not enabled yet. Please write to us by e-mail.",
+        "turnstile_failed": "The human verification did not pass. Please try again.",
+        "mail_failed": "The message could not be delivered. Please try again later.",
+        "network": "The connection failed. Check your network and try again."
+      }
+    },
+    "calcom": {
+      "title": "Prefer a call?",
+      "text": "Pick a slot for a short introductory call.",
+      "cta": "Book a slot"
+    }
+  },
+  "legal": {
+    "draftBanner": "Draft — this text is pending approval and may still change.",
+    "updated": "Updated {date}"
   }
 }
