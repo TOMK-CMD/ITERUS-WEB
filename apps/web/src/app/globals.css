@@ -1,1 +1,4 @@
-@import "tailwindcss";
+@import "@iterus/ui/styles/globals.css";
+
+/* Tailwind v4 scans the app automatically; the shared UI package must be declared explicitly. */
+@source "../../../../packages/ui/src";

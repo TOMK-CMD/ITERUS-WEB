@@ -6,6 +6,8 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // @iterus/ui ships raw TypeScript from the workspace; Next must compile it.
+  transpilePackages: ["@iterus/ui"],
 };
 
 export default withNextIntl(nextConfig);
