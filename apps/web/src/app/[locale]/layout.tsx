@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
+import { Plausible } from "@/components/plausible";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getPathname } from "@/i18n/navigation";
@@ -44,6 +45,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} className={inter.variable}>
       <body className="flex min-h-dvh flex-col antialiased">
         <JsonLd data={buildSiteJsonLd(locale)} />
+        <Plausible />
         <NextIntlClientProvider>
           <a
             href="#main"
