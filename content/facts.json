@@ -39,6 +39,7 @@
     "iso_27001_status_cs": "TODO — schválená formulace, např.: Zavádíme ISO/IEC 27001 (rozsah: vývoj software); certifikace probíhá.",
     "iso_27001_status_en": "TODO — approved wording",
     "insurance_cs": "TODO — po sjednání: pojištění profesní odpovědnosti do výše X Kč",
+    "insurance_en": "TODO — once the policy is signed: professional indemnity insurance up to X CZK",
     "code_ownership_cs": "Klient vlastní 100 % zdrojového kódu a dokumentace po zaplacení.",
     "code_ownership_en": "The client owns 100% of the source code and documentation upon payment.",
     "gdpr_hosting_cs": "Data hostujeme v EU (Frankfurt), zpracování dle GDPR.",
@@ -49,7 +50,7 @@
     "approved_en": "We work AI-native: delivery is accelerated with Claude Code and Codex, and quality is secured by automated tests, independent code review and specialists on demand."
   },
   "pricing": {
-    "_readme": "Approved by Tomas 2026-09-09. Amounts in CZK excluding VAT. Bands are derived from reference_rate_czk_hour so they stay internally consistent; changing the rate means re-deriving them. Never publish a band that is not listed here.",
+    "_readme": "Approved by Tomas 2026-09-09. Amounts in CZK excluding VAT. reference_rate_czk_hour is the sanity check the bands were set against, not a formula that reproduces them: implied_hours records what each band's entry price buys at that rate. Never publish a band that is not listed here.",
     "currency": "CZK",
     "vat_note_cs": "Ceny jsou uvedeny bez DPH.",
     "vat_note_en": "Prices exclude VAT.",
@@ -65,7 +66,8 @@
         "weeks_min": 3,
         "weeks_max": 6,
         "includes_cs": "Funkční pilot v provozu: přihlášení, databáze, jedna až dvě integrace, testy, nasazení.",
-        "includes_en": "A working pilot in production: authentication, database, one or two integrations, tests, deployment."
+        "includes_en": "A working pilot in production: authentication, database, one or two integrations, tests, deployment.",
+        "implied_hours_at_reference_rate": 45
       },
       {
         "key": "production",
@@ -76,7 +78,8 @@
         "weeks_min": 6,
         "weeks_max": 14,
         "includes_cs": "Role a oprávnění, platby, administrace, více integrací, e2e testy, CI a monitoring.",
-        "includes_en": "Roles and permissions, payments, admin, multiple integrations, e2e tests, CI and monitoring."
+        "includes_en": "Roles and permissions, payments, admin, multiple integrations, e2e tests, CI and monitoring.",
+        "implied_hours_at_reference_rate": 125
       },
       {
         "key": "ai",
@@ -88,7 +91,8 @@
         "weeks_min": 4,
         "weeks_max": 12,
         "includes_cs": "Napojení modelu na firemní data, kontrola kvality odpovědí, transparenční vrstva. On-premise nasazení začíná výš kvůli hardwaru a provozu; hardware není v ceně.",
-        "includes_en": "Connecting a model to company data, answer-quality controls and a transparency layer. On-premise deployment starts higher because of hardware and operations; hardware is not included."
+        "includes_en": "Connecting a model to company data, answer-quality controls and a transparency layer. On-premise deployment starts higher because of hardware and operations; hardware is not included.",
+        "implied_hours_at_reference_rate": 90
       }
     ],
     "consultation": {
@@ -101,7 +105,9 @@
       "deducted_from_project": true,
       "cs": "Placené discovery za 25 000 Kč — zadání, architektura a odhad. Částka se odečítá z ceny navazujícího projektu.",
       "en": "A paid discovery for 25,000 CZK — scope, architecture and estimate. The fee is deducted from the price of the follow-up project."
-    }
+    },
+    "reference_rate_internal_only": true,
+    "reference_rate_note": "TODO(Tomas) — publishing the hourly rate needs its own approval; the 2026-09-09 approval covered the bands only. /cena targets the phrase 'hodinová sazba programátora', so decide before that page is written."
   },
   "services": [
     {
@@ -166,7 +172,6 @@
     "iterus-platform": {
       "name": "Iterus Platform",
       "type": "own-product",
-      "public": "TODO(true/false)",
       "features": 60,
       "tests": 2520,
       "tables": 27,
@@ -174,37 +179,37 @@
       "stack": ["Electron", "TypeScript", "SQLite"],
       "note": "Numbers as stated by Tomas; confirm before publishing.",
       "publish": false,
-      "publish_note": "Tomas rozhoduje o zveřejnění; čísla nejsou ověřená."
+      "publish_note": "Tomas decides whether to publish; the recorded numbers are not verified."
     },
     "innea": {
       "name": "Innea",
       "type": "own-product",
-      "public": "TODO(true/false)",
       "stack": ["Claude API", "Next.js", "Supabase", "AWS eu-central-1"],
       "compliance": ["GDPR", "EU AI Act transparency layer"],
       "publish": "case-study",
       "status_cs": "v provozu",
       "status_en": "live",
       "hook_cs": "AI průvodce pro české uživatele — Claude API, Next.js, Supabase, AWS eu-central-1, transparenční vrstva podle EU AI Act.",
-      "hook_en": "An AI companion for Czech users — Claude API, Next.js, Supabase, AWS eu-central-1, with an EU AI Act transparency layer."
+      "hook_en": "An AI guide for Czech users — Claude API, Next.js, Supabase, AWS eu-central-1, with an EU AI Act transparency layer.",
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     },
     "stamiq": {
       "name": "STAMIQ",
       "type": "own-product",
-      "public": "TODO",
       "stack": ["web-first", "Paddle"],
       "note": "pre-launch; publish only what Tomas approves",
       "publish": "card",
       "status_cs": "před spuštěním",
       "status_en": "pre-launch",
-      "repo": "TRAINING-APP",
       "hook_cs": "Adaptivní tréninkové plány pro vytrvalce — Garmin Training a Health API, plán se přepočítává podle HRV a spánku.",
-      "hook_en": "Adaptive endurance training plans — Garmin Training and Health APIs, with plans recalculated from HRV and sleep."
+      "hook_en": "Adaptive endurance training plans — Garmin Training and Health APIs, with plans recalculated from HRV and sleep.",
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     },
     "tender-radar": {
       "name": "tender-radar",
       "type": "internal-tool",
-      "public": "TODO",
       "stack": [
         "Claude Code skill",
         "TED API v3",
@@ -215,31 +220,32 @@
         "llama.cpp"
       ],
       "publish": false,
-      "publish_note": "Nezveřejněno. Na /sluzby/ceske-integrace smí být zmíněn jen nepojmenovaně jako vlastní interní nástroj (schváleno 2026-09-09)."
+      "publish_note": "Not published. May be referenced on /sluzby/ceske-integrace only without its name and without a link (\"vlastní interní nástroj, který čte TED a ISVZ\") — approved 2026-09-09. No cadence claim until one is recorded here."
     },
     "super-shared-calendar": {
-      "name": "TODO(public name)",
+      "name": "Koordinační kalendář",
       "type": "own-product",
-      "public": "TODO",
       "publish": "card",
       "status_cs": "ve vývoji",
       "status_en": "in development",
-      "repo": "CALENDER-SYNC",
-      "working_name": "Koordinační kalendář",
       "hook_cs": "Koordinační kalendář pro provozy s terénními týmy — multi-tenant nad PostgreSQL s izolací dat na úrovni řádků.",
-      "hook_en": "A coordination calendar for field-service operations — multi-tenant on PostgreSQL with row-level data isolation."
+      "hook_en": "A coordination calendar for field-service operations — multi-tenant on PostgreSQL with row-level data isolation.",
+      "name_provisional": true,
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     },
     "nt8-optimizer": {
       "name": "NT8-Optimizer",
       "type": "own-product",
-      "public": "TODO",
       "stack": ["NinjaScript", "C#", "ZeroMQ", "Python"],
       "publish": "card",
       "status_cs": "ve vývoji",
       "status_en": "in development",
       "hook_cs": "Optimalizace obchodních strategií pro NinjaTrader 8 — NinjaScript v C# propojený přes ZeroMQ s vyhodnocením v Pythonu.",
       "hook_en": "Strategy optimisation for NinjaTrader 8 — NinjaScript in C# bridged over ZeroMQ to evaluation in Python.",
-      "publish_note": "Zmínka schválena 2026-09-09; slouží jako doklad na /sluzby/ninjatrader."
+      "publish_note": "Naming approved 2026-09-09; serves as the proof point on /sluzby/ninjatrader.",
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     },
     "innea-pro": {
       "name": "Innea Pro",
@@ -249,7 +255,9 @@
       "status_en": "live",
       "stack": ["Next.js", "Supabase", "Claude API"],
       "hook_cs": "Verze pro odborné praxe — analytika praxe, správa týmu a auditní log nad stejným jádrem.",
-      "hook_en": "The version for professional practices — practice analytics, team management and an audit log on the same core."
+      "hook_en": "The version for professional practices — practice analytics, team management and an audit log on the same core.",
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     },
     "legacy-you": {
       "name": "Legacy You",
@@ -258,19 +266,21 @@
       "status_cs": "před spuštěním",
       "status_en": "pre-launch",
       "stack": ["Next.js", "React Native / Expo", "Supabase"],
-      "hook_cs": "Platforma pro odkaz blízkým, navržená pro seniory: ovládání hlasem, kontrast WCAG AAA, dotykové cíle 72 px, bez hesel.",
-      "hook_en": "A platform for leaving messages to loved ones, designed senior-first: voice control, WCAG AAA contrast, 72px touch targets, no passwords."
+      "hook_cs": "Platforma pro odkaz blízkým, navržená pro seniory: ovládání hlasem, velké dotykové cíle a přihlášení bez hesla.",
+      "hook_en": "A platform for leaving messages to loved ones, designed senior-first: voice control, large touch targets and passwordless sign-in.",
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     },
     "geo-seo": {
       "name": "TODO(veřejný název)",
       "type": "own-product",
-      "publish": "card",
+      "publish": false,
       "status_cs": "ve vývoji",
       "status_en": "in development",
-      "repo": "GEO-SEO",
       "stack": ["TypeScript", "DataForSEO API"],
       "hook_cs": "Měří, jak často AI enginy zmiňují značku proti konkurenci — každé číslo s 95% Wilsonovým intervalem spolehlivosti.",
-      "hook_en": "Measures how often AI engines mention a brand against its competitors — every number with a 95% Wilson confidence interval."
+      "hook_en": "Measures how often AI engines mention a brand against its competitors — every number with a 95% Wilson confidence interval.",
+      "publish_note": "Approved by Tomas as a card on 2026-09-09, but the project has no public name yet; flip back to \"card\" once name is filled in."
     },
     "gaits": {
       "name": "gaits",
@@ -278,10 +288,11 @@
       "publish": "card",
       "status_cs": "ve vývoji",
       "status_en": "in development",
-      "repo": "HORSE-RIDING",
       "stack": ["Garmin Connect IQ", "Python", "ML"],
-      "hook_cs": "Aplikace pro nositelné zařízení Garmin: záznam surové inerciální jednotky na 25 Hz a strojové rozpoznání chodů koně.",
-      "hook_en": "A Garmin wearable app: raw 25 Hz inertial capture and machine classification of a horse's gaits."
+      "hook_cs": "Aplikace pro nositelné zařízení Garmin: surová data z inerciální jednotky na 25 Hz a strojové rozpoznání chodů koně.",
+      "hook_en": "A Garmin wearable app: raw 25 Hz inertial capture and machine classification of a horse's gaits.",
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     }
   }
 }

@@ -11,13 +11,13 @@ written without a row here, and no row invents a fact — proof points reference
 
 ## Market baseline (measured 2026-09-09, refresh before Sprint 2)
 
-| Observation                                                                                                                                                                                                  | Consequence for us                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| "vývoj software na zakázku Praha" is owned by team studios with 15+ years of history (MEMOS, Expert Dev, Pixelfield, SEVENOAKS, PROGRAMATORI.cz, Etyka Digital)                                              | We do not fight for the generic head term. The generic service page exists to convert, not to rank.  |
-| "AI agenti / AI na míru" is led by Apertia.ai: price and delivery time in the opening paragraph, three price bands, a data-security section (on-prem, anonymisation, audit log, EU AI Act), 5-step process   | Same structural bar. We differentiate on transparency and on being reachable below their entry band. |
-| The "kolik stojí…" cluster is crowded but every competitor answers it (MEMOS, SolutionBox, LE ARTIST, ANFILOV, Progity). Published anchors: MVP from 80k CZK, production app from 180k, enterprise from 400k | A pricing page is table stakes. Silence reads as "expensive" and wastes lead-qualification time.     |
-| Nobody in the Czech SERP addresses ARES / datové schránky / NEN / registr smluv integration as a named service                                                                                               | Highest-intent, lowest-competition page we can own.                                                  |
-| English "AI-native agency" is dominated by directory listicles and vendors claiming everything                                                                                                               | Our English edge is specificity and verifiable artefacts, not adjectives.                            |
+| Observation                                                                                                                                                                                                                                                                            | Consequence for us                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| "vývoj software na zakázku Praha" returns established team studios (MEMOS, Expert Dev, Pixelfield, SEVENOAKS, PROGRAMATORI.cz, Etyka Digital) — SERP sample, 2026-09-09                                                                                                                | We do not fight for the generic head term. The generic service page exists to convert, not to rank.                   |
+| "AI agenti / AI na míru" is led by <https://apertia.ai/ai-na-miru> (read 2026-09-09): price and delivery time in the opening paragraph, three price bands (180–350k / 350–900k / 0.9–4M CZK), a data-security section (on-prem, anonymisation, audit log, EU AI Act), a 5-step process | Same structural bar. We differentiate on transparency and on offering a smaller first step, not on undercutting them. |
+| The "kolik stojí…" cluster is answered by MEMOS, SolutionBox, LE ARTIST, ANFILOV, Progity and dostaljakub.cz. Anchors as published by them (SERP sample, 2026-09-09): MVP from 80k CZK, production app with payments and roles from 180k, enterprise from 400k                         | A pricing page is table stakes. Silence reads as "expensive" and wastes lead-qualification time.                      |
+| Nobody in the Czech SERP addresses ARES / datové schránky / NEN / registr smluv integration as a named service                                                                                                                                                                         | Highest-intent, lowest-competition page we can own.                                                                   |
+| English "AI-native agency" returns mostly directory listicles (DesignRush, Parallel) rather than studios — SERP sample, 2026-09-09                                                                                                                                                     | Our English edge is specificity and verifiable artefacts, not adjectives.                                             |
 
 ## Evidence policy (binding)
 
@@ -29,25 +29,33 @@ We have **no client references**. Every proof point on the site is one of:
 
 A product that is not launched may still appear, provided the page states its status plainly
 ("ve vývoji" / "před spuštěním"), promises no availability date, and carries no unverified numbers.
-Presenting unfinished or invented work as delivered client experience is an unfair commercial
-practice under the blacklist of zákon č. 634/1992 Sb. — not a marketing judgement call.
+Presenting unfinished or invented work as delivered client experience is misleading advertising under
+§ 2976–2981 obč. zák. (nekalá soutěž); where a reader is a consumer, the blacklist of zákon
+č. 634/1992 Sb. applies on top. Neither is a marketing judgement call. ⚠ Legal wording is Tomas's
+decision — this note exists to stop an agent inventing proof, not to state legal advice.
 
 ### Two tiers on `/reference` (approved 2026-09-09)
 
-`facts.json → projects[*].publish` decides which tier a project belongs to; a project without a
-status label and a one-line hook in both locales cannot be published (guarded by a unit test).
+`facts.json → projects[*].publish` decides which tier a project belongs to. A project cannot be
+published without a public name, a status label and a one-line hook in both locales, and a hook that
+states a measurement must name where the measurement came from (`claims_source`). All of that is
+guarded by unit tests in `apps/web/src/lib/facts.test.ts`, mutation-checked on 2026-09-09.
 
-| Tier                   | `publish`    | What it shows                                                             | Projects                                                    |
-| ---------------------- | ------------ | ------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots          | Innea, Innea Pro, Legacy You (`před spuštěním`)             |
-| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — no numbers | Koordinační kalendář, GEO-SEO, gaits, STAMIQ, NT8-Optimizer |
-| Not published          | `false`      | —                                                                         | Iterus Platform (Tomas decides), tender-radar               |
+| Tier                   | `publish`    | What it shows                                                                                                           | Projects                                                                        |
+| ---------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots                                                        | Innea, Innea Pro, Legacy You (`před spuštěním`)                                 |
+| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — technical specifics only, no outcome or business metrics | Koordinační kalendář, gaits, STAMIQ, NT8-Optimizer                              |
+| Not published          | `false`      | —                                                                                                                       | Iterus Platform (Tomas decides), tender-radar, GEO-SEO (has no public name yet) |
 
 The card tier exists to show the **breadth** we can work across. It carries a technical hook
 rather than a benefit claim, because a hook ("25 Hz inertial capture", "95% Wilson interval",
 "row-level isolation") is what makes breadth read as competence instead of as scattered hobbies.
 Five cards is the cap: beyond that, a list where most entries say "ve vývoji" starts to read as
-"nothing finished".
+"nothing finished". GEO-SEO is approved for a card but has no public name, so it stays `false` until
+Tomas names it — the guard would fail otherwise.
+
+Every hook currently carries `claims_confirmed: false`: the technical specifics were read from each
+project's own README on 2026-09-09, not re-verified by Tomas. Session C confirms them before go-live.
 
 ## Launch pages
 
@@ -77,12 +85,14 @@ service pages for the same questions.
 Each gap names the page that carries it and the artefact that proves it. Nothing here ships until
 the referenced `facts.json` key is filled and confirmed.
 
-1. **Price transparency at a reachable entry point** — `/cena`. The market's published AI entry
-   band starts at 180k CZK; a solo AI-native studio can serve smaller scopes profitably. Say the
-   number instead of "individuální kalkulace".
+1. **Price transparency** — `/cena`. Competitors publish bands; so do we, plus a smaller first step
+   (a 90k CZK validation pilot and a 25k CZK discovery that is deducted from the project). State the
+   numbers instead of "individuální kalkulace". ⚠ Do **not** write that we are cheaper than a named
+   competitor: our AI band starts at 180k CZK, the same anchor they publish.
 2. **Czech e-government integration as a named service** — `/sluzby/ceske-integrace`. No competitor
-   in the measured SERP names ARES, datové schránky, NEN or registr smluv. Proof: our own tooling
-   that reads TED and ISVZ daily.
+   in the measured SERP names ARES, datové schránky, NEN or registr smluv. Proof: our own internal
+   tooling that reads TED and ISVZ, referenced without its name. No cadence claim ("denně" / "daily")
+   until one is recorded in `facts.json`.
 3. **Numbers instead of client logos** — `/reference`. Studios have logos but NDAs stop them
    showing architecture; we have no logos and can show test counts, schema size and integrations.
 4. **On-prem LLM without an enterprise price tag** — `/sluzby/lokalni-llm`. The competing on-prem
@@ -101,13 +111,17 @@ Resolved 2026-09-09: price bands (`facts.json → pricing`), the `/reference` pr
 status labels, the unnamed mention of the internal tender tool on `/sluzby/ceske-integrace`, and
 NT8-Optimizer as proof on `/sluzby/ninjatrader`. What remains:
 
-| Item                                                                                             | Blocks                             | Owner |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------- | ----- |
-| `facts.json`: `dic`, `registered_address`, `founder_name`, `email`, `phone`, LinkedIn URLs       | `/o-nas`, `/kontakt`, JSON-LD      | Tomas |
-| `organization.software_since` — the year software work began (proposed 2025)                     | `/o-nas`                           | Tomas |
-| Public names for `projects.geo-seo` and `projects.super-shared-calendar`                         | `/reference` cards                 | Tomas |
-| Does `not_offered: "embedded/firmware"` still hold with a Garmin Connect IQ app on `/reference`? | `/sluzby`, `/reference`            | Tomas |
-| Whether Iterus Platform may be published, and with which numbers                                 | `/reference` (a fourth case study) | Tomas |
+| Item                                                                                              | Blocks                             | Owner |
+| ------------------------------------------------------------------------------------------------- | ---------------------------------- | ----- |
+| `facts.json`: `dic`, `registered_address`, `founder_name`, `email`, `phone`, LinkedIn URLs        | `/o-nas`, `/kontakt`, JSON-LD      | Tomas |
+| `organization.software_since` — the year software work began (proposed 2025)                      | `/o-nas`                           | Tomas |
+| Public names for `projects.geo-seo` and `projects.super-shared-calendar`                          | `/reference` cards                 | Tomas |
+| Does `not_offered: "embedded/firmware"` still hold with a Garmin Connect IQ app on `/reference`?  | `/sluzby`, `/reference`            | Tomas |
+| Whether Iterus Platform may be published, and with which numbers                                  | `/reference` (a fourth case study) | Tomas |
+| Public name for `projects.geo-seo` (approved as a card, blocked by the guard until named)         | `/reference` cards                 | Tomas |
+| Whether the hourly rate (2 000 CZK) may be published — the 2026-09-09 approval covered bands only | `/cena`                            | Tomas |
+| Confirm the technical specifics in the card hooks (`claims_confirmed` is false for all)           | `/reference` cards                 | Tomas |
+| Fold `/cena` and the removal of a standalone FAQ page into spec 0002 before it leaves `draft`     | spec acceptance criteria           | Tomas |
 
 ⚠ **Measured numbers are not confirmed numbers.** Migration files in the Innea repository are
 numbered up to `_335` while only 72 files remain in the migrations directory — the two readings
@@ -120,8 +134,18 @@ disagree, so neither may be published. Every number in a case study is measured,
   states that these are our own products, not client work. English stays `/en/references`.
 - The NinjaTrader page is published outside the main navigation: its audience and language differ
   from the rest of the site, and putting it in the menu would dilute the B2B positioning.
-- Service detail pages live under `/sluzby/<slug>` as a dynamic segment in `pathnames`; the five
-  remaining services from `facts.json → services` stay as sections on `/sluzby`.
+- Service detail pages are **five static entries in `pathnames`**, not a dynamic `[slug]` segment,
+  with flat content slugs (`content/<locale>/services-web-applications.mdx`). Reason, verified in the
+  code on 2026-09-09: `localizedPath` (`apps/web/src/lib/seo/paths.ts:20`), `localizedUrl` and
+  `languageAlternates` (`src/lib/seo/metadata.ts`), `PAGE_ROUTES` (`paths.ts:9`) and
+  `buildSitemapEntries` (`src/lib/seo/sitemap.ts:17`) all take an `AppPathname` and accept no params,
+  so a dynamic segment would emit a literal `[slug]` into canonical, hreflang and the sitemap; and
+  next-intl substitutes the same param into both locale templates, so a Czech slug paired with a
+  different English slug needs a per-locale map on top. Worse, `listPages`
+  (`src/lib/content/loader.ts:88`) and `scripts/generate-llms-txt.mjs` read only top-level MDX while
+  `scripts/check-i18n.mjs` reads recursively — nested content would pass the parity check and vanish
+  from the sitemap and llms.txt without any error. See `docs/adr/0004-service-page-routing.md`.
+  The five remaining services from `facts.json → services` stay as sections on `/sluzby`.
 - **The 2005 founding year is never stated on its own.** The company has traded since 2005 in
   shading technology; software under the Iterus brand is recent. `/o-nas` states both facts in one
   breath (`facts.json → organization.origin_note_cs/en`). Stating "on the market since 2005" on a
@@ -129,5 +153,5 @@ disagree, so neither may be published. Every number in a case study is measured,
   pair is an asset: the standard objection to a one-person studio is "what if they disappear", and
   a twenty-year-old limited company with a real registered address answers it better than copy.
 - `/sluzby/ceske-integrace` may cite the internal tender tool **without naming it or linking it**
-  ("vlastní interní nástroj, který denně čte TED a ISVZ"). `/sluzby/ninjatrader` may name
-  NT8-Optimizer. Both approved by Tomas on 2026-09-09.
+  ("vlastní interní nástroj, který čte TED a ISVZ") — no frequency claim, because none is recorded.
+  `/sluzby/ninjatrader` may name NT8-Optimizer. Both approved by Tomas on 2026-09-09.

@@ -46,7 +46,10 @@ describe("pricing facts", () => {
       expect(isTodo(band.includes_en)).toBe(false);
       expect(band.from_czk).toBeGreaterThan(0);
       if (band.to_czk !== null) expect(band.to_czk).toBeGreaterThan(band.from_czk);
+      expect(band.weeks_min).toBeGreaterThan(0);
       expect(band.weeks_max).toBeGreaterThanOrEqual(band.weeks_min);
+      const onPrem = (band as { on_prem_from_czk?: number }).on_prem_from_czk;
+      if (onPrem !== undefined) expect(onPrem).toBeGreaterThanOrEqual(band.from_czk);
     }
   });
 
@@ -55,21 +58,84 @@ describe("pricing facts", () => {
     expect(entries).toStrictEqual({ pilot: 90000, production: 250000, ai: 180000 });
   });
 
-  it("states that amounts exclude VAT in both locales", () => {
+  it("keeps the day rate consistent with the hourly rate", () => {
+    expect(pricing.reference_rate_czk_day).toBe(pricing.reference_rate_czk_hour * 8);
+  });
+
+  it("records what each band's entry price buys at the reference rate", () => {
+    for (const band of pricing.bands) {
+      const hours = band.implied_hours_at_reference_rate;
+      expect(hours).toBeGreaterThan(0);
+      expect(hours * pricing.reference_rate_czk_hour).toBe(band.from_czk);
+    }
+  });
+
+  it("does not let the two scope bands overlap", () => {
+    const byKey = Object.fromEntries(pricing.bands.map((band) => [band.key, band]));
+    expect(byKey.pilot.to_czk).toBeLessThanOrEqual(byKey.production.from_czk);
+  });
+
+  it("states VAT, the free call and the paid discovery in both locales", () => {
     expect(isTodo(pricing.vat_note_cs)).toBe(false);
     expect(isTodo(pricing.vat_note_en)).toBe(false);
+    expect(pricing.consultation.free_minutes).toBeGreaterThan(0);
+    expect(isTodo(pricing.consultation.cs)).toBe(false);
+    expect(isTodo(pricing.consultation.en)).toBe(false);
+    expect(pricing.discovery.czk).toBeGreaterThan(0);
+    expect(isTodo(pricing.discovery.cs)).toBe(false);
+    expect(isTodo(pricing.discovery.en)).toBe(false);
   });
 });
 
 describe("project publication flags", () => {
-  it("never marks a project for publication without a status label and a hook", () => {
-    for (const [key, project] of Object.entries(facts.projects)) {
+  const publishable = Object.entries(facts.projects).filter(
+    ([, project]) => (project as { publish?: unknown }).publish,
+  );
+
+  it("has something to publish", () => {
+    expect(publishable.length).toBeGreaterThan(0);
+  });
+
+  it("never marks a project for publication without a name, a status label and a hook", () => {
+    for (const [key, project] of publishable) {
       const record = project as Record<string, unknown>;
-      if (!record.publish) continue;
-      expect(isTodo(record.status_cs), `${key}.status_cs`).toBe(false);
-      expect(isTodo(record.status_en), `${key}.status_en`).toBe(false);
-      expect(isTodo(record.hook_cs), `${key}.hook_cs`).toBe(false);
-      expect(isTodo(record.hook_en), `${key}.hook_en`).toBe(false);
+      for (const field of ["name", "status_cs", "status_en", "hook_cs", "hook_en"]) {
+        expect(isTodo(record[field]), `${key}.${field}`).toBe(false);
+      }
     }
+  });
+
+  it("makes a hook that states a measurement name where the measurement came from", () => {
+    for (const [key, project] of publishable) {
+      const record = project as Record<string, unknown>;
+      const statesNumber = [record.hook_cs, record.hook_en].some(
+        (hook) => typeof hook === "string" && /\d/.test(hook),
+      );
+      if (statesNumber) expect(isTodo(record.claims_source), `${key}.claims_source`).toBe(false);
+    }
+  });
+});
+
+describe("bilingual facts", () => {
+  it("pairs every _cs value with a different _en value", () => {
+    const seen: string[] = [];
+    const walk = (node: unknown, path: string) => {
+      if (Array.isArray(node)) return node.forEach((item, i) => walk(item, `${path}[${i}]`));
+      if (!node || typeof node !== "object") return;
+      const record = node as Record<string, unknown>;
+      for (const [key, value] of Object.entries(record)) {
+        if (key.endsWith("_cs")) {
+          const twin = `${key.slice(0, -3)}_en`;
+          seen.push(`${path}.${key}`);
+          expect(record, `${path}.${twin} missing`).toHaveProperty(twin);
+          if (!isTodo(value) && !isTodo(record[twin])) {
+            expect(record[twin], `${path}.${twin} repeats the Czech text`).not.toBe(value);
+          }
+        }
+        walk(value, `${path}.${key}`);
+      }
+    };
+    walk(facts, "facts");
+    expect(seen.length).toBeGreaterThan(10);
   });
 });
