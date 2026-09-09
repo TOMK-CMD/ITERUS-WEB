@@ -13,7 +13,7 @@
     prevents loops; `ITERUS_SKIP_STOP_CHECK=1` disables it.
 - `.claude/skills/*` — project skills (auto-triggered by description).
 - `.claude/agents/reviewer.md` — independent review subagent.
-- `.mcp.json` — Linear, Vercel, GitHub (remote HTTP, OAuth via `/mcp`), Playwright (local, `cmd /c`
+- `.mcp.json` — Linear, Vercel, GitHub (remote HTTP, PAT header from `GITHUB_PAT` — see RUNBOOK → Access), Playwright (local, `cmd /c`
   wrapper for native Windows).
 
 ## Sprint 0 task for the agent (see specs/0001)

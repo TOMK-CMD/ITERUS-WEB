@@ -48,10 +48,21 @@ LinkedIn company page, GitHub org, Wikidata item, Clutch — status: TODO each.
 ## Access
 | System | Owner | Access for agents |
 |---|---|---|
-| GitHub repo `TOMK-CMD/ITERUS-WEB` | Tomas | Claude Code via `gh` + GitHub MCP; Codex via GitHub app |
+| GitHub repo `TOMK-CMD/ITERUS-WEB` | Tomas | Claude Code via `gh` + GitHub MCP (`GITHUB_PAT`, see below); Codex via GitHub app |
 | Vercel | Tomas | Vercel MCP (read/deploy) |
 | Linear | Tomas | Linear MCP |
 | Cloudflare / Resend / Plausible | Tomas | none (env vars only) |
+
+GitHub MCP (`.mcp.json` → `github`) cannot use OAuth: GitHub's auth server does not support the
+dynamic client registration Claude Code relies on, so the server authenticates with a personal
+access token sent as `Authorization: Bearer ${GITHUB_PAT:-}`. Setup, once per machine:
+
+1. github.com → Settings → Developer settings → Fine-grained tokens → repository `ITERUS-WEB`;
+   permissions: Contents, Issues, Pull requests (read & write), Actions and Metadata (read).
+2. PowerShell: `setx GITHUB_PAT "<token>"` (user-level variable — never in the repo or `.env`).
+3. Restart the terminal and Claude Code; `/mcp` then shows `github` as connected.
+
+Without the variable the header is empty and only the `github` server fails to connect.
 
 ## Test data
 - Contact form test address: TODO. Never use real client data in tests.
