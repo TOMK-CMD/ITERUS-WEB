@@ -13,10 +13,6 @@
     "cs": "Čeština",
     "en": "English"
   },
-  "home": {
-    "title": "AI-native softwarové studio z Prahy",
-    "description": "Rychle stavíme produkční webové a AI aplikace — s AI nástroji (Claude Code, Codex), lidským dohledem a automatizovanými testy. Praha, Česko."
-  },
   "notFound": {
     "title": "Stránka nenalezena",
     "text": "Tahle adresa neexistuje nebo byla přesunuta.",

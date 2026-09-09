@@ -60,3 +60,31 @@
     @apply font-sans;
   }
 }
+
+/* Minimal long-form typography for MDX pages (no @tailwindcss/typography dependency). */
+@utility prose-iterus {
+  & > * + * {
+    margin-top: --spacing(5);
+  }
+  & h1 {
+    font-size: var(--text-4xl);
+    line-height: var(--text-4xl--line-height);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  & h2 {
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    font-weight: 600;
+    margin-top: --spacing(10);
+  }
+  & p,
+  & li {
+    max-width: 70ch;
+  }
+  & a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}

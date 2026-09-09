@@ -13,14 +13,18 @@
   },
   "dependencies": {
     "@iterus/ui": "workspace:*",
+    "gray-matter": "4.0.3",
     "next": "16.3.4",
     "next-intl": "4.14.2",
+    "next-mdx-remote": "6.0.0",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "zod": "4.5.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",
     "@testing-library/react": "16.3.3",
+    "@types/mdx": "2.0.13",
     "@types/node": "22.20.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",

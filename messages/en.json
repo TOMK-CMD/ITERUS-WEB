@@ -13,10 +13,6 @@
     "cs": "Čeština",
     "en": "English"
   },
-  "home": {
-    "title": "AI-native software studio from Prague",
-    "description": "We build production web and AI applications fast — with AI tools (Claude Code, Codex), human oversight and automated tests. Prague, Czech Republic."
-  },
   "notFound": {
     "title": "Page not found",
     "text": "This address does not exist or has moved.",
