@@ -153,3 +153,16 @@ describe("bilingual facts", () => {
     expect(seen.length).toBeGreaterThan(10);
   });
 });
+
+describe("founder identity", () => {
+  const org = facts.organization;
+
+  it("keeps one canonical spelling and an ASCII-only alternate", () => {
+    expect(isTodo(org.founder_name)).toBe(false);
+    expect(isTodo(org.founder_name_alternate)).toBe(false);
+    // The alternate exists for Person.alternateName, so it must be the stripped form —
+    // swapping the two would publish the diacritics-free name as the person's actual name.
+    expect(org.founder_name_alternate).toMatch(/^[ -~]+$/);
+    expect(org.founder_name).not.toBe(org.founder_name_alternate);
+  });
+});
