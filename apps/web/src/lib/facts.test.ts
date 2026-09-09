@@ -48,8 +48,11 @@ describe("pricing facts", () => {
       if (band.to_czk !== null) expect(band.to_czk).toBeGreaterThan(band.from_czk);
       expect(band.weeks_min).toBeGreaterThan(0);
       expect(band.weeks_max).toBeGreaterThanOrEqual(band.weeks_min);
-      const onPrem = (band as { on_prem_from_czk?: number }).on_prem_from_czk;
-      if (onPrem !== undefined) expect(onPrem).toBeGreaterThanOrEqual(band.from_czk);
+      if ("on_prem_from_czk" in band) {
+        const onPrem = (band as { on_prem_from_czk: unknown }).on_prem_from_czk;
+        expect(typeof onPrem, `${band.key}.on_prem_from_czk`).toBe("number");
+        expect(onPrem as number).toBeGreaterThanOrEqual(band.from_czk);
+      }
     }
   });
 
@@ -72,6 +75,9 @@ describe("pricing facts", () => {
 
   it("does not let the two scope bands overlap", () => {
     const byKey = Object.fromEntries(pricing.bands.map((band) => [band.key, band]));
+    // Pinned so that adding a band forces someone to decide where it sits: `pilot` and
+    // `production` are scope bands on one axis, `ai` is priced on a different one.
+    expect(Object.keys(byKey).sort()).toStrictEqual(["ai", "pilot", "production"]);
     expect(byKey.pilot.to_czk).toBeLessThanOrEqual(byKey.production.from_czk);
   });
 
@@ -112,23 +118,31 @@ describe("project publication flags", () => {
         (hook) => typeof hook === "string" && /\d/.test(hook),
       );
       if (statesNumber) expect(isTodo(record.claims_source), `${key}.claims_source`).toBe(false);
+      expect(typeof record.claims_confirmed, `${key}.claims_confirmed`).toBe("boolean");
     }
   });
 });
 
 describe("bilingual facts", () => {
-  it("pairs every _cs value with a different _en value", () => {
+  // Keys where the Czech and English text is legitimately identical (proper nouns, stack names).
+  // Empty today; add a key here rather than weakening the assertion below.
+  const IDENTICAL_BY_DESIGN: string[] = [];
+
+  it("pairs every _cs value with a different _en value, in both directions", () => {
     const seen: string[] = [];
     const walk = (node: unknown, path: string) => {
       if (Array.isArray(node)) return node.forEach((item, i) => walk(item, `${path}[${i}]`));
       if (!node || typeof node !== "object") return;
       const record = node as Record<string, unknown>;
       for (const [key, value] of Object.entries(record)) {
-        if (key.endsWith("_cs")) {
-          const twin = `${key.slice(0, -3)}_en`;
+        const suffix = key.endsWith("_cs") ? "_cs" : key.endsWith("_en") ? "_en" : null;
+        if (suffix) {
+          const base = key.slice(0, -3);
+          const twin = `${base}${suffix === "_cs" ? "_en" : "_cs"}`;
           seen.push(`${path}.${key}`);
           expect(record, `${path}.${twin} missing`).toHaveProperty(twin);
-          if (!isTodo(value) && !isTodo(record[twin])) {
+          const identicalAllowed = IDENTICAL_BY_DESIGN.includes(base);
+          if (suffix === "_cs" && !identicalAllowed && !isTodo(value) && !isTodo(record[twin])) {
             expect(record[twin], `${path}.${twin} repeats the Czech text`).not.toBe(value);
           }
         }
