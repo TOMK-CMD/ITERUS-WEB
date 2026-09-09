@@ -1,3 +1,5 @@
+// next/link on purpose (not the next-intl Link): the hrefs arrive already localized from
+// getPathname() in the layout, which keeps this component free of i18n context for unit tests.
 import Link from "next/link";
 import type { Locale } from "@/i18n/routing";
 import { legalLine, tagline } from "@/lib/facts";

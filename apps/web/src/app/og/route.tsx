@@ -6,14 +6,18 @@ export const runtime = "nodejs";
 
 const INTER_CSS = "https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap";
 
+const FETCH_TIMEOUT_MS = 3_000; // a stalled Google Fonts must not hold every /og request
+const FAILURE_CACHE_MS = 60_000; // do not retry a failed fetch on every request either
+
 async function fetchInter(): Promise<ArrayBuffer | null> {
   try {
     const css = await fetch(INTER_CSS, {
       headers: { "user-agent": "Mozilla/5.0 (compatible; IterusOG/1.0)" },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     }).then((response) => (response.ok ? response.text() : ""));
     const url = css.match(/src: url\((https:[^)]+\.(?:ttf|woff))\)/)?.[1];
     if (!url) return null;
-    const fontResponse = await fetch(url);
+    const fontResponse = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
     if (!fontResponse.ok) return null;
     const buffer: ArrayBuffer = await fontResponse.arrayBuffer();
     return buffer;
@@ -29,8 +33,8 @@ async function fetchInter(): Promise<ArrayBuffer | null> {
 let interPromise: Promise<ArrayBuffer | null> | undefined;
 function loadInter(): Promise<ArrayBuffer | null> {
   interPromise ??= fetchInter().then((font) => {
-    // Do not cache a failure for the lifetime of the instance — try again on the next request.
-    if (!font) interPromise = undefined;
+    // A failure is cached briefly, not for the lifetime of the instance.
+    if (!font) setTimeout(() => (interPromise = undefined), FAILURE_CACHE_MS).unref?.();
     return font;
   });
   return interPromise;

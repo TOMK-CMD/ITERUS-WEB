@@ -10,6 +10,11 @@
 | iterus.io  | international alias        | TODO (already owned) | Cloudflare (planned) | open item (ADR-0003): recommended 301 → iterus.cz/en |
 | iterus.com | backorder placed? TODO     | —                    | —                    | expires 2026-09-09, status "pending transfer"        |
 
+If Cloudflare DNS is used, keep the records **DNS-only (grey cloud)**: behind the Cloudflare proxy
+Vercel sees Cloudflare's edge IPs in `x-real-ip`/`x-forwarded-for`, so the contact-form rate limit
+(5 requests / 10 min per IP) would lock out real visitors who share an edge, and Vercel's own edge
+caching is bypassed.
+
 ## E-mail
 
 - Provider: TODO (Migadu planned). Mailboxes: hello@iterus.cz, TODO.

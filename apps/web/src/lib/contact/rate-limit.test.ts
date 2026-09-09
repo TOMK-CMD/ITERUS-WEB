@@ -17,4 +17,12 @@ describe("createRateLimiter", () => {
     clock = 1_100;
     expect(limiter.check("a")).toEqual({ ok: true });
   });
+
+  it("caps memory: a flood of distinct keys resets the table instead of growing it", () => {
+    const limiter = createRateLimiter({ limit: 1, windowMs: 60_000, now: () => 0 });
+    expect(limiter.check("first")).toEqual({ ok: true });
+    for (let i = 0; i < 10_001; i += 1) limiter.check(`key-${i}`);
+    // The table was cleared past 10k entries, so "first" is allowed again (best effort by design).
+    expect(limiter.check("first")).toEqual({ ok: true });
+  });
 });

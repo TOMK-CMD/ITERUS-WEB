@@ -14,7 +14,9 @@ export async function POST(request: Request) {
     body = null;
   }
 
-  // Vercel sets both headers to the connecting client; x-real-ip cannot be extended by a client.
+  // Vercel overwrites both headers with the connecting client's IP (a plain `next start` trusts
+  // whatever the client sends — that only affects the best-effort limiter). Keep DNS "grey cloud"
+  // if Cloudflare is ever put in front: proxied traffic would share Cloudflare's edge IPs.
   const clientKey =
     request.headers.get("x-real-ip")?.trim() ||
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
