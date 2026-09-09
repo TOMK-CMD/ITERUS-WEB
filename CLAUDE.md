@@ -128,6 +128,23 @@ GitHub needs `GITHUB_PAT` in the environment (`docs/RUNBOOK.md` → Access).
 Linear workflow: pick issue → set _In Progress_ → branch `feat/<issue-id>-slug` → PR links the
 issue → _In Review_ when the PR is ready for Tomas → he moves it to _Done_ after merge.
 
+## Session planning — model and effort
+
+- Pick `/model` and `/effort` for the hardest step the main session does **itself**, not the
+  hardest item on the list. A session that mixes one hard step with five routine ones either
+  delegates the routine ones (subagents on Sonnet/Haiku, Gemini/Qwen per the global matrix) or is
+  split into sessions of similar difficulty — never run Fable for a batch of routine pages.
+- Reference bands: **Fable 5.1 `xhigh`** — architecture, auth/security, EU AI Act features,
+  adversarial review of security-relevant diffs. **Opus 5 `high`** — planning, research synthesis,
+  Czech copy, implementation with judgment. **Sonnet 5 `medium`–`high`** — pages and components
+  from an existing pattern (`web-page`, `case-study` skills), review fixes, docs, tech-debt
+  batches. **Haiku 4.5** — trivial batches and scan subagents.
+- When the work changes character mid-session (research → mechanical pages, or the reverse),
+  propose the switch in one sentence with the reason and the expected saving; never switch for a
+  single step.
+- Every `/save-session` ends with the recommendation for the next session: model, effort, task mix
+  and the spec / Linear issue it starts from (see `.claude/memory-bank/activeContext.md`).
+
 ## Don'ts
 
 - No new dependency without a one-line justification in the PR description.
