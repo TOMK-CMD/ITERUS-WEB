@@ -21,7 +21,7 @@ Wait for approval. Then execute step by step, committing after each logical step
 
 ## Steps
 1. **Verify the toolchain**: Node 22 LTS, pnpm (set `"packageManager"` in root `package.json`),
-   `git`, `gh` auth, `claude` MCP auth (`/mcp`). Report versions.
+   `git`, `gh` auth, `claude` MCP auth (`/mcp`; GitHub via `GITHUB_PAT`). Report versions.
 2. **Agent-ops refresh**: fetch current official docs for Claude Code (settings/permissions, hooks,
    skills, subagents, MCP on Windows, GitHub Action) and Codex (AGENTS.md, PR review). Fix any
    format drift in `.claude/settings.json`, `.mcp.json`, skills, subagent. Rewrite

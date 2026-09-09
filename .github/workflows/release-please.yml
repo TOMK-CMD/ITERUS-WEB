@@ -8,11 +8,19 @@ permissions:
   contents: write
   pull-requests: write
 
+# Skips gracefully until the project is scaffolded (no package.json yet) — the same
+# bootstrap-phase pattern as ci.yml. Sprint 0 adds package.json,
+# release-please-config.json and .release-please-manifest.json for the monorepo.
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        run: |
+          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT"
+          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::No package.json yet — bootstrap phase, release-please skipped"; fi
       - uses: googleapis/release-please-action@v4
+        if: steps.detect.outputs.ready == 'true'
         with:
           release-type: node
-          # Sprint 0 adds release-please-config.json + .release-please-manifest.json for the monorepo.

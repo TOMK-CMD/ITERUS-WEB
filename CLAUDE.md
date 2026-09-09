@@ -119,7 +119,8 @@ Subagent `reviewer` (`.claude/agents/reviewer.md`) reviews PRs independently.
 ## MCP servers (`.mcp.json`)
 
 Linear (issues, status), Vercel (projects, deployments, preview URLs), GitHub (PRs, reviews),
-Playwright (browser checks, screenshots). First use: `/mcp` to authenticate.
+Playwright (browser checks, screenshots). First use: `/mcp` to authenticate Linear and Vercel;
+GitHub needs `GITHUB_PAT` in the environment (`docs/RUNBOOK.md` → Access).
 Linear workflow: pick issue → set *In Progress* → branch `feat/<issue-id>-slug` → PR links the
 issue → *In Review* when the PR is ready for Tomas → he moves it to *Done* after merge.
 

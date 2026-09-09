@@ -23,3 +23,5 @@ Thumbs.db
 !.vscode/extensions.json
 # Claude Code local state (personal, never shared)
 .claude/settings.local.json
+# Claude Code memory-bank (ephemeral session state, kept local)
+.claude/memory-bank/

@@ -36,7 +36,7 @@ single file; `llms.txt` is cheap insurance, not a strategy.
 
 ## Entity consistency (coordinate with Tomas, not code)
 Name, description, address, IČO and URL must be identical on: website footer, LinkedIn company
-page, GitHub org, Firmy.cz, Google Business Profile, Wikidata item, Clutch. Keep the canonical
+page, GitHub (`TOMK-CMD` profile — no org), Firmy.cz, Google Business Profile, Wikidata item, Clutch. Keep the canonical
 text in `content/facts.json` → `organization`. Flag any drift you notice.
 
 ## Definition of done for SEO/GEO work
