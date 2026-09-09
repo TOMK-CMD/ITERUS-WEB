@@ -104,6 +104,8 @@ jobs:
         if: steps.detect.outputs.ready == 'true'
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+          # Lighthouse audits canonical/hreflang against the served host; production URLs would fail on localhost.
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
       - run: pnpm exec lhci autorun --config=lighthouserc.json
         if: steps.detect.outputs.ready == 'true'
       - uses: actions/upload-artifact@v4
