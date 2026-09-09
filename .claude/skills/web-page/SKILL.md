@@ -9,12 +9,14 @@ A page is done only when both locales exist, search engines and LLMs can read it
 reachable from navigation and sitemap, and CI proves it renders and is accessible.
 
 ## Inputs to collect first
+
 1. Purpose in one sentence (what question does the page answer, for whom).
 2. Content source: `docs/CONTENT-MAP.md` (keyword/answer plan) if the page is listed there; otherwise
    ask Tomas for a brief (goal, key facts from `content/facts.json`, CTA).
 3. Page type → JSON-LD type (see `docs/CONTENT-GUIDE.md` § Schema map).
 
 ## Workflow
+
 1. **Spec**: if the page is not covered by an approved spec, write `specs/NNNN-page-<slug>.md`
    from `specs/_template.md` and get approval.
 2. **Slugs**: cs slug and en slug (e.g. `/sluzby` ↔ `/en/services`). Register the pair in the
@@ -36,6 +38,7 @@ reachable from navigation and sitemap, and CI proves it renders and is accessibl
    any `TODO(facts:*)` left for Tomas. Ask the `reviewer` subagent for a review first.
 
 ## Checklist (paste into the PR)
+
 - [ ] cs and en exist, structure identical, meaning equivalent
 - [ ] answer-first first paragraph; headings as questions where natural
 - [ ] metadata + hreflang + canonical + OG
@@ -44,6 +47,7 @@ reachable from navigation and sitemap, and CI proves it renders and is accessibl
 - [ ] no invented facts; `content/facts.json` referenced
 
 ## Anti-patterns
+
 - Writing English first and machine-translating to Czech; Czech is the primary audience.
 - Hard-coding company data in JSX (use `content/facts.json`).
 - Adding a page to navigation without the sitemap/hreflang pair (silent SEO damage).

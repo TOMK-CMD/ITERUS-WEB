@@ -21,4 +21,4 @@ by Tomas on the preview, not by the author's opinion.
 8. **Evidence in the PR** — template filled, Vercel preview URL, desktop + mobile screenshots per
    locale, reviewer verdict addressed, open items for Tomas listed.
 9. **Housekeeping** — Conventional Commits, branch named `feat/<issue>-slug` (or `fix/`, `docs/`),
-   Linear issue moved to *In Review*.
+   Linear issue moved to _In Review_.

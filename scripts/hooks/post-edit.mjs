@@ -14,7 +14,19 @@ const file = payload?.tool_input?.file_path ?? payload?.tool_input?.filePath;
 if (!file || !existsSync(file)) process.exit(0);
 if (!existsSync("node_modules")) process.exit(0); // bootstrap phase
 
-const formattable = [".ts", ".tsx", ".js", ".mjs", ".cjs", ".json", ".md", ".mdx", ".css", ".yml", ".yaml"];
+const formattable = [
+  ".ts",
+  ".tsx",
+  ".js",
+  ".mjs",
+  ".cjs",
+  ".json",
+  ".md",
+  ".mdx",
+  ".css",
+  ".yml",
+  ".yaml",
+];
 if (!formattable.some((ext) => file.endsWith(ext))) process.exit(0);
 
 spawnSync("pnpm", ["-s", "exec", "prettier", "--write", "--log-level", "warn", file], {

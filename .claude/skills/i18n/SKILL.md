@@ -9,6 +9,7 @@ Czech is the primary locale (served at `/`), English at `/en`, German planned at
 Parity is enforced: `pnpm check:i18n` fails on missing message keys or content files.
 
 ## Adding a locale (e.g. `de`)
+
 1. Spec + ADR note (why, scope: which pages first — usually home, services, contact, references).
 2. Routing: add the locale to `apps/web/src/i18n/routing.ts` (`locales`, `pathnames` for every
    route pair), keep `defaultLocale: 'cs'`, `localePrefix: 'as-needed'`.
@@ -22,6 +23,7 @@ Parity is enforced: `pnpm check:i18n` fails on missing message keys or content f
 8. Docs: `docs/ARCHITECTURE.md` (locales), `docs/CONTENT-GUIDE.md` (terminology table + de column).
 
 ## Translating well
+
 - Translate meaning, not words. Keep the answer-first structure and numbers identical.
 - Terminology table in `docs/CONTENT-GUIDE.md` is binding (e.g. "vývoj software na zakázku" ↔
   "custom software development"). Extend it when you introduce a new recurring term.
@@ -29,6 +31,7 @@ Parity is enforced: `pnpm check:i18n` fails on missing message keys or content f
 - Never machine-translate legal or pricing text silently; mark it for review.
 
 ## The parity check (`scripts/check-i18n.mjs`)
+
 Compares (a) message keys across `messages/*.json`, (b) file sets under `content/<locale>/`,
 (c) frontmatter keys per matching file. When it fails: fix content, do not weaken the check.
 If a locale intentionally lacks a page, register the exception in `scripts/i18n-exceptions.json`

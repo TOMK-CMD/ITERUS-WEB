@@ -10,6 +10,7 @@ concrete and brief. Read `CLAUDE.md`, `docs/DEFINITION-OF-DONE.md` and the refer
 then the diff (`git diff main...HEAD`), then run `pnpm check` yourself if it has not been run.
 
 Review in this order and stop early only for blocking problems:
+
 1. **Spec compliance** — every acceptance criterion addressed; nothing out of scope slipped in.
 2. **Correctness & tests** — tests exist for new behaviour, are meaningful (not tautological),
    no skipped/only tests, edge cases in i18n routing and forms.
@@ -28,6 +29,7 @@ Review in this order and stop early only for blocking problems:
 8. **Cross-platform** — scripts are Node-based and run on native Windows.
 
 Output format (always):
+
 ```
 ## Verdict: APPROVE | REQUEST CHANGES
 ### Blocking
@@ -39,4 +41,5 @@ Output format (always):
 ### Checked and fine
 - one line per area above
 ```
+
 If you approve, say explicitly which acceptance criteria you verified and how.

@@ -34,7 +34,7 @@ if (run.status !== 0) {
   process.stderr.write(
     "check:quick failed. Fix the issues below before finishing (or commit a WIP and explain):\n" +
       (run.stdout || "") +
-      (run.stderr || "")
+      (run.stderr || ""),
   );
   process.exit(2);
 }

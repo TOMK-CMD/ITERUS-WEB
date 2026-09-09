@@ -45,18 +45,64 @@
     "approved_en": "We work AI-native: delivery is accelerated with Claude Code and Codex, and quality is secured by automated tests, independent code review and specialists on demand."
   },
   "services": [
-    { "key": "web-apps", "cs": "Webové aplikace (Next.js / React / TypeScript)", "en": "Web applications (Next.js / React / TypeScript)" },
-    { "key": "backend", "cs": "Backend a API (Node.js / TypeScript, Python / FastAPI)", "en": "Backend and APIs (Node.js / TypeScript, Python / FastAPI)" },
-    { "key": "data", "cs": "Databáze a datové pipeline (PostgreSQL / Supabase)", "en": "Databases and data pipelines (PostgreSQL / Supabase)" },
-    { "key": "desktop", "cs": "Desktopové aplikace (Electron)", "en": "Desktop applications (Electron)" },
-    { "key": "ai", "cs": "AI integrace: Claude / OpenAI API, RAG, agenti, MCP servery", "en": "AI integration: Claude / OpenAI APIs, RAG, agents, MCP servers" },
-    { "key": "automation", "cs": "Automatizace procesů (n8n, vlastní agenti)", "en": "Process automation (n8n, custom agents)" },
-    { "key": "trading", "cs": "Nástroje pro NinjaTrader 8 / NinjaScript (C#)", "en": "NinjaTrader 8 / NinjaScript (C#) tooling" },
-    { "key": "local-llm", "cs": "Lokální / on-prem nasazení LLM (GDPR)", "en": "Local / on-prem LLM deployment (GDPR)" },
-    { "key": "cz-integrations", "cs": "Integrace na české systémy: ARES, datové schránky, registr smluv, NEN, Fakturoid, GoPay/Comgate", "en": "Czech system integrations: ARES, data boxes, contract registry, NEN, Fakturoid, GoPay/Comgate" },
-    { "key": "mobile", "cs": "Mobilní aplikace (React Native / Expo) — ve spolupráci se specialistou", "en": "Mobile apps (React Native / Expo) — with a partner specialist" }
+    {
+      "key": "web-apps",
+      "cs": "Webové aplikace (Next.js / React / TypeScript)",
+      "en": "Web applications (Next.js / React / TypeScript)"
+    },
+    {
+      "key": "backend",
+      "cs": "Backend a API (Node.js / TypeScript, Python / FastAPI)",
+      "en": "Backend and APIs (Node.js / TypeScript, Python / FastAPI)"
+    },
+    {
+      "key": "data",
+      "cs": "Databáze a datové pipeline (PostgreSQL / Supabase)",
+      "en": "Databases and data pipelines (PostgreSQL / Supabase)"
+    },
+    {
+      "key": "desktop",
+      "cs": "Desktopové aplikace (Electron)",
+      "en": "Desktop applications (Electron)"
+    },
+    {
+      "key": "ai",
+      "cs": "AI integrace: Claude / OpenAI API, RAG, agenti, MCP servery",
+      "en": "AI integration: Claude / OpenAI APIs, RAG, agents, MCP servers"
+    },
+    {
+      "key": "automation",
+      "cs": "Automatizace procesů (n8n, vlastní agenti)",
+      "en": "Process automation (n8n, custom agents)"
+    },
+    {
+      "key": "trading",
+      "cs": "Nástroje pro NinjaTrader 8 / NinjaScript (C#)",
+      "en": "NinjaTrader 8 / NinjaScript (C#) tooling"
+    },
+    {
+      "key": "local-llm",
+      "cs": "Lokální / on-prem nasazení LLM (GDPR)",
+      "en": "Local / on-prem LLM deployment (GDPR)"
+    },
+    {
+      "key": "cz-integrations",
+      "cs": "Integrace na české systémy: ARES, datové schránky, registr smluv, NEN, Fakturoid, GoPay/Comgate",
+      "en": "Czech system integrations: ARES, data boxes, contract registry, NEN, Fakturoid, GoPay/Comgate"
+    },
+    {
+      "key": "mobile",
+      "cs": "Mobilní aplikace (React Native / Expo) — ve spolupráci se specialistou",
+      "en": "Mobile apps (React Native / Expo) — with a partner specialist"
+    }
   ],
-  "not_offered": ["embedded/firmware", "bankovní core systémy", "velké enterprise migrace Java/.NET bez dedikovaného týmu", "penetrační testy a bezpečnostní audity", "zdravotnické prostředky (MDR)"],
+  "not_offered": [
+    "embedded/firmware",
+    "bankovní core systémy",
+    "velké enterprise migrace Java/.NET bez dedikovaného týmu",
+    "penetrační testy a bezpečnostní audity",
+    "zdravotnické prostředky (MDR)"
+  ],
   "projects": {
     "iterus-platform": {
       "name": "Iterus Platform",
@@ -76,9 +122,37 @@
       "stack": ["Claude API", "Next.js", "Supabase", "AWS eu-central-1"],
       "compliance": ["GDPR", "EU AI Act transparency layer"]
     },
-    "stamiq": { "name": "STAMIQ", "type": "own-product", "public": "TODO", "stack": ["web-first", "Paddle"], "note": "pre-launch; publish only what Tomas approves" },
-    "tender-radar": { "name": "tender-radar", "type": "internal-tool", "public": "TODO", "stack": ["Claude Code skill", "TED API v3", "ISVZ open data", "Supabase", "Vercel", "Telegram", "llama.cpp"] },
-    "super-shared-calendar": { "name": "TODO(public name)", "type": "own-product", "public": "TODO" },
-    "nt8-optimizer": { "name": "NT8-Optimizer", "type": "own-product", "public": "TODO", "stack": ["NinjaScript", "C#", "ZeroMQ", "Python"] }
+    "stamiq": {
+      "name": "STAMIQ",
+      "type": "own-product",
+      "public": "TODO",
+      "stack": ["web-first", "Paddle"],
+      "note": "pre-launch; publish only what Tomas approves"
+    },
+    "tender-radar": {
+      "name": "tender-radar",
+      "type": "internal-tool",
+      "public": "TODO",
+      "stack": [
+        "Claude Code skill",
+        "TED API v3",
+        "ISVZ open data",
+        "Supabase",
+        "Vercel",
+        "Telegram",
+        "llama.cpp"
+      ]
+    },
+    "super-shared-calendar": {
+      "name": "TODO(public name)",
+      "type": "own-product",
+      "public": "TODO"
+    },
+    "nt8-optimizer": {
+      "name": "NT8-Optimizer",
+      "type": "own-product",
+      "public": "TODO",
+      "stack": ["NinjaScript", "C#", "ZeroMQ", "Python"]
+    }
   }
 }
