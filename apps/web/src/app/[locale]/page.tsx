@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HomePage() {
   const t = await getTranslations("home");
   return (
-    <main>
+    <main id="main" className="mx-auto max-w-5xl px-4 py-12">
       <h1>{t("title")}</h1>
       <p>{t("description")}</p>
     </main>

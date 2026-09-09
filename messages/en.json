@@ -5,7 +5,8 @@
   },
   "nav": {
     "home": "Home",
-    "contact": "Contact"
+    "contact": "Contact",
+    "label": "Main navigation"
   },
   "localeSwitch": {
     "label": "Language",
@@ -20,5 +21,8 @@
     "title": "Page not found",
     "text": "This address does not exist or has moved.",
     "home": "Back to home"
+  },
+  "footer": {
+    "navLabel": "Footer navigation"
   }
 }

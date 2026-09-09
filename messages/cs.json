@@ -5,7 +5,8 @@
   },
   "nav": {
     "home": "Úvod",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "label": "Hlavní navigace"
   },
   "localeSwitch": {
     "label": "Jazyk",
@@ -20,5 +21,8 @@
     "title": "Stránka nenalezena",
     "text": "Tahle adresa neexistuje nebo byla přesunuta.",
     "home": "Zpět na úvod"
+  },
+  "footer": {
+    "navLabel": "Navigace v patičce"
   }
 }
