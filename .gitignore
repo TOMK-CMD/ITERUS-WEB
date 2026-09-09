@@ -25,3 +25,8 @@ Thumbs.db
 .claude/settings.local.json
 # Claude Code memory-bank (ephemeral session state, kept local)
 .claude/memory-bank/
+# Next.js / TypeScript generated
+next-env.d.ts
+*.tsbuildinfo
+# generated at build time (scripts/generate-llms-txt.mjs)
+apps/web/public/llms.txt

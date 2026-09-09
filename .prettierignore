@@ -1,0 +1,16 @@
+node_modules/
+.next/
+out/
+coverage/
+.turbo/
+.vercel/
+playwright-report/
+test-results/
+.lighthouseci/
+pnpm-lock.yaml
+CHANGELOG.md
+.release-please-manifest.json
+*.mdx
+apps/web/public/llms.txt
+apps/web/AGENTS.md
+apps/web/CLAUDE.md
