@@ -7,6 +7,10 @@ describe("routing", () => {
     expect(routing.localePrefix).toBe("as-needed");
   });
 
+  it("never redirects based on Accept-Language or cookies (URL is the source of truth)", () => {
+    expect(routing.localeDetection).toBe(false);
+  });
+
   it("defines every localized pathname for every locale", () => {
     const locales = [...routing.locales].sort();
     for (const [internal, value] of Object.entries(routing.pathnames)) {

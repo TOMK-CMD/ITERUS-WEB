@@ -7,6 +7,9 @@ export const routing = defineRouting({
   locales: ["cs", "en"],
   defaultLocale: "cs",
   localePrefix: "as-needed",
+  // The URL is the only source of truth: no Accept-Language or cookie based redirects. Otherwise
+  // an English browser (or Googlebot) requesting "/" or "/kontakt" would be bounced to /en.
+  localeDetection: false,
   pathnames: {
     "/": "/",
     "/contact": { cs: "/kontakt", en: "/contact" },

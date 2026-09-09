@@ -30,7 +30,9 @@ Option 1. `apps/web/src/i18n/routing.ts` defines `locales: ['cs', 'en']`, `defau
 `localePrefix: 'as-needed'` and a typed `pathnames` map whose keys are English-internal route
 names (`/contact`, `/privacy`, `/terms`) mapped to localized slugs (`/kontakt`,
 `/ochrana-osobnich-udaju`, `/obchodni-podminky`). `src/proxy.ts` (Next 16 network boundary)
-negotiates the locale and emits hreflang `Link` headers. `src/lib/seo/metadata.ts` builds
+resolves the locale from the URL only (`localeDetection: false` — an English browser or
+Googlebot asking for `/` must get the Czech page, not a redirect to `/en`; the e2e suite caught
+this on the first run) and emits hreflang `Link` headers. `src/lib/seo/metadata.ts` builds
 `canonical`, `alternates.languages` (cs, en) and `x-default` → Czech from the same map, so
 metadata, sitemap and links cannot drift apart. The canonical host is `https://iterus.cz`
 (`NEXT_PUBLIC_SITE_URL`).
