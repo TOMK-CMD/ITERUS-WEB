@@ -86,22 +86,32 @@ Each gap names the page that carries it and the artefact that proves it. Nothing
 the referenced `facts.json` key is filled and confirmed.
 
 1. **Price transparency** — `/cena`. Competitors publish bands; so do we, plus a smaller first step
-   (a validation pilot from 90k CZK and a 25k CZK discovery that is deducted from the project). State the
+   (a 90–250k CZK validation pilot and a 25k CZK discovery that is deducted from the project). State the
    numbers instead of "individuální kalkulace". ⚠ Do **not** write that we are cheaper than a named
    competitor: our AI band starts at 180k CZK, the same anchor they publish.
 2. **Czech e-government integration as a named service** — `/sluzby/ceske-integrace`. No competitor
-   in the measured SERP names ARES, datové schránky, NEN or registr smluv. ⚠ Our proof covers only
-   part of that list, and the page must not blur the difference:
+   in the measured SERP names ARES, datové schránky, NEN or registr smluv. ⚠ This is the page where
+   it is easiest to overclaim, so the rule is mechanical:
 
-   | System                                                        | What backs it                                                           |
-   | ------------------------------------------------------------- | ----------------------------------------------------------------------- |
-   | ARES                                                          | a production integration in Innea (`/api/therapist/ares`)               |
-   | public-procurement data (TED, ISVZ)                           | our own internal tooling, referenced without its name                   |
-   | datové schránky, NEN, registr smluv, Fakturoid, GoPay/Comgate | **nothing shipped yet** — offered as a service, no artefact to point at |
+   **What we may offer** (all of it is in `facts.json → services`, all of it may be named on the
+   page as something we build): ARES · datové schránky · registr smluv · NEN · Fakturoid ·
+   GoPay/Comgate. Fakturoid and GoPay/Comgate are commercial services, not e-government — keep them
+   in a separate sentence so the page does not present them as state systems.
 
-   The page may name the whole list as services (they are in `facts.json → services`), but a proof
-   point may only be attached to the first two rows. No cadence claim ("denně" / "daily") until one
-   is recorded in `facts.json`.
+   **What we may prove**, and nothing else:
+
+   | Claim on the page                                                            | Proof that may be attached to it                             |
+   | ---------------------------------------------------------------------------- | ------------------------------------------------------------ |
+   | "napojujeme ARES"                                                            | the production integration in Innea (`/api/therapist/ares`)  |
+   | "čteme data o veřejných zakázkách"                                           | our own internal tooling reading TED and ISVZ, named nowhere |
+   | anything about datové schránky, NEN, registr smluv, Fakturoid, GoPay/Comgate | **none — say what we build, show nothing**                   |
+
+   Three prohibitions, because each is a way the page could drift:
+   - A proof from one row may **never** be moved to another row. The procurement tooling proves
+     reading TED and ISVZ; it does not prove NEN or registr smluv, however related they sound.
+   - TED and ISVZ are an **evidence source, not a service**. They are not in
+     `facts.json → services` and must not be offered as one; TED is an EU register, not Czech e-gov.
+   - No cadence claim ("denně" / "daily") anywhere, until one is recorded in `facts.json`.
 
 3. **Numbers instead of client logos** — `/reference`. Studios have logos but NDAs stop them
    showing architecture; we have no logos and can show test counts, schema size and integrations.
@@ -128,7 +138,7 @@ NT8-Optimizer as proof on `/sluzby/ninjatrader`. What remains:
 | Confirm the provisional card name "Koordinační kalendář" (`name_provisional: true`)               | `/reference` cards                 | Tomas |
 | Does `not_offered: "embedded/firmware"` still hold with a Garmin Connect IQ app on `/reference`?  | `/sluzby`, `/reference`            | Tomas |
 | Whether Iterus Platform may be published, and with which numbers                                  | `/reference` (a fourth case study) | Tomas |
-| Public name for `projects.geo-seo` — it stays unpublished until then                              | `/reference` cards                 | Tomas |
+| Public name for `projects.geo-seo`, which stays unpublished until it has one                      | `/reference` cards                 | Tomas |
 | Whether the hourly rate (2 000 CZK) may be published — the 2026-09-09 approval covered bands only | `/cena`                            | Tomas |
 | Confirm the technical specifics in the card hooks (`claims_confirmed` is false for all)           | `/reference` cards                 | Tomas |
 | Fold `/cena` and the removal of a standalone FAQ page into spec 0002 before it leaves `draft`     | spec acceptance criteria           | Tomas |
