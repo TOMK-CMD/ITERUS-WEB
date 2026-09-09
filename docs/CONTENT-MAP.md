@@ -86,13 +86,23 @@ Each gap names the page that carries it and the artefact that proves it. Nothing
 the referenced `facts.json` key is filled and confirmed.
 
 1. **Price transparency** — `/cena`. Competitors publish bands; so do we, plus a smaller first step
-   (a 90k CZK validation pilot and a 25k CZK discovery that is deducted from the project). State the
+   (a validation pilot from 90k CZK and a 25k CZK discovery that is deducted from the project). State the
    numbers instead of "individuální kalkulace". ⚠ Do **not** write that we are cheaper than a named
    competitor: our AI band starts at 180k CZK, the same anchor they publish.
 2. **Czech e-government integration as a named service** — `/sluzby/ceske-integrace`. No competitor
-   in the measured SERP names ARES, datové schránky, NEN or registr smluv. Proof: our own internal
-   tooling that reads TED and ISVZ, referenced without its name. No cadence claim ("denně" / "daily")
-   until one is recorded in `facts.json`.
+   in the measured SERP names ARES, datové schránky, NEN or registr smluv. ⚠ Our proof covers only
+   part of that list, and the page must not blur the difference:
+
+   | System                                                        | What backs it                                                           |
+   | ------------------------------------------------------------- | ----------------------------------------------------------------------- |
+   | ARES                                                          | a production integration in Innea (`/api/therapist/ares`)               |
+   | public-procurement data (TED, ISVZ)                           | our own internal tooling, referenced without its name                   |
+   | datové schránky, NEN, registr smluv, Fakturoid, GoPay/Comgate | **nothing shipped yet** — offered as a service, no artefact to point at |
+
+   The page may name the whole list as services (they are in `facts.json → services`), but a proof
+   point may only be attached to the first two rows. No cadence claim ("denně" / "daily") until one
+   is recorded in `facts.json`.
+
 3. **Numbers instead of client logos** — `/reference`. Studios have logos but NDAs stop them
    showing architecture; we have no logos and can show test counts, schema size and integrations.
 4. **On-prem LLM without an enterprise price tag** — `/sluzby/lokalni-llm`. The competing on-prem
@@ -115,17 +125,18 @@ NT8-Optimizer as proof on `/sluzby/ninjatrader`. What remains:
 | ------------------------------------------------------------------------------------------------- | ---------------------------------- | ----- |
 | `facts.json`: `dic`, `registered_address`, `founder_name`, `email`, `phone`, LinkedIn URLs        | `/o-nas`, `/kontakt`, JSON-LD      | Tomas |
 | `organization.software_since` — the year software work began (proposed 2025)                      | `/o-nas`                           | Tomas |
-| Public names for `projects.geo-seo` and `projects.super-shared-calendar`                          | `/reference` cards                 | Tomas |
+| Confirm the provisional card name "Koordinační kalendář" (`name_provisional: true`)               | `/reference` cards                 | Tomas |
 | Does `not_offered: "embedded/firmware"` still hold with a Garmin Connect IQ app on `/reference`?  | `/sluzby`, `/reference`            | Tomas |
 | Whether Iterus Platform may be published, and with which numbers                                  | `/reference` (a fourth case study) | Tomas |
-| Public name for `projects.geo-seo` (approved as a card, blocked by the guard until named)         | `/reference` cards                 | Tomas |
+| Public name for `projects.geo-seo` — it stays unpublished until then                              | `/reference` cards                 | Tomas |
 | Whether the hourly rate (2 000 CZK) may be published — the 2026-09-09 approval covered bands only | `/cena`                            | Tomas |
 | Confirm the technical specifics in the card hooks (`claims_confirmed` is false for all)           | `/reference` cards                 | Tomas |
 | Fold `/cena` and the removal of a standalone FAQ page into spec 0002 before it leaves `draft`     | spec acceptance criteria           | Tomas |
 
 ⚠ **Measured numbers are not confirmed numbers.** Migration files in the Innea repository are
-numbered up to `_335` while only 72 files remain in the migrations directory — the two readings
-disagree, so neither may be published. Every number in a case study is measured, written into
+numbered up to `_335` while only 72 files sit in the migrations directory; the difference is a
+`migrations_archive_2026-06-16_pre_baseline` folder, so a naive `ls | wc -l` understates the history
+fourfold. Neither reading may be published as-is. Every number in a case study is measured, written into
 `facts.json`, and confirmed by Tomas before it reaches a page.
 
 ## Assumptions recorded (change here, not in a page)

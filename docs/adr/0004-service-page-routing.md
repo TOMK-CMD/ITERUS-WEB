@@ -43,9 +43,10 @@ helpers built in Sprint 0 actually work. Verified in the code on 2026-09-09:
 ## Decision
 
 Option 3. Each service detail page is a static entry in `routing.pathnames` and `PAGE_ROUTES`, with
-a flat content slug. The registration line is cheap and the alternative rewrites five SEO helpers
-before a single page exists — a refactor that would be done blind, ahead of any evidence about how
-many service pages we actually want.
+a flat content slug. At five pages the registration costs five lines; option 1 costs a rewrite of
+five SEO helpers plus two scripts, and has to close the parity/sitemap recursion mismatch, before the
+first page renders. A dynamic route only starts paying for itself once pages are added faster than
+they can be registered, and there is no evidence yet that they will be.
 
 ## Consequences
 
