@@ -14,6 +14,10 @@
     "registered_address": "TODO(ulice, PSČ Praha)",
     "city": "Praha",
     "country": "CZ",
+    "founded_year": 2005,
+    "software_since": "TODO(potvrdit rok, kdy začaly softwarové projekty — návrh: 2025)",
+    "origin_note_cs": "Iterus je softwarová značka společnosti SUN Professionals s.r.o. Firma působí na trhu od roku 2005, dosud v oboru stínicí techniky.",
+    "origin_note_en": "Iterus is the software brand of SUN Professionals s.r.o. The company has traded since 2005, until now in the shading-technology sector.",
     "founder_name": "TODO(jméno zakladatele, jak má být uvedeno na webu)",
     "founder_title_cs": "zakladatel",
     "founder_title_en": "founder",
@@ -43,6 +47,61 @@
   "how_we_work": {
     "approved_cs": "Pracujeme AI-native: vývoj akcelerujeme nástroji Claude Code a Codex, kvalitu jistíme automatizovanými testy, nezávislým code review a specialisty na vyžádání.",
     "approved_en": "We work AI-native: delivery is accelerated with Claude Code and Codex, and quality is secured by automated tests, independent code review and specialists on demand."
+  },
+  "pricing": {
+    "_readme": "Approved by Tomas 2026-09-09. Amounts in CZK excluding VAT. Bands are derived from reference_rate_czk_hour so they stay internally consistent; changing the rate means re-deriving them. Never publish a band that is not listed here.",
+    "currency": "CZK",
+    "vat_note_cs": "Ceny jsou uvedeny bez DPH.",
+    "vat_note_en": "Prices exclude VAT.",
+    "reference_rate_czk_hour": 2000,
+    "reference_rate_czk_day": 16000,
+    "bands": [
+      {
+        "key": "pilot",
+        "cs": "Ověření nápadu",
+        "en": "Idea validation",
+        "from_czk": 90000,
+        "to_czk": 250000,
+        "weeks_min": 3,
+        "weeks_max": 6,
+        "includes_cs": "Funkční pilot v provozu: přihlášení, databáze, jedna až dvě integrace, testy, nasazení.",
+        "includes_en": "A working pilot in production: authentication, database, one or two integrations, tests, deployment."
+      },
+      {
+        "key": "production",
+        "cs": "Produkční aplikace",
+        "en": "Production application",
+        "from_czk": 250000,
+        "to_czk": 700000,
+        "weeks_min": 6,
+        "weeks_max": 14,
+        "includes_cs": "Role a oprávnění, platby, administrace, více integrací, e2e testy, CI a monitoring.",
+        "includes_en": "Roles and permissions, payments, admin, multiple integrations, e2e tests, CI and monitoring."
+      },
+      {
+        "key": "ai",
+        "cs": "AI integrace a on-prem LLM",
+        "en": "AI integration and on-prem LLM",
+        "from_czk": 180000,
+        "to_czk": null,
+        "on_prem_from_czk": 350000,
+        "weeks_min": 4,
+        "weeks_max": 12,
+        "includes_cs": "Napojení modelu na firemní data, kontrola kvality odpovědí, transparenční vrstva. On-premise nasazení začíná výš kvůli hardwaru a provozu; hardware není v ceně.",
+        "includes_en": "Connecting a model to company data, answer-quality controls and a transparency layer. On-premise deployment starts higher because of hardware and operations; hardware is not included."
+      }
+    ],
+    "consultation": {
+      "free_minutes": 60,
+      "cs": "Úvodní konzultace 60 minut zdarma.",
+      "en": "A free 60-minute introductory call."
+    },
+    "discovery": {
+      "czk": 25000,
+      "deducted_from_project": true,
+      "cs": "Placené discovery za 25 000 Kč — zadání, architektura a odhad. Částka se odečítá z ceny navazujícího projektu.",
+      "en": "A paid discovery for 25,000 CZK — scope, architecture and estimate. The fee is deducted from the price of the follow-up project."
+    }
   },
   "services": [
     {
@@ -113,21 +172,34 @@
       "tables": 27,
       "integrations": 16,
       "stack": ["Electron", "TypeScript", "SQLite"],
-      "note": "Numbers as stated by Tomas; confirm before publishing."
+      "note": "Numbers as stated by Tomas; confirm before publishing.",
+      "publish": false,
+      "publish_note": "Tomas rozhoduje o zveřejnění; čísla nejsou ověřená."
     },
     "innea": {
       "name": "Innea",
       "type": "own-product",
       "public": "TODO(true/false)",
       "stack": ["Claude API", "Next.js", "Supabase", "AWS eu-central-1"],
-      "compliance": ["GDPR", "EU AI Act transparency layer"]
+      "compliance": ["GDPR", "EU AI Act transparency layer"],
+      "publish": "case-study",
+      "status_cs": "v provozu",
+      "status_en": "live",
+      "hook_cs": "AI průvodce pro české uživatele — Claude API, Next.js, Supabase, AWS eu-central-1, transparenční vrstva podle EU AI Act.",
+      "hook_en": "An AI companion for Czech users — Claude API, Next.js, Supabase, AWS eu-central-1, with an EU AI Act transparency layer."
     },
     "stamiq": {
       "name": "STAMIQ",
       "type": "own-product",
       "public": "TODO",
       "stack": ["web-first", "Paddle"],
-      "note": "pre-launch; publish only what Tomas approves"
+      "note": "pre-launch; publish only what Tomas approves",
+      "publish": "card",
+      "status_cs": "před spuštěním",
+      "status_en": "pre-launch",
+      "repo": "TRAINING-APP",
+      "hook_cs": "Adaptivní tréninkové plány pro vytrvalce — Garmin Training a Health API, plán se přepočítává podle HRV a spánku.",
+      "hook_en": "Adaptive endurance training plans — Garmin Training and Health APIs, with plans recalculated from HRV and sleep."
     },
     "tender-radar": {
       "name": "tender-radar",
@@ -141,18 +213,75 @@
         "Vercel",
         "Telegram",
         "llama.cpp"
-      ]
+      ],
+      "publish": false,
+      "publish_note": "Nezveřejněno. Na /sluzby/ceske-integrace smí být zmíněn jen nepojmenovaně jako vlastní interní nástroj (schváleno 2026-09-09)."
     },
     "super-shared-calendar": {
       "name": "TODO(public name)",
       "type": "own-product",
-      "public": "TODO"
+      "public": "TODO",
+      "publish": "card",
+      "status_cs": "ve vývoji",
+      "status_en": "in development",
+      "repo": "CALENDER-SYNC",
+      "working_name": "Koordinační kalendář",
+      "hook_cs": "Koordinační kalendář pro provozy s terénními týmy — multi-tenant nad PostgreSQL s izolací dat na úrovni řádků.",
+      "hook_en": "A coordination calendar for field-service operations — multi-tenant on PostgreSQL with row-level data isolation."
     },
     "nt8-optimizer": {
       "name": "NT8-Optimizer",
       "type": "own-product",
       "public": "TODO",
-      "stack": ["NinjaScript", "C#", "ZeroMQ", "Python"]
+      "stack": ["NinjaScript", "C#", "ZeroMQ", "Python"],
+      "publish": "card",
+      "status_cs": "ve vývoji",
+      "status_en": "in development",
+      "hook_cs": "Optimalizace obchodních strategií pro NinjaTrader 8 — NinjaScript v C# propojený přes ZeroMQ s vyhodnocením v Pythonu.",
+      "hook_en": "Strategy optimisation for NinjaTrader 8 — NinjaScript in C# bridged over ZeroMQ to evaluation in Python.",
+      "publish_note": "Zmínka schválena 2026-09-09; slouží jako doklad na /sluzby/ninjatrader."
+    },
+    "innea-pro": {
+      "name": "Innea Pro",
+      "type": "own-product",
+      "publish": "case-study",
+      "status_cs": "v provozu",
+      "status_en": "live",
+      "stack": ["Next.js", "Supabase", "Claude API"],
+      "hook_cs": "Verze pro odborné praxe — analytika praxe, správa týmu a auditní log nad stejným jádrem.",
+      "hook_en": "The version for professional practices — practice analytics, team management and an audit log on the same core."
+    },
+    "legacy-you": {
+      "name": "Legacy You",
+      "type": "own-product",
+      "publish": "case-study",
+      "status_cs": "před spuštěním",
+      "status_en": "pre-launch",
+      "stack": ["Next.js", "React Native / Expo", "Supabase"],
+      "hook_cs": "Platforma pro odkaz blízkým, navržená pro seniory: ovládání hlasem, kontrast WCAG AAA, dotykové cíle 72 px, bez hesel.",
+      "hook_en": "A platform for leaving messages to loved ones, designed senior-first: voice control, WCAG AAA contrast, 72px touch targets, no passwords."
+    },
+    "geo-seo": {
+      "name": "TODO(veřejný název)",
+      "type": "own-product",
+      "publish": "card",
+      "status_cs": "ve vývoji",
+      "status_en": "in development",
+      "repo": "GEO-SEO",
+      "stack": ["TypeScript", "DataForSEO API"],
+      "hook_cs": "Měří, jak často AI enginy zmiňují značku proti konkurenci — každé číslo s 95% Wilsonovým intervalem spolehlivosti.",
+      "hook_en": "Measures how often AI engines mention a brand against its competitors — every number with a 95% Wilson confidence interval."
+    },
+    "gaits": {
+      "name": "gaits",
+      "type": "own-product",
+      "publish": "card",
+      "status_cs": "ve vývoji",
+      "status_en": "in development",
+      "repo": "HORSE-RIDING",
+      "stack": ["Garmin Connect IQ", "Python", "ML"],
+      "hook_cs": "Aplikace pro nositelné zařízení Garmin: záznam surové inerciální jednotky na 25 Hz a strojové rozpoznání chodů koně.",
+      "hook_en": "A Garmin wearable app: raw 25 Hz inertial capture and machine classification of a horse's gaits."
     }
   }
 }

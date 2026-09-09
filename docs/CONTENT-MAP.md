@@ -32,6 +32,23 @@ A product that is not launched may still appear, provided the page states its st
 Presenting unfinished or invented work as delivered client experience is an unfair commercial
 practice under the blacklist of zákon č. 634/1992 Sb. — not a marketing judgement call.
 
+### Two tiers on `/reference` (approved 2026-09-09)
+
+`facts.json → projects[*].publish` decides which tier a project belongs to; a project without a
+status label and a one-line hook in both locales cannot be published (guarded by a unit test).
+
+| Tier                   | `publish`    | What it shows                                                             | Projects                                                    |
+| ---------------------- | ------------ | ------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots          | Innea, Innea Pro, Legacy You (`před spuštěním`)             |
+| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — no numbers | Koordinační kalendář, GEO-SEO, gaits, STAMIQ, NT8-Optimizer |
+| Not published          | `false`      | —                                                                         | Iterus Platform (Tomas decides), tender-radar               |
+
+The card tier exists to show the **breadth** we can work across. It carries a technical hook
+rather than a benefit claim, because a hook ("25 Hz inertial capture", "95% Wilson interval",
+"row-level isolation") is what makes breadth read as competence instead of as scattered hobbies.
+Five cards is the cap: beyond that, a list where most entries say "ve vývoji" starts to read as
+"nothing finished".
+
 ## Launch pages
 
 `⚑` = not in the main navigation (linked from `/sluzby` and `/reference` only).
@@ -80,13 +97,17 @@ the referenced `facts.json` key is filled and confirmed.
 
 ## Open items before pages are written
 
-| Item                                                                                       | Blocks                        | Owner |
-| ------------------------------------------------------------------------------------------ | ----------------------------- | ----- |
-| Price bands and what is included per band → `facts.json → pricing`                         | `/cena`, all service pages    | Tomas |
-| Confirm which products appear on `/reference` and with what status label                   | `/reference`, case studies    | Tomas |
-| `facts.json`: `dic`, `registered_address`, `founder_name`, `email`, `phone`, LinkedIn URLs | `/o-nas`, `/kontakt`, JSON-LD | Tomas |
-| Whether the internal tender tool may be described (unnamed) as proof of e-gov integration  | `/sluzby/ceske-integrace`     | Tomas |
-| Whether NT8-Optimizer may be shown as proof for the NinjaTrader page                       | `/sluzby/ninjatrader`         | Tomas |
+Resolved 2026-09-09: price bands (`facts.json → pricing`), the `/reference` project list and
+status labels, the unnamed mention of the internal tender tool on `/sluzby/ceske-integrace`, and
+NT8-Optimizer as proof on `/sluzby/ninjatrader`. What remains:
+
+| Item                                                                                             | Blocks                             | Owner |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------- | ----- |
+| `facts.json`: `dic`, `registered_address`, `founder_name`, `email`, `phone`, LinkedIn URLs       | `/o-nas`, `/kontakt`, JSON-LD      | Tomas |
+| `organization.software_since` — the year software work began (proposed 2025)                     | `/o-nas`                           | Tomas |
+| Public names for `projects.geo-seo` and `projects.super-shared-calendar`                         | `/reference` cards                 | Tomas |
+| Does `not_offered: "embedded/firmware"` still hold with a Garmin Connect IQ app on `/reference`? | `/sluzby`, `/reference`            | Tomas |
+| Whether Iterus Platform may be published, and with which numbers                                 | `/reference` (a fourth case study) | Tomas |
 
 ⚠ **Measured numbers are not confirmed numbers.** Migration files in the Innea repository are
 numbered up to `_335` while only 72 files remain in the migrations directory — the two readings
@@ -101,3 +122,12 @@ disagree, so neither may be published. Every number in a case study is measured,
   from the rest of the site, and putting it in the menu would dilute the B2B positioning.
 - Service detail pages live under `/sluzby/<slug>` as a dynamic segment in `pathnames`; the five
   remaining services from `facts.json → services` stay as sections on `/sluzby`.
+- **The 2005 founding year is never stated on its own.** The company has traded since 2005 in
+  shading technology; software under the Iterus brand is recent. `/o-nas` states both facts in one
+  breath (`facts.json → organization.origin_note_cs/en`). Stating "on the market since 2005" on a
+  software site would let the reader infer twenty years of software delivery. Used correctly the
+  pair is an asset: the standard objection to a one-person studio is "what if they disappear", and
+  a twenty-year-old limited company with a real registered address answers it better than copy.
+- `/sluzby/ceske-integrace` may cite the internal tender tool **without naming it or linking it**
+  ("vlastní interní nástroj, který denně čte TED a ISVZ"). `/sluzby/ninjatrader` may name
+  NT8-Optimizer. Both approved by Tomas on 2026-09-09.
