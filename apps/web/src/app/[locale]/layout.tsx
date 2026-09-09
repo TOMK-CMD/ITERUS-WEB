@@ -3,10 +3,12 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
+import { buildSiteJsonLd } from "@/lib/seo/json-ld";
 import "../globals.css";
 
 // Body font (docs/BRAND.md). The heading font is still TODO until the design direction is
@@ -41,6 +43,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale} className={inter.variable}>
       <body className="flex min-h-dvh flex-col antialiased">
+        <JsonLd data={buildSiteJsonLd(locale)} />
         <NextIntlClientProvider>
           <a
             href="#main"

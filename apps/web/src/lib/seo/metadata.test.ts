@@ -47,6 +47,10 @@ describe("buildMetadata", () => {
     expect(og.url).toBe(`${SITE_URL}/en/contact`);
     expect(og.locale).toBe("en_US");
     expect(og.siteName).toBe("Iterus");
+    expect(og.images).toEqual([
+      { url: `${SITE_URL}/og?title=Contact&locale=en`, width: 1200, height: 630, alt: "Contact | Iterus" },
+    ]);
+    expect(buildMetadata(input).twitter).toMatchObject({ card: "summary_large_image" });
   });
 
   it("only emits robots noindex when asked", () => {

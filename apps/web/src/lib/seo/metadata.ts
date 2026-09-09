@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getPathname } from "@/i18n/navigation";
 import { routing, type AppPathname, type Locale } from "@/i18n/routing";
+import { OG_HEIGHT, OG_WIDTH, ogImageUrl } from "./og";
 
 const BRAND = "Iterus";
 const TITLE_SUFFIX = ` | ${BRAND}`;
@@ -64,7 +65,9 @@ export function buildMetadata({
       url,
       title: fullTitle,
       description,
+      images: [{ url: ogImageUrl(locale, title), width: OG_WIDTH, height: OG_HEIGHT, alt: fullTitle }],
     },
+    twitter: { card: "summary_large_image", title: fullTitle, description },
     ...(noindex ? { robots: { index: false, follow: false } } : {}),
   };
 }
