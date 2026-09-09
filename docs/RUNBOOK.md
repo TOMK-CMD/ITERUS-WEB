@@ -21,13 +21,13 @@
 
 - Team: "TOMK-CMD's projects" (`team_viOg0bRhbm2Grrd1eTcucU1B`, plan Pro), region `fra1`
   (`apps/web/vercel.json`).
-- Project `iterus-web`: created through the Vercel MCP on 2026-09-09, but the Git link to
-  `TOMK-CMD/ITERUS-WEB` could not be verified and the project is not listed by the API (the name
-  is reserved: a second create returns 409). **Tomas:** open the Vercel dashboard → if
-  `iterus-web` exists, connect the repository in Settings → Git; otherwise import the repository
-  as a new project. Either way: root directory `apps/web`, framework Next.js (auto), default
-  install/build commands (pnpm workspace detected from the root lockfile), Node 22. Make sure
-  the Vercel GitHub App has access to the repository.
+- Project `iterus-web` (`prj_1LAtDroYuASQYTcPcS4q3bvYnQMK`): created through the Vercel MCP on
+  2026-09-09 and linked to `TOMK-CMD/ITERUS-WEB` — the first branch push produced a preview
+  deployment (GitHub check "Vercel"). Root directory `apps/web`, framework Next.js (auto), default
+  install/build commands (pnpm workspace detected from the root lockfile), Node 22.
+  **Known gap:** the Vercel MCP integration cannot read this project (404/403 on project and
+  deployment reads) — **Tomas:** Vercel → Integrations → the Claude/MCP integration → grant access
+  to `iterus-web`, so agents can verify previews and read logs without the dashboard.
 - Git integration: every branch → preview; `main` → production. Preview protection: Vercel
   default (team members only). PR screenshots are therefore taken locally against `next start`;
   agents verify previews through the Vercel MCP.
