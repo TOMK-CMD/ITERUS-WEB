@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# All jobs skip gracefully until the project is scaffolded (no pnpm-lock.yaml yet).
+jobs:
+  quality:
+    name: typecheck · lint · unit · i18n · build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        run: |
+          if [ -f pnpm-lock.yaml ]; then echo "ready=true" >> "$GITHUB_OUTPUT"
+          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::No pnpm-lock.yaml yet — bootstrap phase, checks skipped"; fi
+      - uses: pnpm/action-setup@v4
+        if: steps.detect.outputs.ready == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.detect.outputs.ready == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run typecheck
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run lint
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run test
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run check:i18n
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run build
+        if: steps.detect.outputs.ready == 'true'
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+
+  e2e:
+    name: playwright · axe · schema · links
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        run: |
+          if [ -f pnpm-lock.yaml ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "ready=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: pnpm/action-setup@v4
+        if: steps.detect.outputs.ready == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.detect.outputs.ready == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run build
+        if: steps.detect.outputs.ready == 'true'
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+      - run: pnpm exec playwright install --with-deps chromium
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run test:e2e
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run check:schema
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run check:links
+        if: steps.detect.outputs.ready == 'true'
+      - uses: actions/upload-artifact@v4
+        if: failure() && steps.detect.outputs.ready == 'true'
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  lighthouse:
+    name: lighthouse budgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        run: |
+          if [ -f pnpm-lock.yaml ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; else echo "ready=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: pnpm/action-setup@v4
+        if: steps.detect.outputs.ready == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.detect.outputs.ready == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        if: steps.detect.outputs.ready == 'true'
+      - run: pnpm run build
+        if: steps.detect.outputs.ready == 'true'
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+      - run: pnpm exec lhci autorun --config=lighthouserc.json
+        if: steps.detect.outputs.ready == 'true'
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.detect.outputs.ready == 'true'
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/
+          retention-days: 7

@@ -1,0 +1,84 @@
+{
+  "_readme": "Single source of truth for every fact and number published on the site. Agents never invent values; missing values stay as TODO strings and are listed in the PR for Tomas. Keep organization data identical to LinkedIn, Firmy.cz, Google Business Profile and Wikidata.",
+  "brand": {
+    "name": "Iterus",
+    "tagline_cs": "Software, který vzniká po krocích.",
+    "tagline_en": "Software, built in loops.",
+    "legal_line_cs": "Iterus je značka společnosti SUN Professionals s.r.o., IČO 27159884.",
+    "legal_line_en": "Iterus is a brand of SUN Professionals s.r.o., Company ID 27159884."
+  },
+  "organization": {
+    "legal_name": "SUN Professionals s.r.o.",
+    "ico": "27159884",
+    "dic": "TODO",
+    "registered_address": "TODO(ulice, PSČ Praha)",
+    "city": "Praha",
+    "country": "CZ",
+    "founder_name": "TODO(jméno zakladatele, jak má být uvedeno na webu)",
+    "founder_title_cs": "zakladatel",
+    "founder_title_en": "founder",
+    "email": "TODO(hello@iterus.cz)",
+    "phone": "TODO",
+    "urls": {
+      "primary": "https://iterus.cz",
+      "international": "https://iterus.io",
+      "linkedin_company": "TODO",
+      "linkedin_founder": "TODO",
+      "github_org": "TODO(https://github.com/iterus)",
+      "firmy_cz": "TODO",
+      "google_business": "TODO",
+      "wikidata": "TODO",
+      "clutch": "TODO"
+    }
+  },
+  "trust": {
+    "iso_27001_status_cs": "TODO — schválená formulace, např.: Zavádíme ISO/IEC 27001 (rozsah: vývoj software); certifikace probíhá.",
+    "iso_27001_status_en": "TODO — approved wording",
+    "insurance_cs": "TODO — po sjednání: pojištění profesní odpovědnosti do výše X Kč",
+    "code_ownership_cs": "Klient vlastní 100 % zdrojového kódu a dokumentace po zaplacení.",
+    "code_ownership_en": "The client owns 100% of the source code and documentation upon payment.",
+    "gdpr_hosting_cs": "Data hostujeme v EU (Frankfurt), zpracování dle GDPR.",
+    "gdpr_hosting_en": "Data is hosted in the EU (Frankfurt) and processed under GDPR."
+  },
+  "how_we_work": {
+    "approved_cs": "Pracujeme AI-native: vývoj akcelerujeme nástroji Claude Code a Codex, kvalitu jistíme automatizovanými testy, nezávislým code review a specialisty na vyžádání.",
+    "approved_en": "We work AI-native: delivery is accelerated with Claude Code and Codex, and quality is secured by automated tests, independent code review and specialists on demand."
+  },
+  "services": [
+    { "key": "web-apps", "cs": "Webové aplikace (Next.js / React / TypeScript)", "en": "Web applications (Next.js / React / TypeScript)" },
+    { "key": "backend", "cs": "Backend a API (Node.js / TypeScript, Python / FastAPI)", "en": "Backend and APIs (Node.js / TypeScript, Python / FastAPI)" },
+    { "key": "data", "cs": "Databáze a datové pipeline (PostgreSQL / Supabase)", "en": "Databases and data pipelines (PostgreSQL / Supabase)" },
+    { "key": "desktop", "cs": "Desktopové aplikace (Electron)", "en": "Desktop applications (Electron)" },
+    { "key": "ai", "cs": "AI integrace: Claude / OpenAI API, RAG, agenti, MCP servery", "en": "AI integration: Claude / OpenAI APIs, RAG, agents, MCP servers" },
+    { "key": "automation", "cs": "Automatizace procesů (n8n, vlastní agenti)", "en": "Process automation (n8n, custom agents)" },
+    { "key": "trading", "cs": "Nástroje pro NinjaTrader 8 / NinjaScript (C#)", "en": "NinjaTrader 8 / NinjaScript (C#) tooling" },
+    { "key": "local-llm", "cs": "Lokální / on-prem nasazení LLM (GDPR)", "en": "Local / on-prem LLM deployment (GDPR)" },
+    { "key": "cz-integrations", "cs": "Integrace na české systémy: ARES, datové schránky, registr smluv, NEN, Fakturoid, GoPay/Comgate", "en": "Czech system integrations: ARES, data boxes, contract registry, NEN, Fakturoid, GoPay/Comgate" },
+    { "key": "mobile", "cs": "Mobilní aplikace (React Native / Expo) — ve spolupráci se specialistou", "en": "Mobile apps (React Native / Expo) — with a partner specialist" }
+  ],
+  "not_offered": ["embedded/firmware", "bankovní core systémy", "velké enterprise migrace Java/.NET bez dedikovaného týmu", "penetrační testy a bezpečnostní audity", "zdravotnické prostředky (MDR)"],
+  "projects": {
+    "iterus-platform": {
+      "name": "Iterus Platform",
+      "type": "own-product",
+      "public": "TODO(true/false)",
+      "features": 60,
+      "tests": 2520,
+      "tables": 27,
+      "integrations": 16,
+      "stack": ["Electron", "TypeScript", "SQLite"],
+      "note": "Numbers as stated by Tomas; confirm before publishing."
+    },
+    "innea": {
+      "name": "Innea",
+      "type": "own-product",
+      "public": "TODO(true/false)",
+      "stack": ["Claude API", "Next.js", "Supabase", "AWS eu-central-1"],
+      "compliance": ["GDPR", "EU AI Act transparency layer"]
+    },
+    "stamiq": { "name": "STAMIQ", "type": "own-product", "public": "TODO", "stack": ["web-first", "Paddle"], "note": "pre-launch; publish only what Tomas approves" },
+    "tender-radar": { "name": "tender-radar", "type": "internal-tool", "public": "TODO", "stack": ["Claude Code skill", "TED API v3", "ISVZ open data", "Supabase", "Vercel", "Telegram", "llama.cpp"] },
+    "super-shared-calendar": { "name": "TODO(public name)", "type": "own-product", "public": "TODO" },
+    "nt8-optimizer": { "name": "NT8-Optimizer", "type": "own-product", "public": "TODO", "stack": ["NinjaScript", "C#", "ZeroMQ", "Python"] }
+  }
+}

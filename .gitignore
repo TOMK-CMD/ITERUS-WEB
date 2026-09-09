@@ -1,0 +1,25 @@
+# dependencies / build
+node_modules/
+.next/
+out/
+dist/
+coverage/
+.turbo/
+.vercel/
+# env & secrets
+.env
+.env.*
+!.env.example
+# tooling
+playwright-report/
+test-results/
+.lighthouseci/
+*.log
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+# Claude Code local state (personal, never shared)
+.claude/settings.local.json
