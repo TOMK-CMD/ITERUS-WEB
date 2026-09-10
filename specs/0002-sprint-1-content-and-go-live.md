@@ -1,6 +1,6 @@
 # 0002 — Sprint 1: content map, core pages and go-live prerequisites
 
-- Status: draft (Tomas approves before the first Sprint 1 session)
+- Status: **approved** by Tomas 2026-09-10 (scope is binding; open inputs are tracked as questions below)
 - Linear: [CRE-34](https://linear.app/innea/issue/CRE-34/sprint-1-content-map-core-pages-go-live-prerequisites)
 - Owner: Tomas · Agent: Claude Code
 - Skills to use: `web-page`, `case-study`, `seo-geo`, `i18n`, `release`
@@ -32,7 +32,7 @@ projektů označená „confirm before publishing". Legal stránky jsou drafty. 
    interní odkazy → `docs/CONTENT-MAP.md` (tabulka existuje).
 3. GEO kontrola: entity, na které se web odkazuje (`sameAs`), a co chybí v `facts.json` → seznam
    pro Tomase (adresa, DIČ, LinkedIn URL, čísla projektů k potvrzení).
-4. Spec 0002 → `approved` (Tomas), Linear issue → In Progress.
+4. ✅ Spec 0002 → `approved` (Tomas, 2026-09-10), Linear issue → In Progress.
 
 **Co Session A skutečně dodala** (`docs/CONTENT-MAP.md`, `content/facts.json`, `docs/adr/0004-*`):
 obsahovou mapu pro 12 launch stránek, schválená cenová pásma, dvoustupňové `/reference`
