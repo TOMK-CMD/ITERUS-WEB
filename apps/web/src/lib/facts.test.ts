@@ -175,6 +175,23 @@ describe("organization identifiers", () => {
     expect(org.dic).toBe(`CZ${org.ico}`);
   });
 
+  it("keeps the printed address assembled from its own parts", () => {
+    // The display string and the structured fields feed different surfaces (contact page vs
+    // JSON-LD). If they drift, the site and the register stop agreeing about the same address.
+    const { registered_address, district, postal_code, address_display, city } = org;
+    for (const part of [registered_address, district, postal_code, city]) {
+      expect(isTodo(part)).toBe(false);
+      expect(address_display, `${part} missing from address_display`).toContain(part as string);
+    }
+    expect(postal_code).toMatch(/^\d{3} \d{2}$/);
+  });
+
+  it("carries the by-appointment note in both locales, because the address is a home", () => {
+    expect(isTodo(org.address_note_cs)).toBe(false);
+    expect(isTodo(org.address_note_en)).toBe(false);
+    expect(isTodo(org.address_note_rule)).toBe(false);
+  });
+
   it("keeps the dialable phone equal to the printed one", () => {
     expect(org.phone_e164).toBe(org.phone.replace(/\s/g, ""));
     expect(org.phone_e164).toMatch(/^\+[1-9]\d{6,14}$/);

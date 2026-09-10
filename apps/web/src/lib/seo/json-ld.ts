@@ -26,9 +26,11 @@ export function sameAsUrls(): string[] {
 
 function postalAddress() {
   const street = factOrNull(facts.organization.registered_address);
+  const postalCode = factOrNull(facts.organization.postal_code);
   return {
     "@type": "PostalAddress" as const,
     ...(street ? { streetAddress: street } : {}),
+    ...(postalCode ? { postalCode } : {}),
     addressLocality: facts.organization.city,
     addressCountry: facts.organization.country,
   };

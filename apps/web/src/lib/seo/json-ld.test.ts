@@ -39,6 +39,7 @@ describe("JSON-LD builders", () => {
       ["email", facts.organization.email, org.email],
       ["telephone", facts.organization.phone, org.telephone],
       ["streetAddress", facts.organization.registered_address, org.address?.streetAddress],
+      ["postalCode", facts.organization.postal_code, org.address?.postalCode],
     ];
     for (const [field, fact, published] of cases) {
       if (isTodo(fact)) {
