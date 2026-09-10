@@ -153,3 +153,77 @@ describe("bilingual facts", () => {
     expect(seen.length).toBeGreaterThan(10);
   });
 });
+
+describe("founder identity", () => {
+  const org = facts.organization;
+
+  it("keeps one canonical spelling and an ASCII-only alternate", () => {
+    expect(isTodo(org.founder_name)).toBe(false);
+    expect(isTodo(org.founder_name_alternate)).toBe(false);
+    // The alternate exists for Person.alternateName, so it must be the stripped form —
+    // swapping the two would publish the diacritics-free name as the person's actual name.
+    expect(org.founder_name_alternate).toMatch(/^[ -~]+$/);
+    expect(org.founder_name).not.toBe(org.founder_name_alternate);
+  });
+});
+
+describe("organization identifiers", () => {
+  const org = facts.organization;
+
+  it("keeps the VAT number derived from the company ID", () => {
+    // A typo here would ship a wrong identifier into Organization JSON-LD on every page.
+    expect(org.dic).toBe(`CZ${org.ico}`);
+  });
+
+  it("keeps the printed address assembled from its own parts", () => {
+    // The display string and the structured fields feed different surfaces (contact page vs
+    // JSON-LD). If they drift, the site and the register stop agreeing about the same address.
+    const { registered_address, district, postal_code, address_display, city } = org;
+    for (const part of [registered_address, district, postal_code, city]) {
+      expect(isTodo(part)).toBe(false);
+      expect(address_display, `${part} missing from address_display`).toContain(part as string);
+    }
+    expect(postal_code).toMatch(/^\d{3} \d{2}$/);
+  });
+
+  it("carries the by-appointment note in both locales, because the address is a home", () => {
+    expect(isTodo(org.address_note_cs)).toBe(false);
+    expect(isTodo(org.address_note_en)).toBe(false);
+    expect(isTodo(org.address_note_rule)).toBe(false);
+  });
+
+  it("keeps the dialable phone equal to the printed one", () => {
+    expect(org.phone_e164).toBe(org.phone.replace(/\s/g, ""));
+    expect(org.phone_e164).toMatch(/^\+[1-9]\d{6,14}$/);
+  });
+});
+
+describe("founder story", () => {
+  const org = facts.organization;
+
+  it("is not publishable until Tomas approves it", () => {
+    expect(typeof org.founder_story_approved).toBe("boolean");
+    if (org.founder_story_approved) {
+      expect(isTodo(org.founder_story_cs)).toBe(false);
+      expect(isTodo(org.founder_story_en)).toBe(false);
+    }
+  });
+
+  it("never states or denies that the founder is a programmer", () => {
+    // CLAUDE.md forbids both directions. The draft is framed around time, not ability;
+    // this stops a later edit from quietly crossing the line in either direction.
+    const forbidden = [
+      /neum(ěl|ím)\s+programovat/i,
+      /nejsem\s+program(átor|ovač)/i,
+      /jsem\s+program(átor|ovač)/i,
+      /programátorsk[éá]\s+schopnosti/i,
+      /(not|never)\s+a\s+(programmer|developer|coder)/i,
+      /\bI(?:'m| am)\s+a\s+(programmer|developer|coder)\b/i,
+    ];
+    for (const text of [org.founder_story_cs, org.founder_story_en]) {
+      for (const pattern of forbidden) {
+        expect(pattern.test(text as string), `${pattern} matched: ${text}`).toBe(false);
+      }
+    }
+  });
+});
