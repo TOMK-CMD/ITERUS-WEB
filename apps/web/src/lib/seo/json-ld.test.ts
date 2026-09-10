@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { facts } from "@/lib/facts";
+import { facts, isTodo } from "@/lib/facts";
 import { buildOrganization, buildSiteJsonLd, sameAsUrls, serializeJsonLd } from "./json-ld";
 import { SITE_URL } from "./metadata";
 
@@ -26,10 +26,27 @@ describe("JSON-LD builders", () => {
       identifier: "27159884",
       address: { "@type": "PostalAddress", addressLocality: "Praha", addressCountry: "CZ" },
     });
-    // Address street, e-mail and phone are still TODO → must be absent, not empty strings.
-    expect(org).not.toHaveProperty("email");
-    expect(org).not.toHaveProperty("telephone");
-    expect(org).not.toHaveProperty("address.streetAddress");
+  });
+
+  it("includes an optional contact field when the fact is real and omits it while it is TODO", () => {
+    // The original version of this test asserted that telephone was absent, which only held
+    // because the fact happened to be TODO — it broke the moment a real number arrived.
+    // What must hold is the rule: a TODO never reaches the output, a real value always does.
+    const org = buildOrganization() as unknown as Record<string, unknown> & {
+      address?: Record<string, unknown>;
+    };
+    const cases: Array<[string, unknown, unknown]> = [
+      ["email", facts.organization.email, org.email],
+      ["telephone", facts.organization.phone, org.telephone],
+      ["streetAddress", facts.organization.registered_address, org.address?.streetAddress],
+    ];
+    for (const [field, fact, published] of cases) {
+      if (isTodo(fact)) {
+        expect(published, `${field} must stay absent while the fact is TODO`).toBeUndefined();
+      } else {
+        expect(published, `${field} must be published once the fact is real`).toBe(fact);
+      }
+    }
   });
 
   it("links WebSite and ProfessionalService to the organisation and sets the language", () => {

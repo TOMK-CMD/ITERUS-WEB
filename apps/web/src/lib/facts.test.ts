@@ -166,3 +166,47 @@ describe("founder identity", () => {
     expect(org.founder_name).not.toBe(org.founder_name_alternate);
   });
 });
+
+describe("organization identifiers", () => {
+  const org = facts.organization;
+
+  it("keeps the VAT number derived from the company ID", () => {
+    // A typo here would ship a wrong identifier into Organization JSON-LD on every page.
+    expect(org.dic).toBe(`CZ${org.ico}`);
+  });
+
+  it("keeps the dialable phone equal to the printed one", () => {
+    expect(org.phone_e164).toBe(org.phone.replace(/\s/g, ""));
+    expect(org.phone_e164).toMatch(/^\+[1-9]\d{6,14}$/);
+  });
+});
+
+describe("founder story", () => {
+  const org = facts.organization;
+
+  it("is not publishable until Tomas approves it", () => {
+    expect(typeof org.founder_story_approved).toBe("boolean");
+    if (org.founder_story_approved) {
+      expect(isTodo(org.founder_story_cs)).toBe(false);
+      expect(isTodo(org.founder_story_en)).toBe(false);
+    }
+  });
+
+  it("never states or denies that the founder is a programmer", () => {
+    // CLAUDE.md forbids both directions. The draft is framed around time, not ability;
+    // this stops a later edit from quietly crossing the line in either direction.
+    const forbidden = [
+      /neum(ěl|ím)\s+programovat/i,
+      /nejsem\s+program(átor|ovač)/i,
+      /jsem\s+program(átor|ovač)/i,
+      /programátorsk[éá]\s+schopnosti/i,
+      /(not|never)\s+a\s+(programmer|developer|coder)/i,
+      /\bI(?:'m| am)\s+a\s+(programmer|developer|coder)\b/i,
+    ];
+    for (const text of [org.founder_story_cs, org.founder_story_en]) {
+      for (const pattern of forbidden) {
+        expect(pattern.test(text as string), `${pattern} matched: ${text}`).toBe(false);
+      }
+    }
+  });
+});
