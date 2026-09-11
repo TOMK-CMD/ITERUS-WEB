@@ -192,6 +192,14 @@ describe("organization identifiers", () => {
     expect(isTodo(org.address_note_rule)).toBe(false);
   });
 
+  it("keeps the contact e-mail on the site's own domain", () => {
+    // A contact address on a foreign domain (gmail, seznam) undercuts the entity consistency
+    // the whole SEO/GEO approach rests on, and reads as a hobby project.
+    expect(isTodo(org.email)).toBe(false);
+    const host = new URL(org.urls.primary).hostname.replace(/^www\./, "");
+    expect(org.email).toMatch(new RegExp(`@${host.replace(/\./g, "\.")}$`));
+  });
+
   it("keeps the dialable phone equal to the printed one", () => {
     expect(org.phone_e164).toBe(org.phone.replace(/\s/g, ""));
     expect(org.phone_e164).toMatch(/^\+[1-9]\d{6,14}$/);
@@ -201,7 +209,7 @@ describe("organization identifiers", () => {
 describe("founder story", () => {
   const org = facts.organization;
 
-  it("is not publishable until Tomas approves it", () => {
+  it("is only publishable once approved, and then must have real text in both locales", () => {
     expect(typeof org.founder_story_approved).toBe("boolean");
     if (org.founder_story_approved) {
       expect(isTodo(org.founder_story_cs)).toBe(false);
