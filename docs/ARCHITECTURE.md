@@ -26,25 +26,33 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
 
 - `apps/web` — Next.js app.
   - `src/app/[locale]/` — `layout.tsx` (html lang, Inter, header, footer, site-wide JSON-LD,
-    Plausible), `page.tsx` (home), `contact/`, `privacy/`, `terms/` (route folders use
-    English-internal names; Czech slugs come from the routing map), `not-found.tsx`,
-    `[...rest]/` (404 inside a valid locale).
+    Plausible), `page.tsx` (home), `contact/`, `privacy/`, `terms/`, `services/` (overview +
+    `web-applications/`, `ai-integration/`, `local-llm/`, `czech-integrations/`, `ninjatrader/`;
+    route folders use English-internal names; Czech slugs come from the routing map),
+    `not-found.tsx`, `[...rest]/` (404 inside a valid locale).
   - `src/app/api/contact/route.ts`, `src/app/og/route.tsx`, `src/app/icon.tsx`,
     `src/app/sitemap.ts`, `src/app/robots.ts`.
   - `src/i18n/` — `routing.ts` (locales, `localePrefix: as-needed`, `localeDetection: false`,
     typed `pathnames`), `navigation.ts` (`Link`, `getPathname`, …), `request.ts` (root params).
   - `src/proxy.ts` — next-intl middleware (Next 16 network boundary).
   - `src/lib/content/` — `schema.ts` (zod frontmatter), `loader.ts` (`readPage`, `listPages`,
-    `loadPage` via `next-mdx-remote/rsc`).
+    `loadPage` via `next-mdx-remote/rsc`), `service-catalog.ts` (the five service detail slugs +
+    `loadServiceCatalog`, read by the `/sluzby` overview for its cards and `Service` JSON-LD).
+  - `src/lib/pages/` — `service-detail-page.tsx` (`createServiceDetailPage`: factors the
+    boilerplate shared by the five near-identical service detail routes — locale guard, MDX load,
+    metadata, one `Service` JSON-LD entity — per ADR-0004).
   - `src/lib/seo/` — `metadata.ts` (`buildMetadata`: title suffix, canonical, hreflang,
     x-default, OG/Twitter), `paths.ts` (slug → route map, script-safe `localizedPath`),
-    `sitemap.ts`, `robots.ts`, `json-ld.ts` (schema-dts builders, TODO values omitted), `og.ts`.
+    `sitemap.ts`, `robots.ts`, `json-ld.ts` (schema-dts builders — `Organization`/`WebSite`/
+    `ProfessionalService` site-wide, plus `Service`/`FAQPage` builders for service pages — TODO
+    values omitted), `og.ts`.
   - `src/lib/contact/` — `schema.ts`, `handle.ts` (pure, dependency-injected handler),
     `rate-limit.ts` (best-effort in-memory), `turnstile.ts`, `mail.ts` (Resend REST).
   - `src/lib/facts.ts` — typed access to `content/facts.json`, `isTodo()` guard.
   - `src/components/` — `site-header`, `site-footer` (legal line), `locale-switch`,
     `contact-form` (client, Turnstile explicit render), `calcom-cta`, `legal-page`, `json-ld`,
-    `plausible`, `mdx/` (facts-driven blocks available inside MDX).
+    `plausible`, `mdx/` (facts-driven blocks available inside MDX, incl. `Faq`/`FaqItem` and
+    `NotOffered`).
   - `e2e/` — Playwright: smoke (metadata, legal footer, locale switch, 404), axe, contact API,
     SEO artefacts. `vitest.config.mts`, `playwright.config.ts`, `components.json`, `vercel.json`.
 - `packages/ui` (`@iterus/ui`) — `src/styles/tokens.css` (brand tokens → shadcn semantic
@@ -52,7 +60,10 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   `src/components/*` (shadcn/ui 4 on Base UI: button, card, input, textarea, sheet),
   `src/lib/utils.ts` (`cn`). Consumed as raw TS (`transpilePackages`), scanned by Tailwind via
   `@source`.
-- `content/{cs,en}/*.mdx` — pages (`home`, `contact`, `privacy`, `terms`); `content/facts.json`.
+- `content/{cs,en}/*.mdx` — pages (`home`, `contact`, `privacy`, `terms`, `services`,
+  `services-web-applications`, `services-ai-integration`, `services-local-llm`,
+  `services-czech-integrations`, `services-ninjatrader` — flat slugs per ADR-0004);
+  `content/facts.json`.
 - `messages/{cs,en}.json` — UI strings (next-intl, typed through `AppConfig`).
 - `scripts/` — `check-i18n.mjs`, `check-schema.mjs`, `check-links.mjs`, `generate-llms-txt.mjs`
   (apps/web `prebuild`), `indexnow.mjs`, `lib/serve.mjs` (starts `next start` for scripts),
@@ -86,6 +97,9 @@ branch is unit-tested with injected dependencies; e2e covers the HTTP contract.
 - 0001 — stack (accepted, versions verified 2026-09-09)
 - 0002 — content pipeline: plain MDX + zod loader (accepted)
 - 0003 — i18n routing: cs at root, `/en`, URL-only locale (accepted; iterus.io open)
+- 0004 — service detail pages are static `pathnames` entries with flat content slugs, not a
+  dynamic `[slug]` segment (accepted; revisit past ~10 service pages or a page needing a URL
+  parameter)
 
 ## Quality architecture
 

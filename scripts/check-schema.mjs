@@ -6,7 +6,26 @@
 // Usage: node scripts/check-schema.mjs [--base https://preview.example]  (default: local server)
 import { startServer } from "./lib/serve.mjs";
 
-const PAGES = ["/", "/en", "/kontakt", "/en/contact", "/ochrana-osobnich-udaju", "/en/terms"];
+const PAGES = [
+  "/",
+  "/en",
+  "/kontakt",
+  "/en/contact",
+  "/ochrana-osobnich-udaju",
+  "/en/terms",
+  "/sluzby",
+  "/en/services",
+  "/sluzby/webove-aplikace",
+  "/en/services/web-applications",
+  "/sluzby/ai-integrace",
+  "/en/services/ai-integration",
+  "/sluzby/lokalni-llm",
+  "/en/services/local-llm",
+  "/sluzby/ceske-integrace",
+  "/en/services/czech-integrations",
+  "/sluzby/ninjatrader",
+  "/en/services/ninjatrader",
+];
 
 const REQUIRED = {
   Organization: ["name", "legalName", "identifier", "url", "address"],

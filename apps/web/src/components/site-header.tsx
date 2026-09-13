@@ -13,7 +13,15 @@ export async function SiteHeader() {
         </Link>
         <div className="flex items-center gap-6">
           <nav aria-label={t("nav.label")}>
-            <ul className="flex items-center gap-4 text-sm">
+            <ul className="flex flex-wrap items-center gap-4 text-sm">
+              <li>
+                <Link
+                  href="/services"
+                  className="text-muted-foreground hover:text-foreground focus-visible:outline-ring focus-visible:outline-2 focus-visible:outline-offset-2"
+                >
+                  {t("nav.services")}
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/contact"

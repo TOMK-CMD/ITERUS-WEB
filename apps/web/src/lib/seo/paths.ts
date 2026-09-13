@@ -11,6 +11,12 @@ export const PAGE_ROUTES: Record<string, AppPathname> = {
   contact: "/contact",
   privacy: "/privacy",
   terms: "/terms",
+  services: "/services",
+  "services-web-applications": "/services/web-applications",
+  "services-ai-integration": "/services/ai-integration",
+  "services-local-llm": "/services/local-llm",
+  "services-czech-integrations": "/services/czech-integrations",
+  "services-ninjatrader": "/services/ninjatrader",
 };
 
 /**

@@ -175,11 +175,23 @@
     }
   ],
   "not_offered": [
-    "embedded/firmware",
-    "bankovní core systémy",
-    "velké enterprise migrace Java/.NET bez dedikovaného týmu",
-    "penetrační testy a bezpečnostní audity",
-    "zdravotnické prostředky (MDR)"
+    { "key": "embedded", "cs": "embedded/firmware", "en": "embedded/firmware" },
+    { "key": "banking-core", "cs": "bankovní core systémy", "en": "banking core systems" },
+    {
+      "key": "enterprise-migrations",
+      "cs": "velké enterprise migrace Java/.NET bez dedikovaného týmu",
+      "en": "large enterprise Java/.NET migrations without a dedicated team"
+    },
+    {
+      "key": "pentesting",
+      "cs": "penetrační testy a bezpečnostní audity",
+      "en": "penetration testing and security audits"
+    },
+    {
+      "key": "medical-devices",
+      "cs": "zdravotnické prostředky (MDR)",
+      "en": "medical devices (MDR)"
+    }
   ],
   "projects": {
     "iterus-platform": {

@@ -38,6 +38,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const t = await getTranslations({ locale });
   const footerLinks = [
     { href: getPathname({ locale, href: "/" }), label: t("nav.home") },
+    { href: getPathname({ locale, href: "/services" }), label: t("nav.services") },
     { href: getPathname({ locale, href: "/contact" }), label: t("nav.contact") },
   ];
 

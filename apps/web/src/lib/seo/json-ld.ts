@@ -1,7 +1,17 @@
-import type { Organization, ProfessionalService, WebSite, WithContext } from "schema-dts";
-import { routing, type Locale } from "@/i18n/routing";
+import type {
+  Answer,
+  FAQPage,
+  Organization,
+  ProfessionalService,
+  Question,
+  Service,
+  WebSite,
+  WithContext,
+} from "schema-dts";
+import type { AppPathname, Locale } from "@/i18n/routing";
+import { routing } from "@/i18n/routing";
 import { facts, factOrNull, tagline } from "@/lib/facts";
-import { SITE_URL } from "./metadata";
+import { localizedUrl, SITE_URL } from "./metadata";
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -85,6 +95,50 @@ export function buildProfessionalService(locale: Locale): WithContext<Profession
 /** Site-wide graph rendered in the locale layout. */
 export function buildSiteJsonLd(locale: Locale) {
   return [buildOrganization(), buildWebSite(locale), buildProfessionalService(locale)];
+}
+
+export type ServiceContent = { name: string; description: string };
+
+/** A single named service — used on each service detail page. */
+export function buildServiceDetail(
+  locale: Locale,
+  href: AppPathname,
+  content: ServiceContent,
+): WithContext<Service> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: content.name,
+    description: content.description,
+    url: localizedUrl(locale, href),
+    provider: { "@id": ORGANIZATION_ID },
+    areaServed: ["CZ", "EU"],
+  };
+}
+
+export type ServiceCatalogEntry = ServiceContent & { href: AppPathname };
+
+/** One `Service` stub per detail page, rendered on the `/sluzby` overview. */
+export function buildServiceCatalog(
+  locale: Locale,
+  entries: ServiceCatalogEntry[],
+): WithContext<Service>[] {
+  return entries.map((entry) => buildServiceDetail(locale, entry.href, entry));
+}
+
+export type FaqItem = { question: string; answer: string };
+
+/** FAQ block JSON-LD — used on service pages, pricing and the process page. */
+export function buildFAQPage(items: FaqItem[]): WithContext<FAQPage> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item): Question => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer } satisfies Answer,
+    })),
+  };
 }
 
 /** Serialises for a <script type="application/ld+json"> so "</script>" in data cannot break out. */
