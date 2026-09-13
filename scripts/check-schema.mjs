@@ -25,6 +25,8 @@ const PAGES = [
   "/en/services/czech-integrations",
   "/sluzby/ninjatrader",
   "/en/services/ninjatrader",
+  "/cena",
+  "/en/pricing",
 ];
 
 const REQUIRED = {
@@ -39,6 +41,8 @@ const REQUIRED = {
   Question: ["name", "acceptedAnswer"],
   Answer: ["text"],
   Service: ["name", "provider"],
+  AggregateOffer: ["priceCurrency", "lowPrice", "highPrice"],
+  Offer: ["name", "price", "priceCurrency"],
   Person: ["name"],
 };
 

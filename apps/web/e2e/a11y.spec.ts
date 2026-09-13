@@ -19,6 +19,8 @@ const paths = [
   "/en/services/czech-integrations",
   "/sluzby/ninjatrader",
   "/en/services/ninjatrader",
+  "/cena",
+  "/en/pricing",
 ];
 
 for (const path of paths) {

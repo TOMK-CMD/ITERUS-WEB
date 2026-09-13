@@ -119,6 +119,18 @@ const cases: Case[] = [
     canonical: `${SITE}/en/services/ninjatrader`,
     alternates: { cs: `${SITE}/sluzby/ninjatrader`, en: `${SITE}/en/services/ninjatrader` },
   },
+  {
+    path: "/cena",
+    locale: "cs",
+    canonical: `${SITE}/cena`,
+    alternates: { cs: `${SITE}/cena`, en: `${SITE}/en/pricing` },
+  },
+  {
+    path: "/en/pricing",
+    locale: "en",
+    canonical: `${SITE}/en/pricing`,
+    alternates: { cs: `${SITE}/cena`, en: `${SITE}/en/pricing` },
+  },
 ];
 
 function collectErrors(page: Page): string[] {

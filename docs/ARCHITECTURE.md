@@ -27,8 +27,8 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
 - `apps/web` — Next.js app.
   - `src/app/[locale]/` — `layout.tsx` (html lang, Inter, header, footer, site-wide JSON-LD,
     Plausible), `page.tsx` (home), `contact/`, `privacy/`, `terms/`, `services/` (overview +
-    `web-applications/`, `ai-integration/`, `local-llm/`, `czech-integrations/`, `ninjatrader/`;
-    route folders use English-internal names; Czech slugs come from the routing map),
+    `web-applications/`, `ai-integration/`, `local-llm/`, `czech-integrations/`, `ninjatrader/`),
+    `pricing/` (route folders use English-internal names; Czech slugs come from the routing map),
     `not-found.tsx`, `[...rest]/` (404 inside a valid locale).
   - `src/app/api/contact/route.ts`, `src/app/og/route.tsx`, `src/app/icon.tsx`,
     `src/app/sitemap.ts`, `src/app/robots.ts`.
@@ -44,15 +44,17 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   - `src/lib/seo/` — `metadata.ts` (`buildMetadata`: title suffix, canonical, hreflang,
     x-default, OG/Twitter), `paths.ts` (slug → route map, script-safe `localizedPath`),
     `sitemap.ts`, `robots.ts`, `json-ld.ts` (schema-dts builders — `Organization`/`WebSite`/
-    `ProfessionalService` site-wide, plus `Service`/`FAQPage` builders for service pages — TODO
-    values omitted), `og.ts`.
+    `ProfessionalService` site-wide, `Service`/`FAQPage` for service pages, `buildPricingService`
+    (`Service` + `AggregateOffer`/`Offer` per band, from `facts.json → pricing` only — the
+    unpublished hourly rate is guarded out by a unit test) for `/cena` — TODO values omitted),
+    `og.ts`.
   - `src/lib/contact/` — `schema.ts`, `handle.ts` (pure, dependency-injected handler),
     `rate-limit.ts` (best-effort in-memory), `turnstile.ts`, `mail.ts` (Resend REST).
   - `src/lib/facts.ts` — typed access to `content/facts.json`, `isTodo()` guard.
   - `src/components/` — `site-header`, `site-footer` (legal line), `locale-switch`,
     `contact-form` (client, Turnstile explicit render), `calcom-cta`, `legal-page`, `json-ld`,
-    `plausible`, `mdx/` (facts-driven blocks available inside MDX, incl. `Faq`/`FaqItem` and
-    `NotOffered`).
+    `plausible`, `mdx/` (facts-driven blocks available inside MDX, incl. `Faq`/`FaqItem`,
+    `NotOffered` and `PricingBands`).
   - `e2e/` — Playwright: smoke (metadata, legal footer, locale switch, 404), axe, contact API,
     SEO artefacts. `vitest.config.mts`, `playwright.config.ts`, `components.json`, `vercel.json`.
 - `packages/ui` (`@iterus/ui`) — `src/styles/tokens.css` (brand tokens → shadcn semantic
@@ -62,7 +64,7 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   `@source`.
 - `content/{cs,en}/*.mdx` — pages (`home`, `contact`, `privacy`, `terms`, `services`,
   `services-web-applications`, `services-ai-integration`, `services-local-llm`,
-  `services-czech-integrations`, `services-ninjatrader` — flat slugs per ADR-0004);
+  `services-czech-integrations`, `services-ninjatrader`, `pricing` — flat slugs per ADR-0004);
   `content/facts.json`.
 - `messages/{cs,en}.json` — UI strings (next-intl, typed through `AppConfig`).
 - `scripts/` — `check-i18n.mjs`, `check-schema.mjs`, `check-links.mjs`, `generate-llms-txt.mjs`
