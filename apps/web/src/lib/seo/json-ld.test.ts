@@ -112,10 +112,16 @@ describe("JSON-LD builders", () => {
       provider: { "@id": `${SITE_URL}/#organization` },
     });
     const offers = (service as unknown as { offers: Record<string, unknown> }).offers;
+    const finiteCeilings = facts.pricing.bands.flatMap((b) =>
+      b.to_czk !== null ? [b.to_czk] : [],
+    );
     expect(offers).toMatchObject({
       "@type": "AggregateOffer",
       priceCurrency: facts.pricing.currency,
       lowPrice: Math.min(...facts.pricing.bands.map((b) => b.from_czk)),
+      // The "ai" band's to_czk is null (open-ended); highPrice must come only from bands with a
+      // real ceiling, not be skewed by an open-ended band.
+      highPrice: Math.max(...finiteCeilings),
     });
     expect(Array.isArray((offers as { offers: unknown[] }).offers)).toBe(true);
     expect((offers as { offers: unknown[] }).offers).toHaveLength(facts.pricing.bands.length);
