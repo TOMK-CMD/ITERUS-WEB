@@ -7,6 +7,7 @@ import {
   buildOrganization,
   buildPerson,
   buildPricingService,
+  buildReferencesCollection,
   buildServiceCatalog,
   buildServiceDetail,
   buildSiteJsonLd,
@@ -202,6 +203,26 @@ describe("JSON-LD builders", () => {
       step: [
         { "@type": "HowToStep", position: 1, name: "Krok jedna", text: "Text jedna." },
         { "@type": "HowToStep", position: 2, name: "Krok dva", text: "Text dva." },
+      ],
+    });
+  });
+
+  it("builds a CollectionPage with one SoftwareApplication per card", () => {
+    const collection = buildReferencesCollection(
+      "cs",
+      "/references",
+      { name: "Reference", description: "Popis." },
+      [
+        { name: "Projekt A", hook: "Hook A." },
+        { name: "Projekt B", hook: "Hook B." },
+      ],
+    );
+    expect(collection).toMatchObject({
+      "@type": "CollectionPage",
+      name: "Reference",
+      hasPart: [
+        { "@type": "SoftwareApplication", name: "Projekt A", description: "Hook A." },
+        { "@type": "SoftwareApplication", name: "Projekt B", description: "Hook B." },
       ],
     });
   });

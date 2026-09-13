@@ -42,6 +42,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     { href: getPathname({ locale, href: "/pricing" }), label: t("nav.pricing") },
     { href: getPathname({ locale, href: "/process" }), label: t("nav.process") },
     { href: getPathname({ locale, href: "/about" }), label: t("nav.about") },
+    { href: getPathname({ locale, href: "/references" }), label: t("nav.references") },
     { href: getPathname({ locale, href: "/contact" }), label: t("nav.contact") },
   ];
 

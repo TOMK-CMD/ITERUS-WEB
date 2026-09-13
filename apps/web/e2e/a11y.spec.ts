@@ -25,6 +25,8 @@ const paths = [
   "/en/about",
   "/jak-pracujeme",
   "/en/process",
+  "/reference",
+  "/en/references",
 ];
 
 for (const path of paths) {

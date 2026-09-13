@@ -31,6 +31,8 @@ const PAGES = [
   "/en/about",
   "/jak-pracujeme",
   "/en/process",
+  "/reference",
+  "/en/references",
 ];
 
 const REQUIRED = {
@@ -51,6 +53,8 @@ const REQUIRED = {
   AboutPage: ["name", "url"],
   HowTo: ["name", "step"],
   HowToStep: ["name", "text"],
+  CollectionPage: ["name", "url"],
+  SoftwareApplication: ["name"],
 };
 
 const baseArg = process.argv.indexOf("--base");

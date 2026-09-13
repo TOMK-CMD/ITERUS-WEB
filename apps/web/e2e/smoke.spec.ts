@@ -155,6 +155,18 @@ const cases: Case[] = [
     canonical: `${SITE}/en/process`,
     alternates: { cs: `${SITE}/jak-pracujeme`, en: `${SITE}/en/process` },
   },
+  {
+    path: "/reference",
+    locale: "cs",
+    canonical: `${SITE}/reference`,
+    alternates: { cs: `${SITE}/reference`, en: `${SITE}/en/references` },
+  },
+  {
+    path: "/en/references",
+    locale: "en",
+    canonical: `${SITE}/en/references`,
+    alternates: { cs: `${SITE}/reference`, en: `${SITE}/en/references` },
+  },
 ];
 
 function collectErrors(page: Page): string[] {

@@ -48,6 +48,14 @@ export async function SiteHeader() {
               </li>
               <li>
                 <Link
+                  href="/references"
+                  className="text-muted-foreground hover:text-foreground focus-visible:outline-ring focus-visible:outline-2 focus-visible:outline-offset-2"
+                >
+                  {t("nav.references")}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/contact"
                   className="text-muted-foreground hover:text-foreground focus-visible:outline-ring focus-visible:outline-2 focus-visible:outline-offset-2"
                 >

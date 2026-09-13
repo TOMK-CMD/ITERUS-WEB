@@ -28,8 +28,9 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   - `src/app/[locale]/` — `layout.tsx` (html lang, Inter, header, footer, site-wide JSON-LD,
     Plausible), `page.tsx` (home), `contact/`, `privacy/`, `terms/`, `services/` (overview +
     `web-applications/`, `ai-integration/`, `local-llm/`, `czech-integrations/`, `ninjatrader/`),
-    `pricing/`, `about/`, `process/` (route folders use English-internal names; Czech slugs come
-    from the routing map), `not-found.tsx`, `[...rest]/` (404 inside a valid locale).
+    `pricing/`, `about/`, `process/`, `references/` (route folders use English-internal names;
+    Czech slugs come from the routing map), `not-found.tsx`, `[...rest]/` (404 inside a valid
+    locale).
   - `src/app/api/contact/route.ts`, `src/app/og/route.tsx`, `src/app/icon.tsx`,
     `src/app/sitemap.ts`, `src/app/robots.ts`.
   - `src/i18n/` — `routing.ts` (locales, `localePrefix: as-needed`, `localeDetection: false`,
@@ -37,7 +38,10 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   - `src/proxy.ts` — next-intl middleware (Next 16 network boundary).
   - `src/lib/content/` — `schema.ts` (zod frontmatter), `loader.ts` (`readPage`, `listPages`,
     `loadPage` via `next-mdx-remote/rsc`), `service-catalog.ts` (the five service detail slugs +
-    `loadServiceCatalog`, read by the `/sluzby` overview for its cards and `Service` JSON-LD).
+    `loadServiceCatalog`, read by the `/sluzby` overview for its cards and `Service` JSON-LD),
+    `reference-cards.ts` (`getCardProjects`: the `facts.json → projects[*].publish === "card"`
+    entries, read by both the `<ReferenceCards />` component and `/reference`'s `page.tsx` so the
+    rendered cards and the `CollectionPage` JSON-LD never drift apart).
   - `src/lib/pages/` — `service-detail-page.tsx` (`createServiceDetailPage`: factors the
     boilerplate shared by the five near-identical service detail routes — locale guard, MDX load,
     metadata, one `Service` JSON-LD entity — per ADR-0004).
@@ -49,16 +53,19 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
     unpublished hourly rate is guarded out by a unit test) for `/cena`, `buildAboutPage`/
     `buildPerson` (`AboutPage` linked to the founder `Person` via `about: {"@id": ...}`) for
     `/o-nas`, `buildHowTo` (`HowTo`/`HowToStep`, built from the steps authored on the page) for
-    `/jak-pracujeme` — TODO values omitted), `og.ts`.
+    `/jak-pracujeme`, `buildReferencesCollection` (`CollectionPage` with one `SoftwareApplication`
+    per card-tier project — case-study tier projects join this collection once they have their own
+    page to link to) for `/reference` — TODO values omitted), `og.ts`.
   - `src/lib/contact/` — `schema.ts`, `handle.ts` (pure, dependency-injected handler),
     `rate-limit.ts` (best-effort in-memory), `turnstile.ts`, `mail.ts` (Resend REST).
   - `src/lib/facts.ts` — typed access to `content/facts.json`, `isTodo()` guard.
   - `src/components/` — `site-header`, `site-footer` (legal line), `locale-switch`,
     `contact-form` (client, Turnstile explicit render), `calcom-cta`, `legal-page`, `json-ld`,
     `plausible`, `mdx/` (facts-driven blocks available inside MDX, incl. `Faq`/`FaqItem`,
-    `NotOffered`, `PricingBands`, `ProcessSteps`/`Step` and `PageLink` — a locale-aware internal
-    link for MDX prose, re-exporting `@/i18n/navigation`'s `Link`). `Faq`/`FaqItem` and
-    `ProcessSteps`/`Step` take JSX children rather than an array/object prop: `next-mdx-remote`
+    `NotOffered`, `PricingBands`, `ProcessSteps`/`Step`, `ReferenceCards` and `PageLink` — a
+    locale-aware internal link for MDX prose, re-exporting `@/i18n/navigation`'s `Link`).
+    `Faq`/`FaqItem` and `ProcessSteps`/`Step` take JSX children rather than an array/object prop:
+    `next-mdx-remote`
     strips JS-expression attributes from MDX by default (`blockJS: true`, a defence for
     untrusted remote content) — children and string attributes are unaffected.
   - `e2e/` — Playwright: smoke (metadata, legal footer, locale switch, 404), axe, contact API,
@@ -70,7 +77,8 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   `@source`.
 - `content/{cs,en}/*.mdx` — pages (`home`, `contact`, `privacy`, `terms`, `services`,
   `services-web-applications`, `services-ai-integration`, `services-local-llm`,
-  `services-czech-integrations`, `services-ninjatrader`, `pricing`, `about`, `process` — flat
+  `services-czech-integrations`, `services-ninjatrader`, `pricing`, `about`, `process`,
+  `references` — flat
   slugs per ADR-0004); `content/facts.json`.
 - `messages/{cs,en}.json` — UI strings (next-intl, typed through `AppConfig`).
 - `scripts/` — `check-i18n.mjs`, `check-schema.mjs`, `check-links.mjs`, `generate-llms-txt.mjs`
