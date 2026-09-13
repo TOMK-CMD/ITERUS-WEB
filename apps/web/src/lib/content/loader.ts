@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import type { MDXComponents } from "mdx/types";
 import { compileMDX } from "next-mdx-remote/rsc";
 import type { Locale } from "@/i18n/routing";
+import { remarkCzechNbsp } from "./remark-czech-nbsp";
 import { pageFrontmatterSchema, type PageFrontmatter } from "./schema";
 
 export type ContentPage = {
@@ -110,7 +111,12 @@ export async function loadPage(
   const { content } = await compileMDX({
     source: page.body,
     components,
-    options: { parseFrontmatter: false },
+    options: {
+      parseFrontmatter: false,
+      // Czech typographic rule (docs/CONTENT-GUIDE.md): one-letter prepositions/conjunctions
+      // never end a line. English has no equivalent rule, so this runs cs-only.
+      mdxOptions: locale === "cs" ? { remarkPlugins: [remarkCzechNbsp] } : undefined,
+    },
   });
   return { ...page, content };
 }
