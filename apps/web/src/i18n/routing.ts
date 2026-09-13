@@ -33,6 +33,7 @@ export const routing = defineRouting({
       en: "/services/czech-integrations",
     },
     "/services/ninjatrader": { cs: "/sluzby/ninjatrader", en: "/services/ninjatrader" },
+    "/pricing": { cs: "/cena", en: "/pricing" },
   },
 });
 

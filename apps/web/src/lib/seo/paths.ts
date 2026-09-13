@@ -17,6 +17,7 @@ export const PAGE_ROUTES: Record<string, AppPathname> = {
   "services-local-llm": "/services/local-llm",
   "services-czech-integrations": "/services/czech-integrations",
   "services-ninjatrader": "/services/ninjatrader",
+  pricing: "/pricing",
 };
 
 /**

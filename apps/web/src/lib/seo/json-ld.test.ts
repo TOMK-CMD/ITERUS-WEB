@@ -3,6 +3,7 @@ import { facts, isTodo } from "@/lib/facts";
 import {
   buildFAQPage,
   buildOrganization,
+  buildPricingService,
   buildServiceCatalog,
   buildServiceDetail,
   buildSiteJsonLd,
@@ -98,6 +99,36 @@ describe("JSON-LD builders", () => {
     expect(catalog).toHaveLength(2);
     expect(catalog[0]).toMatchObject({ "@type": "Service", name: "A" });
     expect(catalog[1]).toMatchObject({ "@type": "Service", name: "B" });
+  });
+
+  it("builds a pricing Service with an AggregateOffer spanning the price bands", () => {
+    const service = buildPricingService("cs", "/pricing", {
+      name: "Cena",
+      description: "Popis cen.",
+    });
+    expect(service).toMatchObject({
+      "@type": "Service",
+      name: "Cena",
+      provider: { "@id": `${SITE_URL}/#organization` },
+    });
+    const offers = (service as unknown as { offers: Record<string, unknown> }).offers;
+    expect(offers).toMatchObject({
+      "@type": "AggregateOffer",
+      priceCurrency: facts.pricing.currency,
+      lowPrice: Math.min(...facts.pricing.bands.map((b) => b.from_czk)),
+    });
+    expect(Array.isArray((offers as { offers: unknown[] }).offers)).toBe(true);
+    expect((offers as { offers: unknown[] }).offers).toHaveLength(facts.pricing.bands.length);
+  });
+
+  it("never publishes the internal hourly rate in the pricing JSON-LD", () => {
+    const service = buildPricingService("cs", "/pricing", {
+      name: "Cena",
+      description: "Popis cen.",
+    });
+    const json = serializeJsonLd(service);
+    expect(json).not.toContain(String(facts.pricing.reference_rate_czk_hour));
+    expect(json).not.toContain(String(facts.pricing.reference_rate_czk_day));
   });
 
   it("builds an FAQPage with one Question/Answer pair per item", () => {

@@ -1,6 +1,8 @@
 import type {
+  AggregateOffer,
   Answer,
   FAQPage,
+  Offer,
   Organization,
   ProfessionalService,
   Question,
@@ -138,6 +140,47 @@ export function buildFAQPage(items: FaqItem[]): WithContext<FAQPage> {
       name: item.question,
       acceptedAnswer: { "@type": "Answer", text: item.answer } satisfies Answer,
     })),
+  };
+}
+
+/**
+ * `/cena` — Service with an AggregateOffer built from `facts.pricing.bands`. Never reads
+ * `reference_rate_*`: the hourly rate is `reference_rate_internal_only` and stays unpublished
+ * until Tomas approves it (guarded by a unit test).
+ */
+export function buildPricingService(
+  locale: Locale,
+  href: AppPathname,
+  content: ServiceContent,
+): WithContext<Service> {
+  const bands = facts.pricing.bands;
+  const lowPrice = Math.min(...bands.map((band) => band.from_czk));
+  const finiteCeilings = bands.flatMap((band) => (band.to_czk !== null ? [band.to_czk] : []));
+  const highPrice = finiteCeilings.length ? Math.max(...finiteCeilings) : lowPrice;
+
+  const offers: Offer[] = bands.map((band) => ({
+    "@type": "Offer",
+    name: locale === "cs" ? band.cs : band.en,
+    description: locale === "cs" ? band.includes_cs : band.includes_en,
+    price: band.from_czk,
+    priceCurrency: facts.pricing.currency,
+  }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: content.name,
+    description: content.description,
+    url: localizedUrl(locale, href),
+    provider: { "@id": ORGANIZATION_ID },
+    areaServed: ["CZ", "EU"],
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: facts.pricing.currency,
+      lowPrice,
+      highPrice,
+      offers,
+    } satisfies AggregateOffer,
   };
 }
 
