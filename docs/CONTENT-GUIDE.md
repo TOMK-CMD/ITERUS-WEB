@@ -99,9 +99,12 @@ by agents and approved by Tomas (ideally a lawyer) before publishing; mark draft
 
 ## Style
 
-Short sentences. Active voice. No filler intros ("V dnešní době…"). Czech typographic rules
-(non-breaking spaces after one-letter prepositions via the MDX post-processor, „uvozovky“,
-thin spaces in numbers 2 520). Alt text describes what the image shows for the page's purpose.
+Short sentences. Active voice. No filler intros ("V dnešní době…"). Czech typographic rules:
+non-breaking spaces after one-letter prepositions/conjunctions are applied automatically by
+`remark-czech-nbsp.ts` (wired into `loadPage` for the `cs` locale only — never edit them by hand
+in content) — write plain spaces in the source and let the pipeline handle it; „uvozovky“; thin
+spaces in numbers (2 520) where a raw multi-digit number appears in prose. Alt text describes what
+the image shows for the page's purpose.
 
 ## Content map
 

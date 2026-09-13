@@ -102,14 +102,18 @@ ne s vlastními odpověďmi.
 ### Session C — reference a copy (Opus 5 · effort `high`)
 
 9. Case studies přes `case-study` skill pro **Innea, Innea Pro a Legacy You** (poslední se
-   štítkem „před spuštěním") — každá jen po Tomasově briefu a potvrzení čísel. Karty „na čem dál
-   pracujeme" pro Koordinační kalendář, gaits, STAMIQ a NT8-Optimizer: jedna věta, štítek stavu,
-   technický háček, žádná čísla. **Iterus Platform, tender-radar a GEO-SEO se nezveřejňují**
-   (rozhodnutí 2026-09-09). Listing `/reference` ↔ `/en/references` (`CollectionPage`);
-   tier každého projektu určuje `facts.json → projects[*].publish` a hlídá ho unit test.
-10. Průchod celého obsahu proti `docs/CONTENT-GUIDE.md` (answer-first, terminologie, typografie —
-    zvážit remark plugin pro nezlomitelné mezery po jednopísmenných předložkách).
+   štítkem „před spuštěním") — každá jen po Tomasově briefu a potvrzení čísel — **brief vyžádán
+   2026-09-13, čeká se**. ✅ Karty „na čem dál pracujeme" pro Koordinační kalendář, gaits, STAMIQ
+   a NT8-Optimizer hotové (PR #11, `/reference` ↔ `/en/references`, `CollectionPage`; tier určuje
+   `facts.json → projects[*].publish`, hlídá unit test). **Iterus Platform, tender-radar a
+   GEO-SEO se nezveřejňují** (rozhodnutí 2026-09-09).
+10. ✅ Průchod celého obsahu proti `docs/CONTENT-GUIDE.md` (2026-09-13): answer-first ověřeno
+    skriptem (první odstavec ≤ 60 slov na všech marketingových stránkách), terminologie a
+    superlativy zkontrolovány ručně (bez nálezu). Nezlomitelné mezery po jednopísmenných
+    předložkách řeší remark plugin `remark-czech-nbsp.ts`, zapojený v `loadPage` jen pro `cs` —
+    nemusí se psát ručně do žádného obsahového souboru.
 11. Legal stránky: Tomas + právník doplní `TODO(legal:*)` a `TODO(facts:*)` → `status: published`.
+    Dvě zastaralé `TODO(facts:*)` (adresa, e-mail) doplněny 2026-09-13 (PR #12); zbytek čeká.
 
 ### Session D — go-live (Sonnet 5 · effort `medium`, skill `release`)
 

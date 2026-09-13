@@ -37,8 +37,11 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
     typed `pathnames`), `navigation.ts` (`Link`, `getPathname`, …), `request.ts` (root params).
   - `src/proxy.ts` — next-intl middleware (Next 16 network boundary).
   - `src/lib/content/` — `schema.ts` (zod frontmatter), `loader.ts` (`readPage`, `listPages`,
-    `loadPage` via `next-mdx-remote/rsc`), `service-catalog.ts` (the five service detail slugs +
-    `loadServiceCatalog`, read by the `/sluzby` overview for its cards and `Service` JSON-LD),
+    `loadPage` via `next-mdx-remote/rsc`; `loadPage` runs `remark-czech-nbsp.ts` for `cs` only —
+    a remark plugin that replaces the space after a one-letter Czech preposition/conjunction with
+    a non-breaking space, per `docs/CONTENT-GUIDE.md` → Style), `service-catalog.ts` (the five
+    service detail slugs + `loadServiceCatalog`, read by the `/sluzby` overview for its cards and
+    `Service` JSON-LD),
     `reference-cards.ts` (`getCardProjects`: the `facts.json → projects[*].publish === "card"`
     entries, read by both the `<ReferenceCards />` component and `/reference`'s `page.tsx` so the
     rendered cards and the `CollectionPage` JSON-LD never drift apart).

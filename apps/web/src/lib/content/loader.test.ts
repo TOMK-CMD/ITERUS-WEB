@@ -7,6 +7,9 @@ const contentDir = fileURLToPath(new URL("./__fixtures__", import.meta.url));
 // A separate root for broken content: a single invalid page must fail listing loudly, so it
 // cannot live next to the valid fixtures.
 const brokenDir = fileURLToPath(new URL("./__fixtures__/broken", import.meta.url));
+// A separate root so this fixture's slug doesn't show up in the plain listPages() tests above.
+const nbspDir = fileURLToPath(new URL("./__fixtures__/nbsp", import.meta.url));
+const NBSP = " ";
 
 describe("readPage", () => {
   it("parses frontmatter and strips it from the body", async () => {
@@ -58,5 +61,20 @@ describe("loadPage", () => {
     const html = renderToStaticMarkup(page.content);
     expect(html).toContain("<h1>Nadpis</h1>");
     expect(html).toContain("custom-component-rendered");
+  });
+
+  it("applies the Czech non-breaking-space rule to cs pages but not to en pages", async () => {
+    const csHtml = renderToStaticMarkup(
+      (await loadPage("cs", "nbsp", {}, { contentDir: nbspDir })).content,
+    );
+    expect(csHtml).toContain(`k${NBSP}domu`);
+
+    // "I went to a house" in the en fixture would also match the one-letter rule ("a house") if
+    // the plugin ran there — it must not, English has no such typographic convention.
+    const enHtml = renderToStaticMarkup(
+      (await loadPage("en", "nbsp", {}, { contentDir: nbspDir })).content,
+    );
+    expect(enHtml).not.toContain(NBSP);
+    expect(enHtml).toContain("a house");
   });
 });
