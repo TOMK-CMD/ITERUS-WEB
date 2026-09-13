@@ -36,7 +36,7 @@ export default async function AboutPage({ params }: Props) {
             name: page.frontmatter.title,
             description: page.frontmatter.description,
           }),
-          buildPerson(),
+          buildPerson(locale),
         ]}
       />
       <article className="prose-iterus">

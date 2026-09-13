@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
 import type { AppPathname } from "@/i18n/routing";
 import { buildHowTo } from "@/lib/seo/json-ld";
+import { textOf } from "./text-of";
 
 type StepProps = { name: string; children: ReactNode };
 
@@ -14,13 +15,6 @@ export function Step({ name, children }: StepProps) {
       {children}
     </li>
   );
-}
-
-function textOf(node: ReactNode): string {
-  if (typeof node === "string" || typeof node === "number") return String(node);
-  if (Array.isArray(node)) return node.map(textOf).join("");
-  if (isValidElement<{ children?: ReactNode }>(node)) return textOf(node.props.children);
-  return "";
 }
 
 type Props = {
@@ -40,7 +34,7 @@ export async function ProcessSteps({ name, description, href, children }: Props)
   return (
     <>
       <ol>{children}</ol>
-      <JsonLd data={buildHowTo(locale as "cs" | "en", href, { name, description }, steps)} />
+      <JsonLd data={buildHowTo(locale, href, { name, description }, steps)} />
     </>
   );
 }

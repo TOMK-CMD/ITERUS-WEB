@@ -192,7 +192,7 @@ export function buildPricingService(
 const FOUNDER_PROFILE_KEYS = ["linkedin_founder"] as const;
 
 /** The founder — referenced by `/o-nas`'s AboutPage via `about: { "@id": ... }`. */
-export function buildPerson(): WithContext<Person> {
+export function buildPerson(locale: Locale): WithContext<Person> {
   const sameAs = FOUNDER_PROFILE_KEYS.map((key) => factOrNull(facts.organization.urls[key])).filter(
     (value): value is string => value !== null,
   );
@@ -202,7 +202,8 @@ export function buildPerson(): WithContext<Person> {
     "@id": PERSON_ID,
     name: facts.organization.founder_name,
     alternateName: facts.organization.founder_name_alternate,
-    jobTitle: facts.organization.founder_title_cs,
+    jobTitle:
+      locale === "cs" ? facts.organization.founder_title_cs : facts.organization.founder_title_en,
     worksFor: { "@id": ORGANIZATION_ID },
     ...(sameAs.length ? { sameAs } : {}),
   };

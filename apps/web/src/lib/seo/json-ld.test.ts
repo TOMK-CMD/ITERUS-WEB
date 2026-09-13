@@ -163,7 +163,7 @@ describe("JSON-LD builders", () => {
   });
 
   it("builds the founder Person linked to the organisation", () => {
-    const person = buildPerson();
+    const person = buildPerson("cs");
     expect(person).toMatchObject({
       "@type": "Person",
       "@id": `${SITE_URL}/#founder`,
@@ -172,6 +172,14 @@ describe("JSON-LD builders", () => {
       jobTitle: facts.organization.founder_title_cs,
       worksFor: { "@id": `${SITE_URL}/#organization` },
     });
+  });
+
+  it("uses the job title of the page's own locale, not always Czech", () => {
+    const jobTitle = (locale: "cs" | "en") =>
+      (buildPerson(locale) as unknown as { jobTitle: string }).jobTitle;
+    expect(jobTitle("cs")).toBe(facts.organization.founder_title_cs);
+    expect(jobTitle("en")).toBe(facts.organization.founder_title_en);
+    expect(jobTitle("en")).not.toBe(facts.organization.founder_title_cs);
   });
 
   it("links the AboutPage to the founder Person via about", () => {
