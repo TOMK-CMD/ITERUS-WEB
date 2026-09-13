@@ -1,9 +1,13 @@
 import type {
+  AboutPage,
   AggregateOffer,
   Answer,
   FAQPage,
+  HowTo,
+  HowToStep,
   Offer,
   Organization,
+  Person,
   ProfessionalService,
   Question,
   Service,
@@ -18,6 +22,7 @@ import { localizedUrl, SITE_URL } from "./metadata";
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const SERVICE_ID = `${SITE_URL}/#professional-service`;
+const PERSON_ID = `${SITE_URL}/#founder`;
 
 const LANGUAGE_TAGS: Record<Locale, string> = { cs: "cs-CZ", en: "en" };
 
@@ -181,6 +186,68 @@ export function buildPricingService(
       highPrice,
       offers,
     } satisfies AggregateOffer,
+  };
+}
+
+const FOUNDER_PROFILE_KEYS = ["linkedin_founder"] as const;
+
+/** The founder — referenced by `/o-nas`'s AboutPage via `about: { "@id": ... }`. */
+export function buildPerson(locale: Locale): WithContext<Person> {
+  const sameAs = FOUNDER_PROFILE_KEYS.map((key) => factOrNull(facts.organization.urls[key])).filter(
+    (value): value is string => value !== null,
+  );
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": PERSON_ID,
+    name: facts.organization.founder_name,
+    alternateName: facts.organization.founder_name_alternate,
+    jobTitle:
+      locale === "cs" ? facts.organization.founder_title_cs : facts.organization.founder_title_en,
+    worksFor: { "@id": ORGANIZATION_ID },
+    ...(sameAs.length ? { sameAs } : {}),
+  };
+}
+
+/** `/o-nas` — AboutPage linked to the founder Person via `about`. */
+export function buildAboutPage(
+  locale: Locale,
+  href: AppPathname,
+  content: ServiceContent,
+): WithContext<AboutPage> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: content.name,
+    description: content.description,
+    url: localizedUrl(locale, href),
+    about: { "@id": PERSON_ID },
+    inLanguage: LANGUAGE_TAGS[locale],
+  };
+}
+
+export type ProcessStep = { name: string; text: string };
+
+/** `/jak-pracujeme` — HowTo built from the steps authored on the page. */
+export function buildHowTo(
+  locale: Locale,
+  href: AppPathname,
+  content: ServiceContent,
+  steps: ProcessStep[],
+): WithContext<HowTo> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: content.name,
+    description: content.description,
+    url: localizedUrl(locale, href),
+    inLanguage: LANGUAGE_TAGS[locale],
+    step: steps.map((stepItem, index): HowToStep => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: stepItem.name,
+      text: stepItem.text,
+    })),
   };
 }
 

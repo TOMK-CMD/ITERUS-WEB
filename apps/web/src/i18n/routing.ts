@@ -34,6 +34,8 @@ export const routing = defineRouting({
     },
     "/services/ninjatrader": { cs: "/sluzby/ninjatrader", en: "/services/ninjatrader" },
     "/pricing": { cs: "/cena", en: "/pricing" },
+    "/about": { cs: "/o-nas", en: "/about" },
+    "/process": { cs: "/jak-pracujeme", en: "/process" },
   },
 });
 

@@ -1,6 +1,7 @@
 import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
 import { JsonLd } from "@/components/json-ld";
 import { buildFAQPage } from "@/lib/seo/json-ld";
+import { textOf } from "./text-of";
 
 type FaqItemProps = { question: string; children: ReactNode };
 
@@ -19,13 +20,6 @@ export function FaqItem({ question, children }: FaqItemProps) {
       {children}
     </div>
   );
-}
-
-function textOf(node: ReactNode): string {
-  if (typeof node === "string" || typeof node === "number") return String(node);
-  if (Array.isArray(node)) return node.map(textOf).join("");
-  if (isValidElement<{ children?: ReactNode }>(node)) return textOf(node.props.children);
-  return "";
 }
 
 /** FAQ block: renders its <FaqItem> children and emits their `FAQPage` JSON-LD. */

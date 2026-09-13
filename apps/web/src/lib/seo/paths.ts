@@ -18,6 +18,8 @@ export const PAGE_ROUTES: Record<string, AppPathname> = {
   "services-czech-integrations": "/services/czech-integrations",
   "services-ninjatrader": "/services/ninjatrader",
   pricing: "/pricing",
+  about: "/about",
+  process: "/process",
 };
 
 /**
