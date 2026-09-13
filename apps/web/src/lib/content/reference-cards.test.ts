@@ -20,9 +20,31 @@ describe("getCardProjects", () => {
     }
   });
 
+  it("returns exactly the card-tier projects named in docs/CONTENT-MAP.md, nothing else", () => {
+    const names = getCardProjects("cs")
+      .map((card) => card.name)
+      .sort();
+    expect(names).toStrictEqual(
+      [
+        facts.projects["super-shared-calendar"].name,
+        facts.projects.gaits.name,
+        facts.projects.stamiq.name,
+        facts.projects["nt8-optimizer"].name,
+      ].sort(),
+    );
+  });
+
   it("never includes a case-study tier or unpublished project", () => {
     const names = getCardProjects("cs").map((card) => card.name);
-    expect(names).not.toContain(facts.projects.innea.name);
-    expect(names).not.toContain(facts.projects["tender-radar"].name);
+    for (const key of [
+      "innea",
+      "innea-pro",
+      "legacy-you",
+      "iterus-platform",
+      "tender-radar",
+      "geo-seo",
+    ] as const) {
+      expect(names, key).not.toContain(facts.projects[key].name);
+    }
   });
 });
