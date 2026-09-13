@@ -5,6 +5,7 @@
   },
   "nav": {
     "home": "Home",
+    "services": "Services",
     "contact": "Contact",
     "label": "Main navigation"
   },
@@ -20,6 +21,9 @@
   },
   "footer": {
     "navLabel": "Footer navigation"
+  },
+  "services": {
+    "detailHeading": "Service detail pages"
   },
   "contact": {
     "form": {

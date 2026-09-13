@@ -1,7 +1,25 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const paths = ["/", "/en", "/kontakt", "/en/contact", "/ochrana-osobnich-udaju"];
+const paths = [
+  "/",
+  "/en",
+  "/kontakt",
+  "/en/contact",
+  "/ochrana-osobnich-udaju",
+  "/sluzby",
+  "/en/services",
+  "/sluzby/webove-aplikace",
+  "/en/services/web-applications",
+  "/sluzby/ai-integrace",
+  "/en/services/ai-integration",
+  "/sluzby/lokalni-llm",
+  "/en/services/local-llm",
+  "/sluzby/ceske-integrace",
+  "/en/services/czech-integrations",
+  "/sluzby/ninjatrader",
+  "/en/services/ninjatrader",
+];
 
 for (const path of paths) {
   test(`${path} has no serious or critical accessibility violations`, async ({ page }) => {

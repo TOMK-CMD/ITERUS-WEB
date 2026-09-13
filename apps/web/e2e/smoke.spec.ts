@@ -35,6 +35,90 @@ const cases: Case[] = [
     canonical: `${SITE}/en/contact`,
     alternates: { cs: `${SITE}/kontakt`, en: `${SITE}/en/contact` },
   },
+  {
+    path: "/sluzby",
+    locale: "cs",
+    canonical: `${SITE}/sluzby`,
+    alternates: { cs: `${SITE}/sluzby`, en: `${SITE}/en/services` },
+  },
+  {
+    path: "/en/services",
+    locale: "en",
+    canonical: `${SITE}/en/services`,
+    alternates: { cs: `${SITE}/sluzby`, en: `${SITE}/en/services` },
+  },
+  {
+    path: "/sluzby/webove-aplikace",
+    locale: "cs",
+    canonical: `${SITE}/sluzby/webove-aplikace`,
+    alternates: {
+      cs: `${SITE}/sluzby/webove-aplikace`,
+      en: `${SITE}/en/services/web-applications`,
+    },
+  },
+  {
+    path: "/en/services/web-applications",
+    locale: "en",
+    canonical: `${SITE}/en/services/web-applications`,
+    alternates: {
+      cs: `${SITE}/sluzby/webove-aplikace`,
+      en: `${SITE}/en/services/web-applications`,
+    },
+  },
+  {
+    path: "/sluzby/ai-integrace",
+    locale: "cs",
+    canonical: `${SITE}/sluzby/ai-integrace`,
+    alternates: { cs: `${SITE}/sluzby/ai-integrace`, en: `${SITE}/en/services/ai-integration` },
+  },
+  {
+    path: "/en/services/ai-integration",
+    locale: "en",
+    canonical: `${SITE}/en/services/ai-integration`,
+    alternates: { cs: `${SITE}/sluzby/ai-integrace`, en: `${SITE}/en/services/ai-integration` },
+  },
+  {
+    path: "/sluzby/lokalni-llm",
+    locale: "cs",
+    canonical: `${SITE}/sluzby/lokalni-llm`,
+    alternates: { cs: `${SITE}/sluzby/lokalni-llm`, en: `${SITE}/en/services/local-llm` },
+  },
+  {
+    path: "/en/services/local-llm",
+    locale: "en",
+    canonical: `${SITE}/en/services/local-llm`,
+    alternates: { cs: `${SITE}/sluzby/lokalni-llm`, en: `${SITE}/en/services/local-llm` },
+  },
+  {
+    path: "/sluzby/ceske-integrace",
+    locale: "cs",
+    canonical: `${SITE}/sluzby/ceske-integrace`,
+    alternates: {
+      cs: `${SITE}/sluzby/ceske-integrace`,
+      en: `${SITE}/en/services/czech-integrations`,
+    },
+  },
+  {
+    path: "/en/services/czech-integrations",
+    locale: "en",
+    canonical: `${SITE}/en/services/czech-integrations`,
+    alternates: {
+      cs: `${SITE}/sluzby/ceske-integrace`,
+      en: `${SITE}/en/services/czech-integrations`,
+    },
+  },
+  {
+    path: "/sluzby/ninjatrader",
+    locale: "cs",
+    canonical: `${SITE}/sluzby/ninjatrader`,
+    alternates: { cs: `${SITE}/sluzby/ninjatrader`, en: `${SITE}/en/services/ninjatrader` },
+  },
+  {
+    path: "/en/services/ninjatrader",
+    locale: "en",
+    canonical: `${SITE}/en/services/ninjatrader`,
+    alternates: { cs: `${SITE}/sluzby/ninjatrader`, en: `${SITE}/en/services/ninjatrader` },
+  },
 ];
 
 function collectErrors(page: Page): string[] {

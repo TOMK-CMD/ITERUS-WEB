@@ -5,6 +5,7 @@
   },
   "nav": {
     "home": "Úvod",
+    "services": "Služby",
     "contact": "Kontakt",
     "label": "Hlavní navigace"
   },
@@ -20,6 +21,9 @@
   },
   "footer": {
     "navLabel": "Navigace v patičce"
+  },
+  "services": {
+    "detailHeading": "Detailní stránky služeb"
   },
   "contact": {
     "form": {

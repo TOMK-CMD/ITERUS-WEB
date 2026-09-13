@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { facts, isTodo } from "@/lib/facts";
-import { buildOrganization, buildSiteJsonLd, sameAsUrls, serializeJsonLd } from "./json-ld";
+import {
+  buildFAQPage,
+  buildOrganization,
+  buildServiceCatalog,
+  buildServiceDetail,
+  buildSiteJsonLd,
+  sameAsUrls,
+  serializeJsonLd,
+} from "./json-ld";
 import { SITE_URL } from "./metadata";
 
 describe("JSON-LD builders", () => {
@@ -66,5 +74,51 @@ describe("JSON-LD builders", () => {
 
   it("escapes closing script tags when serialising", () => {
     expect(serializeJsonLd({ x: "</script><script>alert(1)</script>" })).not.toContain("</script>");
+  });
+
+  it("builds a Service entity for a detail page, linked to the organisation", () => {
+    const service = buildServiceDetail("cs", "/services/web-applications", {
+      name: "Vývoj webových aplikací na míru",
+      description: "Popis služby.",
+    });
+    expect(service).toMatchObject({
+      "@type": "Service",
+      name: "Vývoj webových aplikací na míru",
+      description: "Popis služby.",
+      url: `${SITE_URL}/sluzby/webove-aplikace`,
+      provider: { "@id": `${SITE_URL}/#organization` },
+    });
+  });
+
+  it("builds one Service stub per catalog entry for the /sluzby overview", () => {
+    const catalog = buildServiceCatalog("en", [
+      { href: "/services/web-applications", name: "A", description: "Desc A" },
+      { href: "/services/ai-integration", name: "B", description: "Desc B" },
+    ]);
+    expect(catalog).toHaveLength(2);
+    expect(catalog[0]).toMatchObject({ "@type": "Service", name: "A" });
+    expect(catalog[1]).toMatchObject({ "@type": "Service", name: "B" });
+  });
+
+  it("builds an FAQPage with one Question/Answer pair per item", () => {
+    const faq = buildFAQPage([
+      { question: "Otázka jedna?", answer: "Odpověď jedna." },
+      { question: "Otázka dva?", answer: "Odpověď dva." },
+    ]);
+    expect(faq).toMatchObject({
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Otázka jedna?",
+          acceptedAnswer: { "@type": "Answer", text: "Odpověď jedna." },
+        },
+        {
+          "@type": "Question",
+          name: "Otázka dva?",
+          acceptedAnswer: { "@type": "Answer", text: "Odpověď dva." },
+        },
+      ],
+    });
   });
 });

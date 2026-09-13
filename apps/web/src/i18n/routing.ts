@@ -18,6 +18,21 @@ export const routing = defineRouting({
     "/contact": { cs: "/kontakt", en: "/contact" },
     "/privacy": { cs: "/ochrana-osobnich-udaju", en: "/privacy" },
     "/terms": { cs: "/obchodni-podminky", en: "/terms" },
+    "/services": { cs: "/sluzby", en: "/services" },
+    "/services/web-applications": {
+      cs: "/sluzby/webove-aplikace",
+      en: "/services/web-applications",
+    },
+    "/services/ai-integration": {
+      cs: "/sluzby/ai-integrace",
+      en: "/services/ai-integration",
+    },
+    "/services/local-llm": { cs: "/sluzby/lokalni-llm", en: "/services/local-llm" },
+    "/services/czech-integrations": {
+      cs: "/sluzby/ceske-integrace",
+      en: "/services/czech-integrations",
+    },
+    "/services/ninjatrader": { cs: "/sluzby/ninjatrader", en: "/services/ninjatrader" },
   },
 });
 
