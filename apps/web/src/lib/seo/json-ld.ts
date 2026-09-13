@@ -2,6 +2,7 @@ import type {
   AboutPage,
   AggregateOffer,
   Answer,
+  CollectionPage,
   FAQPage,
   HowTo,
   HowToStep,
@@ -11,6 +12,7 @@ import type {
   ProfessionalService,
   Question,
   Service,
+  SoftwareApplication,
   WebSite,
   WithContext,
 } from "schema-dts";
@@ -247,6 +249,35 @@ export function buildHowTo(
       position: index + 1,
       name: stepItem.name,
       text: stepItem.text,
+    })),
+  };
+}
+
+export type ReferenceCard = { name: string; hook: string };
+
+/**
+ * `/reference` — CollectionPage listing the "card" tier projects (`facts.json →
+ * projects[*].publish === "card"`) as SoftwareApplication entries. Case-study tier projects get
+ * their own page (Article + SoftwareApplication) once written and are added to this collection
+ * then — they are not represented here until they have somewhere to link to.
+ */
+export function buildReferencesCollection(
+  locale: Locale,
+  href: AppPathname,
+  content: ServiceContent,
+  cards: ReferenceCard[],
+): WithContext<CollectionPage> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: content.name,
+    description: content.description,
+    url: localizedUrl(locale, href),
+    inLanguage: LANGUAGE_TAGS[locale],
+    hasPart: cards.map((card): SoftwareApplication => ({
+      "@type": "SoftwareApplication",
+      name: card.name,
+      description: card.hook,
     })),
   };
 }

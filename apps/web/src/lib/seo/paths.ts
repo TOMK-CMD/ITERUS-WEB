@@ -20,6 +20,7 @@ export const PAGE_ROUTES: Record<string, AppPathname> = {
   pricing: "/pricing",
   about: "/about",
   process: "/process",
+  references: "/references",
 };
 
 /**

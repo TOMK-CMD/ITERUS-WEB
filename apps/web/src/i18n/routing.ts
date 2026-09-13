@@ -36,6 +36,7 @@ export const routing = defineRouting({
     "/pricing": { cs: "/cena", en: "/pricing" },
     "/about": { cs: "/o-nas", en: "/about" },
     "/process": { cs: "/jak-pracujeme", en: "/process" },
+    "/references": { cs: "/reference", en: "/references" },
   },
 });
 
