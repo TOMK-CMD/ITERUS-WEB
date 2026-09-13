@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { facts, isTodo } from "@/lib/facts";
 import {
+  buildAboutPage,
   buildFAQPage,
+  buildHowTo,
   buildOrganization,
+  buildPerson,
   buildPricingService,
   buildServiceCatalog,
   buildServiceDetail,
@@ -155,6 +158,42 @@ describe("JSON-LD builders", () => {
           name: "Otázka dva?",
           acceptedAnswer: { "@type": "Answer", text: "Odpověď dva." },
         },
+      ],
+    });
+  });
+
+  it("builds the founder Person linked to the organisation", () => {
+    const person = buildPerson();
+    expect(person).toMatchObject({
+      "@type": "Person",
+      "@id": `${SITE_URL}/#founder`,
+      name: facts.organization.founder_name,
+      alternateName: facts.organization.founder_name_alternate,
+      jobTitle: facts.organization.founder_title_cs,
+      worksFor: { "@id": `${SITE_URL}/#organization` },
+    });
+  });
+
+  it("links the AboutPage to the founder Person via about", () => {
+    const about = buildAboutPage("cs", "/about", { name: "O nás", description: "Popis." });
+    expect(about).toMatchObject({
+      "@type": "AboutPage",
+      name: "O nás",
+      about: { "@id": `${SITE_URL}/#founder` },
+    });
+  });
+
+  it("builds a HowTo with one numbered HowToStep per step, in order", () => {
+    const howTo = buildHowTo("cs", "/process", { name: "Jak pracujeme", description: "Popis." }, [
+      { name: "Krok jedna", text: "Text jedna." },
+      { name: "Krok dva", text: "Text dva." },
+    ]);
+    expect(howTo).toMatchObject({
+      "@type": "HowTo",
+      name: "Jak pracujeme",
+      step: [
+        { "@type": "HowToStep", position: 1, name: "Krok jedna", text: "Text jedna." },
+        { "@type": "HowToStep", position: 2, name: "Krok dva", text: "Text dva." },
       ],
     });
   });

@@ -21,6 +21,10 @@ const paths = [
   "/en/services/ninjatrader",
   "/cena",
   "/en/pricing",
+  "/o-nas",
+  "/en/about",
+  "/jak-pracujeme",
+  "/en/process",
 ];
 
 for (const path of paths) {

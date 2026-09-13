@@ -27,6 +27,10 @@ const PAGES = [
   "/en/services/ninjatrader",
   "/cena",
   "/en/pricing",
+  "/o-nas",
+  "/en/about",
+  "/jak-pracujeme",
+  "/en/process",
 ];
 
 const REQUIRED = {
@@ -44,6 +48,9 @@ const REQUIRED = {
   AggregateOffer: ["priceCurrency", "lowPrice", "highPrice"],
   Offer: ["name", "price", "priceCurrency"],
   Person: ["name"],
+  AboutPage: ["name", "url"],
+  HowTo: ["name", "step"],
+  HowToStep: ["name", "text"],
 };
 
 const baseArg = process.argv.indexOf("--base");

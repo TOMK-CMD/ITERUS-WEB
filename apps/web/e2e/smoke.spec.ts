@@ -131,6 +131,30 @@ const cases: Case[] = [
     canonical: `${SITE}/en/pricing`,
     alternates: { cs: `${SITE}/cena`, en: `${SITE}/en/pricing` },
   },
+  {
+    path: "/o-nas",
+    locale: "cs",
+    canonical: `${SITE}/o-nas`,
+    alternates: { cs: `${SITE}/o-nas`, en: `${SITE}/en/about` },
+  },
+  {
+    path: "/en/about",
+    locale: "en",
+    canonical: `${SITE}/en/about`,
+    alternates: { cs: `${SITE}/o-nas`, en: `${SITE}/en/about` },
+  },
+  {
+    path: "/jak-pracujeme",
+    locale: "cs",
+    canonical: `${SITE}/jak-pracujeme`,
+    alternates: { cs: `${SITE}/jak-pracujeme`, en: `${SITE}/en/process` },
+  },
+  {
+    path: "/en/process",
+    locale: "en",
+    canonical: `${SITE}/en/process`,
+    alternates: { cs: `${SITE}/jak-pracujeme`, en: `${SITE}/en/process` },
+  },
 ];
 
 function collectErrors(page: Page): string[] {
