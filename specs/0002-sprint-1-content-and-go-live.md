@@ -47,11 +47,18 @@ Review: 4 kola (reviewer subagent + 3× Gemini 3.1 Pro), 21 nálezů, 19 pravýc
 2. Zveřejnit lze **Innea a Innea Pro** (v provozu) a **Legacy You** (před spuštěním) jako case
    studies; **Koordinační kalendář, gaits, STAMIQ a NT8-Optimizer** jako jednořádkové karty.
    **Iterus Platform, tender-radar a GEO-SEO se nezveřejňují** (u GEO-SEO chybí veřejný název).
+   ✅ **Aktualizováno 2026-09-15:** GEO-SEO ship jako karta pod pracovním názvem „GEO-SEO"
+   (`name_provisional: true`); Iterus Platform smí jako karta ve stavu „ve vývoji / testování
+   přínosnosti", bez tvrdých čísel — čeká jen na technický hook text od Tomase. Tender-radar
+   zůstává nezveřejněný.
 3. `organization.software_since` = **2025**; firma existuje od 2005, ale ve stínicí technice —
    oba roky se na webu uvádějí vždy spolu, nikdy 2005 samostatně. (Nad rámec otázek ze specu.)
 4. Ceny **jdou ven jako pásma**: pilot 90–250 tis., produkční 250–700 tis., AI od 180 tis.
    (on-prem od 350 tis.) Kč bez DPH; konzultace 60 min zdarma, discovery 25 tis. odečitatelné.
    Hodinová sazba (2 000 Kč) zatím **schválena není** — rozhodnout před psaním `/cena`.
+   ✅ **Rozhodnuto 2026-09-15:** hodinová sazba zůstává neveřejná natrvalo; `/cena` odpovídá na
+   frázi „hodinová sazba programátora" samotným modelem pásem, ne číslem (`facts.json →
+pricing.reference_rate_note`).
 
 **Proč není samostatná FAQ stránka.** Otázky žijí jako `FAQPage` bloky na stránkách, které je
 zodpovídají. Samostatná `/faq` by soutěžila o tytéž dotazy se stránkami služeb a u GEO je
@@ -106,7 +113,9 @@ ne s vlastními odpověďmi.
    2026-09-13, čeká se**. ✅ Karty „na čem dál pracujeme" pro Koordinační kalendář, gaits, STAMIQ
    a NT8-Optimizer hotové (PR #11, `/reference` ↔ `/en/references`, `CollectionPage`; tier určuje
    `facts.json → projects[*].publish`, hlídá unit test). **Iterus Platform, tender-radar a
-   GEO-SEO se nezveřejňují** (rozhodnutí 2026-09-09).
+   GEO-SEO se nezveřejňují** (rozhodnutí 2026-09-09). ✅ **Aktualizováno 2026-09-15:** viz bod 2
+   výše — GEO-SEO je teď karta, Iterus Platform smí jako karta (work-in-progress), jen čeká na
+   hook text; tender-radar zůstává mimo.
 10. ✅ Průchod celého obsahu proti `docs/CONTENT-GUIDE.md` (2026-09-13): answer-first ověřeno
     skriptem (první odstavec ≤ 60 slov na všech marketingových stránkách), terminologie a
     superlativy zkontrolovány ručně (bez nálezu). Nezlomitelné mezery po jednopísmenných
@@ -162,11 +171,12 @@ provizorní), klientský portál. (Fáze 2–3.)
 3. **Otevřené:** jméno zakladatele, adresa sídla, DIČ, LinkedIn URL — doplnit do `facts.json`
    před Session B (`/o-nas`, `/kontakt`, JSON-LD `Organization`/`Person`).
 4. **Otevřené:** spustit na iterus.cz hned po Session C, nebo až po logu/vizuálu?
-5. **Otevřené (přibylo):** smí na web hodinová sazba 2 000 Kč? Schválení z 2026-09-09 pokrývalo
-   jen pásma, ale `/cena` cílí i na frázi „hodinová sazba programátora".
-6. **Otevřené (přibylo):** platí `not_offered: "embedded/firmware"`, když je na `/reference`
-   aplikace pro Garmin Connect IQ? A veřejný název pro GEO-SEO + potvrzení názvu
-   „Koordinační kalendář".
+5. ~~Smí na web hodinová sazba 2 000 Kč?~~ — **zodpovězeno 2026-09-15**: ne, zůstává neveřejná
+   natrvalo; `/cena` odpovídá na cílenou frázi pásmy, ne číslem.
+6. Platí `not_offered: "embedded/firmware"`, když je na `/reference` aplikace pro Garmin Connect
+   IQ? — **zodpovězeno 2026-09-15**: ano, beze změny. Veřejný název pro GEO-SEO — **zodpovězeno
+   2026-09-15**: „GEO-SEO" jako pracovní název (`name_provisional: true`). **Otevřené zůstává:**
+   potvrzení názvu „Koordinační kalendář".
 
 ## Poznámky / Notes
 

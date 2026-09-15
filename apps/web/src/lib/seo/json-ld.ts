@@ -153,7 +153,7 @@ export function buildFAQPage(items: FaqItem[]): WithContext<FAQPage> {
 /**
  * `/cena` — Service with an AggregateOffer built from `facts.pricing.bands`. Never reads
  * `reference_rate_*`: the hourly rate is `reference_rate_internal_only` and stays unpublished
- * until Tomas approves it (guarded by a unit test).
+ * by decision (2026-09-15, guarded by a unit test).
  */
 export function buildPricingService(
   locale: Locale,
