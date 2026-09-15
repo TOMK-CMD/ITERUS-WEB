@@ -48,9 +48,10 @@ Review: 4 kola (reviewer subagent + 3× Gemini 3.1 Pro), 21 nálezů, 19 pravýc
    studies; **Koordinační kalendář, gaits, STAMIQ a NT8-Optimizer** jako jednořádkové karty.
    **Iterus Platform, tender-radar a GEO-SEO se nezveřejňují** (u GEO-SEO chybí veřejný název).
    ✅ **Aktualizováno 2026-09-15:** GEO-SEO ship jako karta pod pracovním názvem „GEO-SEO"
-   (`name_provisional: true`); Iterus Platform smí jako karta ve stavu „ve vývoji / testování
-   přínosnosti", bez tvrdých čísel — čeká jen na technický hook text od Tomase. Tender-radar
-   zůstává nezveřejněný.
+   (`name_provisional: true`); **Iterus Platform ship jako šestá karta** ve stavu „ve vývoji"
+   (rámováno jako testování přínosnosti, bez tvrdých čísel — technický hook dodal Tomas). Strop
+   karet zvednut z pěti na šest (Tomasovo rozhodnutí — šíře záběru má přednost před přesným
+   počtem). Tender-radar zůstává nezveřejněný.
 3. `organization.software_since` = **2025**; firma existuje od 2005, ale ve stínicí technice —
    oba roky se na webu uvádějí vždy spolu, nikdy 2005 samostatně. (Nad rámec otázek ze specu.)
 4. Ceny **jdou ven jako pásma**: pilot 90–250 tis., produkční 250–700 tis., AI od 180 tis.
@@ -114,8 +115,7 @@ ne s vlastními odpověďmi.
    a NT8-Optimizer hotové (PR #11, `/reference` ↔ `/en/references`, `CollectionPage`; tier určuje
    `facts.json → projects[*].publish`, hlídá unit test). **Iterus Platform, tender-radar a
    GEO-SEO se nezveřejňují** (rozhodnutí 2026-09-09). ✅ **Aktualizováno 2026-09-15:** viz bod 2
-   výše — GEO-SEO je teď karta, Iterus Platform smí jako karta (work-in-progress), jen čeká na
-   hook text; tender-radar zůstává mimo.
+   výše — GEO-SEO i Iterus Platform jsou teď karty (šest celkem); tender-radar zůstává mimo.
 10. ✅ Průchod celého obsahu proti `docs/CONTENT-GUIDE.md` (2026-09-13): answer-first ověřeno
     skriptem (první odstavec ≤ 60 slov na všech marketingových stránkách), terminologie a
     superlativy zkontrolovány ručně (bez nálezu). Nezlomitelné mezery po jednopísmenných
@@ -168,8 +168,9 @@ provizorní), klientský portál. (Fáze 2–3.)
 2. ~~Které produkty smí být zveřejněny jako reference a s jakými čísly?~~ — **zodpovězeno
    2026-09-09**, viz Session A. Čísla samotná zatím potvrzená nejsou
    (`claims_confirmed: false` u všech).
-3. **Otevřené:** jméno zakladatele, adresa sídla, DIČ, LinkedIn URL — doplnit do `facts.json`
-   před Session B (`/o-nas`, `/kontakt`, JSON-LD `Organization`/`Person`).
+3. ~~Jméno zakladatele, adresa sídla, DIČ, LinkedIn URL~~ — jméno, adresa, DIČ a e-mail **doplněny
+   do `facts.json`** (Session A/B, `/o-nas`, `/kontakt`, JSON-LD `Organization`/`Person`).
+   **Otevřené zůstávají jen LinkedIn URL** (firemní + osobní).
 4. **Otevřené:** spustit na iterus.cz hned po Session C, nebo až po logu/vizuálu?
 5. ~~Smí na web hodinová sazba 2 000 Kč?~~ — **zodpovězeno 2026-09-15**: ne, zůstává neveřejná
    natrvalo; `/cena` odpovídá na cílenou frázi pásmy, ne číslem.

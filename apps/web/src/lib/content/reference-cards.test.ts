@@ -31,19 +31,14 @@ describe("getCardProjects", () => {
         facts.projects.stamiq.name,
         facts.projects["nt8-optimizer"].name,
         facts.projects["geo-seo"].name,
+        facts.projects["iterus-platform"].name,
       ].sort(),
     );
   });
 
   it("never includes a case-study tier or unpublished project", () => {
     const names = getCardProjects("cs").map((card) => card.name);
-    for (const key of [
-      "innea",
-      "innea-pro",
-      "legacy-you",
-      "iterus-platform",
-      "tender-radar",
-    ] as const) {
+    for (const key of ["innea", "innea-pro", "legacy-you", "tender-radar"] as const) {
       expect(names, key).not.toContain(facts.projects[key].name);
     }
   });

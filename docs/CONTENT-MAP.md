@@ -41,18 +41,22 @@ published without a public name, a status label and a one-line hook in both loca
 states a measurement must name where the measurement came from (`claims_source`). All of that is
 guarded by unit tests in `apps/web/src/lib/facts.test.ts`, mutation-checked on 2026-09-09.
 
-| Tier                   | `publish`    | What it shows                                                                                                           | Projects                                                            |
-| ---------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots                                                        | Innea, Innea Pro, Legacy You (`před spuštěním`)                     |
-| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — technical specifics only, no outcome or business metrics | Koordinační kalendář, gaits, STAMIQ, NT8-Optimizer, GEO-SEO         |
-| Not published          | `false`      | —                                                                                                                       | Iterus Platform (card approved, blocked on hook text), tender-radar |
+| Tier                   | `publish`    | What it shows                                                                                                           | Projects                                                                     |
+| ---------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots                                                        | Innea, Innea Pro, Legacy You (`před spuštěním`)                              |
+| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — technical specifics only, no outcome or business metrics | Koordinační kalendář, gaits, STAMIQ, NT8-Optimizer, GEO-SEO, Iterus Platform |
+| Not published          | `false`      | —                                                                                                                       | tender-radar                                                                 |
 
 The card tier exists to show the **breadth** we can work across. It carries a technical hook
 rather than a benefit claim, because a hook ("25 Hz inertial capture", "95% Wilson interval",
 "row-level isolation") is what makes breadth read as competence instead of as scattered hobbies.
-Five cards is the cap: beyond that, a list where most entries say "ve vývoji" starts to read as
-"nothing finished". GEO-SEO ships as a card under a provisional working name ("GEO-SEO" itself,
-`name_provisional: true` in `facts.json`) — Tomas can rename it later without touching the tier.
+Six cards is the cap (raised from five 2026-09-15 to fit Iterus Platform without dropping an
+existing one — Tomas's call, weighing breadth over a strict count): beyond that, a list where most
+entries say "ve vývoji" starts to read as "nothing finished". GEO-SEO ships as a card under a
+provisional working name ("GEO-SEO" itself, `name_provisional: true` in `facts.json`) — Tomas can
+rename it later without touching the tier. Iterus Platform is framed as work-in-progress with no
+hard numbers (Tomas: AI tooling value is still unproven, "good at least as an experience") — its
+hook describes the orchestration mechanism, not the scale numbers Tomas supplied internally.
 
 Every hook currently carries `claims_confirmed: false`: the technical specifics were read from each
 project's own README on 2026-09-09, not re-verified by Tomas. Session C confirms them before go-live.
@@ -131,17 +135,17 @@ Resolved 2026-09-09: price bands (`facts.json → pricing`), the `/reference` pr
 status labels, the unnamed mention of the internal tender tool on `/sluzby/ceske-integrace`, and
 NT8-Optimizer as proof on `/sluzby/ninjatrader`. Resolved 2026-09-15: the hourly rate stays
 unpublished (bands only); GEO-SEO ships as a card under the provisional working name "GEO-SEO"
-itself; Iterus Platform may be listed as a card framed as work-in-progress ("testing its
-usefulness" — no hard numbers, no case-study tier). What remains:
+itself; `not_offered: "embedded/firmware"` stays unchanged despite the Garmin Connect IQ card
+(`gaits`) — Tomas confirmed the distinction (a wearable app is not embedded/firmware development);
+`organization.email` filled in (no longer blocks `/kontakt`/JSON-LD); Iterus Platform ships as a
+sixth card (cap raised from five), framed as work-in-progress with no hard numbers. What remains:
 
-| Item                                                                                             | Blocks                        | Owner |
-| ------------------------------------------------------------------------------------------------ | ----------------------------- | ----- |
-| `facts.json`: `email`, LinkedIn URLs (founder_name, dic, phone, adresa ✅)                       | `/o-nas`, `/kontakt`, JSON-LD | Tomas |
-| Confirm the provisional card name "Koordinační kalendář" (`name_provisional: true`)              | `/reference` cards            | Tomas |
-| Does `not_offered: "embedded/firmware"` still hold with a Garmin Connect IQ app on `/reference`? | `/sluzby`, `/reference`       | Tomas |
-| Technical hook/description for Iterus Platform, to write its card entry                          | `/reference` cards            | Tomas |
-| Confirm the technical specifics in the card hooks (`claims_confirmed` is false for all)          | `/reference` cards            | Tomas |
-| Fold `/cena` and the removal of a standalone FAQ page into spec 0002 before it leaves `draft`    | spec acceptance criteria      | Tomas |
+| Item                                                                                          | Blocks                        | Owner |
+| --------------------------------------------------------------------------------------------- | ----------------------------- | ----- |
+| LinkedIn URLs (company + founder)                                                             | `/o-nas`, `/kontakt`, JSON-LD | Tomas |
+| Confirm the provisional card name "Koordinační kalendář" (`name_provisional: true`)           | `/reference` cards            | Tomas |
+| Confirm the technical specifics in the card hooks (`claims_confirmed` is false for all)       | `/reference` cards            | Tomas |
+| Fold `/cena` and the removal of a standalone FAQ page into spec 0002 before it leaves `draft` | spec acceptance criteria      | Tomas |
 
 ⚠ **Measured numbers are not confirmed numbers.** Migration files in the Innea repository are
 numbered up to `_335` while only 72 files sit in the migrations directory; the difference is a

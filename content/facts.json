@@ -201,10 +201,16 @@
       "tests": 2520,
       "tables": 27,
       "integrations": 16,
-      "stack": ["Electron", "TypeScript", "SQLite"],
-      "note": "Numbers as stated by Tomas; confirm before publishing.",
-      "publish": false,
-      "publish_note": "Tomas decides whether to publish; the recorded numbers are not verified."
+      "stack": ["Electron", "TypeScript", "Claude Agent SDK", "SQLite"],
+      "note": "Scale numbers (features/tests/tables/integrations) as stated by Tomas 2026-09-15; kept for internal reference only, not published — the card cites the orchestration mechanism instead, per Tomas's decision to avoid hard numbers while the tool's value is still unproven.",
+      "publish": "card",
+      "status_cs": "ve vývoji",
+      "status_en": "in development",
+      "hook_cs": "Autonomní orchestrátor Claude Code — čte úkoly, spouští Claude headless, pouští testy a commituje, dokud úkol není hotový.",
+      "hook_en": "An autonomous Claude Code orchestrator — reads tasks, runs Claude headless, runs tests and commits, until the task is done.",
+      "publish_note": "Approved by Tomas 2026-09-15 as a work-in-progress card — explicitly not a case study and without hard numbers, framed as testing its usefulness given how fast AI tooling changes (\"AI se rychle vyvíjí, otázka je, jestli to bude mít za pár měsíců přínos — dobré ale přinejmenším jako zkušenost\"). Sixth card, cap raised from five per Tomas's 2026-09-15 call to keep breadth over a strict count.",
+      "claims_source": "Tomas, technical spec supplied 2026-09-15",
+      "claims_confirmed": false
     },
     "innea": {
       "name": "Innea",
