@@ -8,7 +8,7 @@ function formatCzk(value: number): string {
 /**
  * Renders the approved price bands, consultation and discovery terms from
  * `facts.json → pricing`. Never reads `reference_rate_*` — the hourly rate is
- * `reference_rate_internal_only` and stays unpublished until Tomas approves it.
+ * `reference_rate_internal_only` and stays unpublished by decision (2026-09-15).
  */
 export async function PricingBands() {
   const locale = await getLocale();

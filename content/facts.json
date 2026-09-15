@@ -120,7 +120,7 @@
       "en": "A paid discovery for 25,000 CZK — scope, architecture and estimate. The fee is deducted from the price of the follow-up project."
     },
     "reference_rate_internal_only": true,
-    "reference_rate_note": "TODO(Tomas) — publishing the hourly rate needs its own approval; the 2026-09-09 approval covered the bands only. /cena targets the phrase 'hodinová sazba programátora', so decide before that page is written."
+    "reference_rate_note": "Decided by Tomas 2026-09-15: the hourly rate stays unpublished. /cena shows bands only, even though it targets the phrase 'hodinová sazba programátora' — the pricing model itself (bands, not hourly billing) is the answer to that search intent."
   },
   "services": [
     {
@@ -297,15 +297,18 @@
       "claims_confirmed": false
     },
     "geo-seo": {
-      "name": "TODO(veřejný název)",
+      "name": "GEO-SEO",
       "type": "own-product",
-      "publish": false,
+      "publish": "card",
       "status_cs": "ve vývoji",
       "status_en": "in development",
       "stack": ["TypeScript", "DataForSEO API"],
       "hook_cs": "Měří, jak často AI enginy zmiňují značku proti konkurenci — každé číslo s 95% Wilsonovým intervalem spolehlivosti.",
       "hook_en": "Measures how often AI engines mention a brand against its competitors — every number with a 95% Wilson confidence interval.",
-      "publish_note": "Approved by Tomas as a card on 2026-09-09, but the project has no public name yet; flip back to \"card\" once name is filled in."
+      "name_provisional": true,
+      "publish_note": "Approved by Tomas as a card on 2026-09-09; name confirmed as a working title on 2026-09-15 (\"Uveď to jako pracovní název\").",
+      "claims_source": "project README, read 2026-09-09",
+      "claims_confirmed": false
     },
     "gaits": {
       "name": "gaits",

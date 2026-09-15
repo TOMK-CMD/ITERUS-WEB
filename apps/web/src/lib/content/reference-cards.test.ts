@@ -30,6 +30,7 @@ describe("getCardProjects", () => {
         facts.projects.gaits.name,
         facts.projects.stamiq.name,
         facts.projects["nt8-optimizer"].name,
+        facts.projects["geo-seo"].name,
       ].sort(),
     );
   });
@@ -42,7 +43,6 @@ describe("getCardProjects", () => {
       "legacy-you",
       "iterus-platform",
       "tender-radar",
-      "geo-seo",
     ] as const) {
       expect(names, key).not.toContain(facts.projects[key].name);
     }
