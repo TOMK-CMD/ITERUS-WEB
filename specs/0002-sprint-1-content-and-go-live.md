@@ -144,8 +144,8 @@ ne s vlastními odpověďmi.
 14. **`check:i18n` čte `content/` rekurzivně, ale `listPages` a `generate-llms-txt.mjs` jen
     nejvyšší úroveň** — vnořený obsah by prošel paritou a tiše zmizel ze sitemapy a `llms.txt`.
     ADR-0004 to zatím obchází plochými slugy; past ale zůstává a patří zavřít.
-15. **`pnpm check` neobsahuje `format:check`** — formátovací drift ve `facts.json` prošel dvěma
-    commity nezpozorován a srovnalo ho až CI. Přidat do `check` (jedna řádka).
+15. ✅ **`pnpm check` obsahuje `format:check`** (2026-09-16) — formátovací drift ve `facts.json`
+    prošel dvěma commity nezpozorován a srovnalo ho až CI; teď padá lokálně.
 16. OG font jako asset místo runtime fetchu; `shadcn` jako runtime závislost pro jeden CSS import;
     rozhodnutí o trvalém rate limitu (Upstash); CI na release PR (PAT vs. ruční re-run); e2e pro
     `/api/contact` s Cloudflare test klíči v CI.
