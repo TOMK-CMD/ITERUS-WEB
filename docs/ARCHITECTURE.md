@@ -28,9 +28,9 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   - `src/app/[locale]/` — `layout.tsx` (html lang, Inter, header, footer, site-wide JSON-LD,
     Plausible), `page.tsx` (home), `contact/`, `privacy/`, `terms/`, `services/` (overview +
     `web-applications/`, `ai-integration/`, `local-llm/`, `czech-integrations/`, `ninjatrader/`),
-    `pricing/`, `about/`, `process/`, `references/` (route folders use English-internal names;
-    Czech slugs come from the routing map), `not-found.tsx`, `[...rest]/` (404 inside a valid
-    locale).
+    `pricing/`, `about/`, `process/`, `references/` (listing + one static case-study route per
+    written-up product: `innea/`, `innea-pro/`; route folders use English-internal names; Czech
+    slugs come from the routing map), `not-found.tsx`, `[...rest]/` (404 inside a valid locale).
   - `src/app/api/contact/route.ts`, `src/app/og/route.tsx`, `src/app/icon.tsx`,
     `src/app/sitemap.ts`, `src/app/robots.ts`.
   - `src/i18n/` — `routing.ts` (locales, `localePrefix: as-needed`, `localeDetection: false`,
@@ -44,10 +44,20 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
     `Service` JSON-LD),
     `reference-cards.ts` (`getCardProjects`: the `facts.json → projects[*].publish === "card"`
     entries, read by both the `<ReferenceCards />` component and `/reference`'s `page.tsx` so the
-    rendered cards and the `CollectionPage` JSON-LD never drift apart).
+    rendered cards and the `CollectionPage` JSON-LD never drift apart),
+    `case-study-catalog.ts` (`CASE_STUDY_PAGES`: the case-study pages that exist — slug, pathname
+    and `facts.json` project key — plus `loadCaseStudyCatalog` and `caseStudyProjectFacts`; a
+    project can sit in the `case-study` tier without a page until its brief is written up, so
+    the listing and JSON-LD only ever show what is built). `schema.ts` knows a `case-study` page
+    type whose frontmatter must also carry `project` (the facts.json key) and `published`
+    (`Article.datePublished`); `content-pages.test.ts` validates the real content tree against the
+    schema in `pnpm check`, not only at build time.
   - `src/lib/pages/` — `service-detail-page.tsx` (`createServiceDetailPage`: factors the
     boilerplate shared by the five near-identical service detail routes — locale guard, MDX load,
-    metadata, one `Service` JSON-LD entity — per ADR-0004).
+    metadata, one `Service` JSON-LD entity — per ADR-0004) and `case-study-page.tsx`
+    (`createCaseStudyPage({slug, href, project})`: the same shell for `/reference/<project>`
+    routes, emitting one `Article` `about` the product and refusing a page whose frontmatter names
+    a different project than the route).
   - `src/lib/seo/` — `metadata.ts` (`buildMetadata`: title suffix, canonical, hreflang,
     x-default, OG/Twitter), `paths.ts` (slug → route map, script-safe `localizedPath`),
     `sitemap.ts`, `robots.ts`, `json-ld.ts` (schema-dts builders — `Organization`/`WebSite`/
@@ -57,15 +67,21 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
     `buildPerson` (`AboutPage` linked to the founder `Person` via `about: {"@id": ...}`) for
     `/o-nas`, `buildHowTo` (`HowTo`/`HowToStep`, built from the steps authored on the page) for
     `/jak-pracujeme`, `buildReferencesCollection` (`CollectionPage` with one `SoftwareApplication`
-    per card-tier project — case-study tier projects join this collection once they have their own
-    page to link to) for `/reference` — TODO values omitted), `og.ts`.
+    per case study that has a page — linked by `url` — followed by one per card-tier project) for
+    `/reference`, `buildCaseStudyArticle` (`Article` authored and published by the organisation,
+    `about` a `SoftwareApplication` read from `facts.json → projects[project]` in the page's
+    locale; dates from the page's `published`/`updated` frontmatter) for `/reference/<project>` —
+    TODO values omitted), `og.ts`.
   - `src/lib/contact/` — `schema.ts`, `handle.ts` (pure, dependency-injected handler),
     `rate-limit.ts` (best-effort in-memory), `turnstile.ts`, `mail.ts` (Resend REST).
   - `src/lib/facts.ts` — typed access to `content/facts.json`, `isTodo()` guard.
   - `src/components/` — `site-header`, `site-footer` (legal line), `locale-switch`,
     `contact-form` (client, Turnstile explicit render), `calcom-cta`, `legal-page`, `json-ld`,
     `plausible`, `mdx/` (facts-driven blocks available inside MDX, incl. `Faq`/`FaqItem`,
-    `NotOffered`, `PricingBands`, `ProcessSteps`/`Step`, `ReferenceCards` and `PageLink` — a
+    `NotOffered`, `PricingBands`, `ProcessSteps`/`Step`, `ReferenceCards`, `CaseStudyList` (one
+    card per entry of `CASE_STUDY_PAGES`, linking to the page), `ProjectMetrics` (the numbers block
+    of a case study — renders `facts.json → projects[project].metrics` and throws unless
+    `metrics_confirmed` is true, so a number on a page has exactly one source) and `PageLink` — a
     locale-aware internal link for MDX prose, re-exporting `@/i18n/navigation`'s `Link`).
     `Faq`/`FaqItem` and `ProcessSteps`/`Step` take JSX children rather than an array/object prop:
     `next-mdx-remote`
@@ -81,8 +97,8 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
 - `content/{cs,en}/*.mdx` — pages (`home`, `contact`, `privacy`, `terms`, `services`,
   `services-web-applications`, `services-ai-integration`, `services-local-llm`,
   `services-czech-integrations`, `services-ninjatrader`, `pricing`, `about`, `process`,
-  `references` — flat
-  slugs per ADR-0004); `content/facts.json`.
+  `references`; case studies `references-innea`, `references-innea-pro` — flat slugs per
+  ADR-0004, `references-<project>` mirrors the `facts.json` project key); `content/facts.json`.
 - `messages/{cs,en}.json` — UI strings (next-intl, typed through `AppConfig`).
 - `scripts/` — `check-i18n.mjs`, `check-schema.mjs`, `check-links.mjs`, `generate-llms-txt.mjs`
   (apps/web `prebuild`), `indexnow.mjs`, `lib/serve.mjs` (starts `next start` for scripts),
@@ -92,8 +108,9 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
 ## Content pipeline (ADR-0002)
 
 `content/<locale>/<slug>.mdx` → gray-matter (single frontmatter parser, also for scripts) → zod
-(`title` ≤ 51 chars + " | Iterus", `description` 120–155, `updated` ISO date, `type`, `status`) →
-`compileMDX` with the components map. A page's slug must be registered in
+(`title` ≤ 51 chars + " | Iterus", `description` 120–155, `updated` ISO date, `type`, `status`;
+`type: case-study` additionally requires `project` and `published`) → `compileMDX` with the
+components map. A page's slug must be registered in
 `src/lib/seo/paths.ts` (`PAGE_ROUTES`) and its slugs in `src/i18n/routing.ts` (`pathnames`) —
 sitemap, llms.txt, links and hreflang all derive from those two maps. Drafts render with
 `noindex` and a banner and are excluded from sitemap and llms.txt.

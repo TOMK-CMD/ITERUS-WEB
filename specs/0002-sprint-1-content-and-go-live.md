@@ -111,7 +111,12 @@ ne s vlastními odpověďmi.
 
 9. Case studies přes `case-study` skill pro **Innea, Innea Pro a Legacy You** (poslední se
    štítkem „před spuštěním") — každá jen po Tomasově briefu a potvrzení čísel — **brief vyžádán
-   2026-09-13, čeká se**. ✅ Karty „na čem dál pracujeme" pro Koordinační kalendář, gaits, STAMIQ
+   2026-09-13, čeká se**. ✅ **Innea a Innea Pro hotové (2026-09-16)**: brief i čísla dodal Tomas
+   2026-09-15, stránky `/reference/innea` a `/reference/innea-pro` (`Article` + `SoftwareApplication`
+   JSON-LD, čísla výhradně přes `<ProjectMetrics />` z `facts.json`, žádná provozní čísla ani
+   zmínka o platících uživatelích — Tomasovy podmínky). Infrastruktura (typ `case-study`,
+   `createCaseStudyPage`, `CASE_STUDY_PAGES`, `<CaseStudyList />` na `/reference`) je hotová;
+   **Legacy You čeká jen na brief**. ✅ Karty „na čem dál pracujeme" pro Koordinační kalendář, gaits, STAMIQ
    a NT8-Optimizer hotové (PR #11, `/reference` ↔ `/en/references`, `CollectionPage`; tier určuje
    `facts.json → projects[*].publish`, hlídá unit test). **Iterus Platform, tender-radar a
    GEO-SEO se nezveřejňují** (rozhodnutí 2026-09-09). ✅ **Aktualizováno 2026-09-15:** viz bod 2
