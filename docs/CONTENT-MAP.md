@@ -201,12 +201,15 @@ fourfold. Neither reading may be published as-is. Every number in a case study i
   `scripts/check-i18n.mjs` reads recursively — nested content would pass the parity check and vanish
   from the sitemap and llms.txt without any error. See `docs/adr/0004-service-page-routing.md`.
   The five remaining services from `facts.json → services` stay as sections on `/sluzby`.
-- **The 2005 founding year is never stated on its own.** The company has traded since 2005 in
-  shading technology; software under the Iterus brand is recent. `/o-nas` states both facts in one
-  breath (`facts.json → organization.origin_note_cs/en`). Stating "on the market since 2005" on a
-  software site would let the reader infer twenty years of software delivery. Used correctly the
-  pair is an asset: the standard objection to a one-person studio is "what if they disappear", and
-  a twenty-year-old limited company with a real registered address answers it better than copy.
+- **The 2005 founding year is never stated on its own.** The company has traded since 2005;
+  software under the Iterus brand is recent. `/o-nas` states both facts in one breath
+  (`facts.json → organization.origin_note_cs/en`: "…která podniká od roku 2005. Software pod
+  značkou Iterus stavíme od roku 2025."). The former line of business is **not named** since
+  2026-09-16 — Tomas: the stability signal matters, the industry does not — and the "since 2025"
+  clause carries the disclaimer on its own. Stating "on the market since 2005" alone on a software
+  site would let the reader infer twenty years of software delivery. Used correctly the pair is an
+  asset: the standard objection to a one-person studio is "what if they disappear", and a
+  twenty-year-old limited company with a real registered address answers it better than copy.
 - `/sluzby/ceske-integrace` may cite the internal tender tool **without naming it or linking it**
   ("vlastní interní nástroj, který čte TED a ISVZ") — no frequency claim, because none is recorded.
   `/sluzby/ninjatrader` may name NT8-Optimizer. Both approved by Tomas on 2026-09-09.

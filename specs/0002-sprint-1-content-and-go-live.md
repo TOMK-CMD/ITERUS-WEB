@@ -54,6 +54,9 @@ Review: 4 kola (reviewer subagent + 3× Gemini 3.1 Pro), 21 nálezů, 19 pravýc
    počtem). Tender-radar zůstává nezveřejněný.
 3. `organization.software_since` = **2025**; firma existuje od 2005, ale ve stínicí technice —
    oba roky se na webu uvádějí vždy spolu, nikdy 2005 samostatně. (Nad rámec otázek ze specu.)
+   ✅ **Aktualizováno 2026-09-16:** dřívější obor se na webu **nejmenuje** (varianta A — „…která
+   podniká od roku 2005. Software pod značkou Iterus stavíme od roku 2025."); pravidlo obou roků
+   spolu platí dál.
 4. Ceny **jdou ven jako pásma**: pilot 90–250 tis., produkční 250–700 tis., AI od 180 tis.
    (on-prem od 350 tis.) Kč bez DPH; konzultace 60 min zdarma, discovery 25 tis. odečitatelné.
    Hodinová sazba (2 000 Kč) zatím **schválena není** — rozhodnout před psaním `/cena`.
