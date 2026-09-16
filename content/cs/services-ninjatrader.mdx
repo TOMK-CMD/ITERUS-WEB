@@ -1,37 +1,44 @@
 ---
 title: Programování NinjaTrader 8 a NinjaScript
 description: Programujeme indikátory, strategie a automatizované obchodní systémy pro NinjaTrader 8 v C# (NinjaScript) na zakázku, včetně testů.
-updated: 2026-09-13
+updated: 2026-09-16
 type: page
 status: published
 ---
 
 Programujeme indikátory, strategie a automatizované obchodní systémy pro NinjaTrader 8 v C#
 (NinjaScript). Umíme propojit NinjaScript s Pythonem přes ZeroMQ pro pokročilé vyhodnocení nebo
-optimalizaci strategie mimo NinjaTrader.
+optimalizaci strategie mimo NinjaTrader. Kód strategie je po zaplacení váš, včetně dokumentace.
 
 ## Co si můžeme doložit?
 
 Vlastní nástroj NT8-Optimizer optimalizuje obchodní strategie pro NinjaTrader 8 — NinjaScript v C#
 propojený přes ZeroMQ s vyhodnocením v Pythonu. Nejde o ukázkový kód, ale o nasazení, které sami
-používáme.
+používáme a dál vyvíjíme; je uvedený mezi rozpracovanými projekty na stránce
+<PageLink href="/references">Reference</PageLink>. Výsledky strategií nezveřejňujeme a nic
+neslibujeme: dodáváme software, ne obchodní výnos.
 
 ## Časté otázky
 
 <Faq>
   <FaqItem question="Máte reálné zkušenosti s NT8 API?">
-    Ano, stavíme na něm vlastní nástroj NT8-Optimizer — ne jen ukázkový kód, ale nasazení, které
-    sami používáme.
+    Ano — na NinjaScript API stavíme vlastní nástroj NT8-Optimizer, který sami používáme.
+    Znamená to, že známe i ta místa, kde se dokumentace a skutečné chování platformy rozcházejí,
+    a nemusíme se je učit na vašem projektu.
   </FaqItem>
   <FaqItem question="Umíte propojit NinjaScript s Pythonem?">
-    Ano, přes ZeroMQ — NinjaScript řeší obchodní logiku v reálném čase, Python těžší výpočty a
-    optimalizaci mimo něj.
+    Ano, přes ZeroMQ: NinjaScript řeší obchodní logiku v reálném čase, Python přebírá těžší
+    výpočty a optimalizaci mimo platformu. Přesně tak je postavený NT8-Optimizer, takže nejde
+    o experiment na vašem projektu.
   </FaqItem>
   <FaqItem question="Kdo vlastní kód strategie?">
     Vy — po zaplacení dostanete 100 % zdrojového kódu a dokumentace, stejně jako u každé jiné
-    zakázky.
+    zakázky. Strategii, kterou jste vymysleli, nikdy neuvidí jiný klient; obchodní logiku bereme
+    jako vaše know-how, ne jako naši referenci.
   </FaqItem>
   <FaqItem question="Otestujete strategii na historických datech?">
-    Ano, backtesting na historických datech je standardní součást vývoje strategie.
+    Ano, backtesting na historických datech je standardní součást vývoje strategie — a řekneme
+    vám i to, co backtest neukáže: strategie, která projde historií, nemá zaručený výsledek
+    naživo. Na to slouží ověření na demo účtu před ostrým nasazením.
   </FaqItem>
 </Faq>

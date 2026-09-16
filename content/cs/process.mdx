@@ -1,7 +1,7 @@
 ---
 title: Jak pracujeme
 description: "Pracujeme AI-native: vývoj akcelerují Claude Code a Codex, kvalitu jistí testy, nezávislé code review a specialisté na vyžádání."
-updated: 2026-09-13
+updated: 2026-09-16
 type: page
 status: published
 ---
@@ -42,18 +42,27 @@ stránce <PageLink href="/about">O nás</PageLink>.
 
 <Faq>
   <FaqItem question="Kdo dělá code review, když pracujete AI-native?">
-    Nezávislé code review je součástí procesu u každé netriviální změny — druhý pohled (lidský nebo
-    nezávislý AI model) se dívá na diff nezávisle na tom, kdo kód napsal.
+    Každou netriviální změnu posuzuje druhý pár očí nezávisle na tom, kdo kód napsal — lidský
+    reviewer nebo nezávislý AI model, a začlenění schvaluje vždy člověk. Jak to vypadá v číslech,
+    popisuje případová studie <PageLink href="/references/innea">Innea</PageLink> — včetně toho,
+    jak velká část nálezů AI review při ověření proti kódu neobstojí, a proč proto rozhoduje člověk.
   </FaqItem>
   <FaqItem question="Co když onemocníte — kdo projekt převezme?">
-    Kód i dokumentace jsou vaše ze 100 % po zaplacení a stavíme na běžném stacku (Next.js,
-    TypeScript, PostgreSQL) s testy a CI — jakýkoli tým je dokáže převzít bez zaškolování na
-    proprietární nástroj.
+    Kdokoli, koho si vyberete: kód i dokumentace jsou po zaplacení ze 100 % vaše a stavíme na
+    běžném stacku (Next.js, TypeScript, PostgreSQL) s automatickými testy a CI, takže jiný tým
+    projekt převezme bez zaškolování na proprietární nástroj. Že to není jen věta, ukazují
+    <PageLink href="/references">případové studie</PageLink> — počty testů a migrací jsou v nich
+    uvedené, ne slíbené.
   </FaqItem>
   <FaqItem question="Kdo vlastní zdrojový kód?">
-    Klient vlastní 100 % zdrojového kódu a dokumentace po zaplacení.
+    Vy — po zaplacení vlastníte 100 % zdrojového kódu a dokumentace — bez závislosti na nás
+    a bez proprietárních nástrojů, které by vás k nám vázaly. Předání je součást ceny každého pásma na stránce
+    <PageLink href="/pricing">Cena</PageLink>, ne příplatek.
   </FaqItem>
   <FaqItem question="Kde leží naše data?">
-    Data hostujeme v EU (Frankfurt), zpracování dle GDPR.
+    V EU (Frankfurt), zpracovaná podle GDPR — stejně jako data našich vlastních produktů. Pokud
+    nesmí opustit vaši firmu vůbec, nasadíme
+    <PageLink href="/services/local-llm">model lokálně</PageLink> a data zůstanou na vašem
+    hardwaru.
   </FaqItem>
 </Faq>

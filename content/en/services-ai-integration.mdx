@@ -1,41 +1,56 @@
 ---
 title: AI Integration for Business
 description: We connect company data to Claude or OpenAI APIs with answer-quality controls and an EU AI Act transparency layer. Data is hosted in the EU.
-updated: 2026-09-13
+updated: 2026-09-16
 type: page
 status: published
 ---
 
-We connect company data to the Claude or OpenAI API through a RAG or agentic workflow — with
-answer-quality controls and a transparency layer under the EU AI Act. Data is hosted in the EU
-(Frankfurt) and processed under GDPR; the third-party model is never trained on your data.
+We connect company data to the Claude or OpenAI API through RAG or agentic workflows — with
+answer-quality controls and an EU AI Act transparency layer. Data is hosted in the EU (Frankfurt)
+and processed under GDPR; no third-party model is trained on it. We run the same architecture in
+our own product, <PageLink href="/references/innea">Innea</PageLink>.
 
 ## What's included?
 
-AI integration and on-prem LLM work starts from 180,000 CZK (on-premise deployment from 350,000
-CZK because of hardware) and includes connecting the model to company data, answer-quality
-controls and a transparency layer.
+AI integration and on-prem LLM start at 180,000 CZK (on-premise deployment from 350,000 CZK
+because of hardware) and include connecting the model to company data, answer-quality controls
+and the transparency layer. Always included: defining what the model may decide on its own and
+what it may not — that is design work, not an afterthought.
 
-We already run an EU AI Act transparency layer in production in our own product, Innea — the user
-learns they're talking to AI from the very first sentence, not partway through.
+## Where does this run in production?
+
+In <PageLink href="/references/innea">Innea</PageLink>, Czech AI support between therapy
+sessions: the Claude API with automatic failover to another provider, three-layer conversation
+memory and a crisis layer that is a textbook example of a bounded AI role — a risk signal passes
+detection, an assessment by a language model and a content safety filter, and a human in a queue
+decides on the intervention, not the model. The EU AI Act transparency layer runs there from the
+start: the user knows they are talking to an AI before the conversation begins.
 
 ## Frequently asked questions
 
 <Faq>
-  <FaqItem question="Does our data stay in the EU under GDPR?">
-    Yes — we host in the EU (Frankfurt) and process data under GDPR, not under terms outside
-    Europe.
+  <FaqItem question="Will our data stay in the EU under GDPR?">
+    Yes. The application and the database are hosted in the EU (Frankfurt) and processing follows
+    GDPR. For the model itself we choose the provider and region by where your data may go — and
+    if it may not leave the company at all, there is the
+    <PageLink href="/services/local-llm">local LLM</PageLink>.
   </FaqItem>
   <FaqItem question="Is the model trained on our data?">
-    No, as long as we use the API in business mode (not a free consumer account) — we check the
-    specific provider's exact terms with you before starting.
+    No. We use the providers' APIs in business mode, where data is not used for training — not
+    free consumer accounts, where that may not hold. We go through the specific provider's terms
+    before the start and record which model runs in which mode.
   </FaqItem>
-  <FaqItem question="What if the AI gives a wrong answer — who's liable?">
-    A human reviews the answer before it becomes a binding offer or decision — the AI gets a
-    clearly scoped role, not unlimited decision-making.
+  <FaqItem question="What if the AI answers wrongly — who is liable?">
+    A human or a rule in the code decides, not the model. The AI gets a precisely bounded role, and
+    everything with binding consequences — a quote, a payment, a decision about a person — goes
+    through human approval or a hard check in the code; that is how the crisis layer in Innea
+    works. Where that line runs for you is the first thing we draw on the call, and its exact
+    definition belongs in the contract, not in this answer.
   </FaqItem>
-  <FaqItem question="Do we have to tell users they're talking to AI?">
-    Yes, for a chat or assistant — it's an EU AI Act (Article 50) requirement, and we build it in
-    from the start rather than bolting it on later.
+  <FaqItem question="Do we have to tell users they are talking to an AI?">
+    Yes — for a chat or an assistant the EU AI Act requires it (Article 50). We don't bolt it on as
+    a notice: the transparency layer in Innea is part of the design, and the user knows they are
+    talking to an AI from the start of the conversation. We use the same pattern for you.
   </FaqItem>
 </Faq>

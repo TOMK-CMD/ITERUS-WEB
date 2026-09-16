@@ -1,7 +1,7 @@
 ---
 title: Vývoj aplikací a AI na míru
 description: Stavíme webové aplikace, AI integrace a napojení na české systémy na zakázku — Next.js, TypeScript, Claude i OpenAI API. Pět služeb má vlastní stránku.
-updated: 2026-09-15
+updated: 2026-09-16
 type: page
 status: published
 ---
@@ -14,6 +14,9 @@ OpenAI API. Pět služeb má vlastní detailní stránku níže, zbytek nabízí
 
 <ServicesList />
 
+Většinu z toho, co nabízíme, máme v provozu ve vlastních produktech — tři z nich s případovou
+studií a čísly z repozitářů na stránce <PageLink href="/references">Reference</PageLink>.
+
 ## Co naopak neděláme?
 
 Rozsah práce raději omezíme, než abychom slíbili něco, co neumíme dobře udělat. Seznam odráží
@@ -25,14 +28,20 @@ aktuální stav a může se časem měnit.
 
 <Faq>
   <FaqItem question="Děláte i mobilní aplikace?">
-    Ano, v React Native / Expo — mobilní vrstva obvykle navazuje na webové API, které stavíme sami.
+    Ano, v React Native / Expo — nativní aplikaci pro iOS i Android, ne web zabalený do aplikace.
+    Mobilní vrstva navazuje na webové API, které stavíme sami; přesně tak je postavená
+    <PageLink href="/references/legacy-you">Legacy You</PageLink>, kde web a mobilní aplikace
+    sdílejí jeden backend.
   </FaqItem>
   <FaqItem question="Převezmete rozdělaný projekt po jiném dodavateli?">
-    Ano. Nejdřív projdeme kód a testy, abychom věděli, v jakém je stavu, a teprve pak dáme odhad na
-    dokončení.
+    Ano. Nejdřív projdeme kód a testy, abychom věděli, v jakém je stavu — bez toho odhad na
+    dokončení nedáme. Výstupem první fáze je písemný nález: co drží, co je potřeba přepsat a proč;
+    teprve podle něj se rozhodnete, jestli pokračovat s námi.
   </FaqItem>
   <FaqItem question="Co naopak neděláte?">
-    Bankovní core systémy, penetrační testy a bezpečnostní audity, zdravotnické prostředky (MDR) a
-    velké enterprise migrace bez dedikovaného týmu — viz seznam výše.
+    Bankovní core systémy, penetrační testy a bezpečnostní audity, zdravotnické prostředky (MDR),
+    vývoj pro vestavěná zařízení a velké enterprise migrace bez dedikovaného týmu — seznam výše
+    odráží dnešní stav. Rozsah raději omezíme dopředu, než abychom slíbili práci, za jejíž kvalitu
+    bychom nemohli ručit.
   </FaqItem>
 </Faq>

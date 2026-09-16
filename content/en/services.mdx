@@ -1,7 +1,7 @@
 ---
 title: Custom Software and AI Development
 description: We build web apps, AI integrations and Czech e-government connections — Next.js, TypeScript, Claude and OpenAI APIs. Five services have their own page.
-updated: 2026-09-15
+updated: 2026-09-16
 type: page
 status: published
 ---
@@ -15,6 +15,9 @@ rest we deliver as part of a project.
 
 <ServicesList />
 
+Most of what we offer runs in production in our own products — three of them with a case study
+and repository numbers on the <PageLink href="/references">References</PageLink> page.
+
 ## What we don't do
 
 We would rather limit scope than promise something we can't do well. This list reflects where we
@@ -26,14 +29,20 @@ stand today and may change over time.
 
 <Faq>
   <FaqItem question="Do you also build mobile apps?">
-    Yes, in React Native / Expo — the mobile layer usually calls the web API we build ourselves.
+    Yes, in React Native / Expo — a native app for iOS and Android, not a website wrapped in an
+    app. The mobile layer calls the web API we build ourselves; that is exactly how
+    <PageLink href="/references/legacy-you">Legacy You</PageLink> is built, with the web and the
+    mobile app sharing one backend.
   </FaqItem>
   <FaqItem question="Will you take over a project started by another vendor?">
-    Yes. We review the code and tests first to see what state it's in, then give an estimate to
-    finish it.
+    Yes. We review the code and tests first to see what state it is in — without that we give no
+    estimate to finish. The first phase ends with a written finding: what holds, what needs
+    rewriting and why; only then do you decide whether to continue with us.
   </FaqItem>
   <FaqItem question="What do you not do?">
-    Banking core systems, penetration testing and security audits, medical devices (MDR) and large
-    enterprise migrations without a dedicated team — see the list above.
+    Banking core systems, penetration testing and security audits, medical devices (MDR),
+    embedded-device development and large enterprise migrations without a dedicated team — the
+    list above reflects where we stand today. We would rather limit scope up front than promise
+    work whose quality we could not stand behind.
   </FaqItem>
 </Faq>

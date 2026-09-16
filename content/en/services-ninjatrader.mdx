@@ -1,37 +1,44 @@
 ---
 title: NinjaTrader 8 and NinjaScript Programming
 description: We program indicators, strategies and automated trading systems for NinjaTrader 8 in C# (NinjaScript), built to order and tested.
-updated: 2026-09-13
+updated: 2026-09-16
 type: page
 status: published
 ---
 
 We program indicators, strategies and automated trading systems for NinjaTrader 8 in C#
 (NinjaScript). We can bridge NinjaScript to Python over ZeroMQ for advanced evaluation or strategy
-optimisation outside NinjaTrader.
+optimisation outside NinjaTrader. The strategy's code is yours on payment, documentation included.
 
 ## What can we show for it?
 
 Our own tool, NT8-Optimizer, optimises trading strategies for NinjaTrader 8 — NinjaScript in C#
 bridged over ZeroMQ to evaluation in Python. It's not sample code; it's a deployment we use
-ourselves.
+ourselves and keep developing, listed among the work in progress on the
+<PageLink href="/references">References</PageLink> page. We publish no strategy results and
+promise none: we deliver software, not trading returns.
 
 ## Frequently asked questions
 
 <Faq>
   <FaqItem question="Do you have real NT8 API experience?">
-    Yes — we built our own tool, NT8-Optimizer, on it. Not just sample code, but a deployment we
-    use ourselves.
+    Yes — we build our own tool, NT8-Optimizer, on the NinjaScript API and use it ourselves. That
+    means we already know the places where the documentation and the platform's actual behaviour
+    part ways, and we don't have to learn them on your project.
   </FaqItem>
   <FaqItem question="Can you bridge NinjaScript to Python?">
-    Yes, over ZeroMQ — NinjaScript handles real-time trading logic, Python handles heavier
-    computation and optimisation outside it.
+    Yes, over ZeroMQ: NinjaScript handles real-time trading logic, Python takes over heavier
+    computation and optimisation outside the platform. NT8-Optimizer is built exactly that way, so
+    it isn't an experiment on your project.
   </FaqItem>
   <FaqItem question="Who owns the strategy's code?">
     You do — you get 100% of the source code and documentation on payment, same as on any other
-    project.
+    project. A strategy you devised is never shown to another client; we treat trading logic as
+    your know-how, not as our reference.
   </FaqItem>
   <FaqItem question="Will you backtest the strategy on historical data?">
-    Yes, backtesting on historical data is a standard part of strategy development.
+    Yes, backtesting on historical data is a standard part of strategy development — and we'll
+    tell you what a backtest doesn't show: a strategy that passes on history has no guaranteed
+    live result. That's what a demo-account run before going live is for.
   </FaqItem>
 </Faq>

@@ -1,40 +1,55 @@
 ---
 title: AI integrace do firmy
 description: Firemní data napojujeme na Claude nebo OpenAI API s kontrolou kvality odpovědí a transparenční vrstvou podle EU AI Act. Data hostujeme v EU.
-updated: 2026-09-13
+updated: 2026-09-16
 type: page
 status: published
 ---
 
 Firemní data napojujeme na Claude nebo OpenAI API přes RAG nebo agentní workflow — s kontrolou
 kvality odpovědí a transparenční vrstvou podle EU AI Act. Data hostujeme v EU (Frankfurt) a
-zpracováváme podle GDPR; cizí model se na vašich datech netrénuje.
+zpracováváme podle GDPR; cizí model se na vašich datech netrénuje. Stejnou architekturu
+provozujeme ve vlastním produktu <PageLink href="/references/innea">Innea</PageLink>.
 
 ## Co je v ceně?
 
 AI integrace a on-prem LLM vychází od 180 tisíc Kč (on-premise nasazení od 350 tisíc Kč kvůli
 hardwaru) a zahrnuje napojení modelu na firemní data, kontrolu kvality odpovědí a transparenční
-vrstvu.
+vrstvu. Součástí je vždy i vymezení, co model smí rozhodnout sám a co ne — to je návrhová
+práce, ne dodatečná pojistka.
 
-Transparenční vrstvu podle EU AI Act máme v provozu ve vlastním produktu Innea — uživatel se od
-první věty dozví, že mluví s AI, ne až po chvíli.
+## Kde to máme v provozu?
+
+V <PageLink href="/references/innea">Innea</PageLink>, české AI podpoře mezi terapeutickými
+sezeními: Claude API s automatickým přepnutím na jiného poskytovatele při výpadku, trojvrstvá
+paměť rozhovorů a krizová vrstva, která je názorným příkladem vymezené role AI — rizikový signál
+projde detekcí, posouzením jazykovým modelem a bezpečnostním filtrem, a o zásahu rozhoduje člověk
+ve frontě, ne model. Transparenční vrstva podle EU AI Act tam běží od začátku: uživatel ví, že
+mluví s AI, dřív než rozhovor začne.
 
 ## Časté otázky
 
 <Faq>
   <FaqItem question="Zůstanou naše data podle GDPR v EU?">
-    Ano — hostujeme v EU (Frankfurt) a zpracování řídíme podle GDPR, ne podle podmínek mimo Evropu.
+    Ano. Aplikaci i databázi hostujeme v EU (Frankfurt) a zpracování řídíme podle GDPR. U samotného
+    modelu volíme poskytovatele a region podle toho, kam vaše data smí — a pokud nesmí opustit
+    firmu vůbec, je tu <PageLink href="/services/local-llm">lokální LLM</PageLink>.
   </FaqItem>
   <FaqItem question="Trénuje se model na našich datech?">
-    Ne, pokud používáme API v obchodním režimu (ne bezplatné spotřebitelské účty) — přesné podmínky
-    konkrétního poskytovatele zkontrolujeme spolu s vámi před zahájením.
+    Ne. Používáme API poskytovatelů v obchodním režimu, kde se data k trénování nepoužívají — ne
+    bezplatné spotřebitelské účty, kde to platit nemusí. Podmínky konkrétního poskytovatele
+    projdeme před startem a zaznamenáme, který model v jakém režimu poběží.
   </FaqItem>
   <FaqItem question="Co když AI odpoví špatně — kdo za to ručí?">
-    Odpovědi kontroluje člověk dřív, než se z nich stane závazná nabídka nebo rozhodnutí — AI
-    dostane přesně vymezenou roli, ne neomezené rozhodování.
+    Rozhoduje člověk nebo pravidlo v kódu, ne model. AI dostane přesně vymezenou roli a všechno,
+    co má závazné důsledky — nabídka, platba, rozhodnutí o člověku — projde lidským schválením
+    nebo tvrdou kontrolou v kódu; v Innea tak funguje krizová vrstva. Kde ta hranice povede u vás,
+    je první věc, kterou na konzultaci nakreslíme, a její přesné vymezení je součást smlouvy, ne
+    téhle odpovědi.
   </FaqItem>
   <FaqItem question="Musíme uživatelům říct, že mluví s AI?">
-    Ano, pokud jde o chat nebo asistenta — je to požadavek EU AI Act (článek 50) a zabudujeme ho do
-    řešení rovnou, ne jako dodatečnou záplatu.
+    Ano, u chatu nebo asistenta to vyžaduje EU AI Act (článek 50). Nestavíme to jako dodatečnou
+    hlášku: transparenční vrstva v Innea je součást návrhu a uživatel ví, že mluví s AI, od
+    začátku rozhovoru. Stejný vzor použijeme u vás.
   </FaqItem>
 </Faq>

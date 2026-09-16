@@ -1,44 +1,60 @@
 ---
 title: Integrace na české systémy
-description: Propojujeme software s ARES, datovými schránkami, registrem smluv a NEN. Napojení na ARES máme v produkčním provozu v Innea.
-updated: 2026-09-13
+description: Propojujeme software s ARES, datovými schránkami, registrem smluv a NEN. ARES, Fakturoid, ISDOC a podklady pro pojišťovny máme v provozu v Innea Pro.
+updated: 2026-09-16
 type: page
 status: published
 ---
 
 Propojujeme software s ARES, datovými schránkami, registrem smluv a Národním elektronickým
 nástrojem (NEN) — systémy, které v českém prostředí většina studií nenabízí jako pojmenovanou
-službu. Napojení na ARES máme v produkčním provozu, čtení dat o veřejných zakázkách zvládá náš
-vlastní interní nástroj.
+službu. Napojení na ARES máme v produkčním provozu; české fakturační formáty, párování plateb
+a podklady pro zdravotní pojišťovny běží v našem produktu
+<PageLink href="/references/innea-pro">Innea Pro</PageLink>.
 
 ## Co umíme napojit?
 
-Umíme navrhnout a postavit napojení na ARES (ověření firem podle IČO), datové schránky (příjem i
-odesílání zpráv), registr smluv a NEN. Fakturoid a platební brány GoPay nebo Comgate jsou komerční
-služby, ne státní systémy, ale napojujeme i je.
+Umíme navrhnout a postavit napojení na ARES (ověření firem podle IČO), datové schránky (příjem
+i odesílání zpráv), registr smluv a NEN. Vedle státních systémů napojujeme i komerční služby,
+které česká firma potřebuje ke stejné práci: Fakturoid, iDoklad a Pohodu, platební brány GoPay
+a Comgate, bankovní API pro párování plateb a SMS brány.
 
-## Co si můžeme doložit?
+## Kde to máme v provozu?
 
-Integraci na ARES máme v provozu ve vlastním produktu Innea, kde ověřuje firmy podle IČO při
-registraci. Data o veřejných zakázkách čte vlastní interní nástroj, který zpracovává TED a ISVZ.
+V <PageLink href="/references/innea-pro">Innea Pro</PageLink>, provozním systému pro terapeutické
+praxe, který používá stejný kód jako Innea, kde ARES ověřuje firmy podle IČO při registraci.
+Innea Pro vystavuje faktury podle českých pravidel s QR platbou (SPAYD) a exportem ISDOC/UBL,
+páruje platby z Fio, přijímá platby přes Comgate, exportuje do Fakturoidu, iDokladu a Pohody,
+generuje podklady pro zdravotní pojišťovny včetně dávek KDAVKA/FDAVKA, synchronizuje kalendář
+s Google Calendar a posílá SMS připomínky přes BulkGate. Data o veřejných zakázkách čte vlastní
+interní nástroj, který zpracovává TED a ISVZ.
+
+Co v provozu zatím nemáme, říkáme rovnou: datové schránky, registr smluv a NEN stavíme na
+zakázku podle vašeho zadání — umíme je navrhnout a napojit, ale nemůžeme k nim přiložit
+běžící produkt.
 
 ## Časté otázky
 
 <Faq>
   <FaqItem question="Umíte číst data z ISVZ a NEN?">
-    Vlastní interní nástroj čte veřejné zakázky z TED a ISVZ. NEN je samostatný registr; integraci
-    na něj navrhneme podle vašeho zadání.
+    Z ISVZ ano — vlastní interní nástroj čte veřejné zakázky z TED a ISVZ. NEN je samostatný
+    registr, na který zatím napojení v provozu nemáme; integraci navrhneme podle toho, co z něj
+    potřebujete číst nebo do něj zapisovat.
   </FaqItem>
   <FaqItem question="Zvládnete obousměrnou komunikaci s datovkou?">
-    Obousměrnou komunikaci s datovou schránkou (příjem i odesílání) umíme navrhnout a napojit na
-    váš systém — konkrétní řešení stavíme na míru podle toho, jaký systém máte.
+    Ano, příjem i odesílání zpráv — ale jako zakázku na míru, ne jako hotový modul: obousměrné
+    napojení na datovou schránku zatím nemáme v žádném provozovaném produktu. Postavíme ho s testy
+    a monitoringem stejně jako fakturaci a pojišťovny v Innea Pro.
   </FaqItem>
   <FaqItem question="Co když stát změní formát API?">
-    Státní rozhraní se mění bez velkého předstihu — integrace proto stavíme s testy a
-    monitoringem, které chybu odhalí dřív, než napáchá škodu.
+    Změna se projeví jako spadlý test nebo alarm z monitoringu, ne jako chybná faktura u klienta.
+    Integrace stavíme s automatickými testy proti skutečným formátům a s monitoringem, takže
+    změnu rozhraní zachytíme dřív, než napáchá škodu; oprava je pak běžná údržba, ne krizový zásah.
   </FaqItem>
   <FaqItem question="Jak řešíte výpadky státních rozhraní?">
-    Počítáme s tím, že státní API občas vypadne — řešení navrhujeme s frontou a opakovaným
-    pokusem, aby výpadek nezastavil celý proces.
+    Frontou a opakovaným pokusem: požadavek se uloží, po výpadku se odešle znovu a proces se
+    nezastaví. Stejně je postavené doručování v Legacy You — naplánované úlohy, které se po
+    výpadku spustí znovu a které hlídá pravidelný health-check. Výpadek rozhraní znamená
+    zpoždění, ne ztracená data.
   </FaqItem>
 </Faq>

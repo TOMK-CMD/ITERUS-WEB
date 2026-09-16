@@ -124,11 +124,12 @@ the referenced `facts.json` key is filled and confirmed.
 
    **What we may prove**, and nothing else:
 
-   | Claim on the page                                                            | Proof that may be attached to it                             |
-   | ---------------------------------------------------------------------------- | ------------------------------------------------------------ |
-   | "napojujeme ARES"                                                            | the production integration in Innea (`/api/therapist/ares`)  |
-   | "čteme data o veřejných zakázkách"                                           | our own internal tooling reading TED and ISVZ, named nowhere |
-   | anything about datové schránky, NEN, registr smluv, Fakturoid, GoPay/Comgate | **none — say what we build, show nothing**                   |
+   | Claim on the page                                                                                                               | Proof that may be attached to it                                                           |
+   | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+   | "napojujeme ARES"                                                                                                               | the production integration in Innea / Innea Pro (`/api/therapist/ares`), linked case study |
+   | "čteme data o veřejných zakázkách"                                                                                              | our own internal tooling reading TED and ISVZ, named nowhere                               |
+   | Fakturoid, iDoklad, Pohoda export · ISDOC/UBL · SPAYD · Fio matching · Comgate · Google Calendar · BulkGate SMS · KDAVKA/FDAVKA | the production integration in Innea Pro, linked case study (since 2026-09-16)              |
+   | anything about datové schránky, NEN, registr smluv, GoPay                                                                       | **none — say what we build, show nothing; the page says so in its own words**              |
 
    Three prohibitions, because each is a way the page could drift:
    - A proof from one row may **never** be moved to another row. The procurement tooling proves
@@ -137,14 +138,11 @@ the referenced `facts.json` key is filled and confirmed.
      `facts.json → services` and must not be offered as one; TED is an EU register, not Czech e-gov.
    - No cadence claim ("denně" / "daily") anywhere, until one is recorded in `facts.json`.
 
-   **Newly provable since 2026-09-16** (Tomas's Innea Pro brief; documented on
-   `/reference/innea-pro`, `facts.json → projects.innea-pro.stack`): Fakturoid, iDoklad and Pohoda
-   XML export, ISDOC/UBL, SPAYD QR payments, Fio payment matching, Comgate, Google Calendar,
-   BulkGate SMS and health-insurer KDAVKA/FDAVKA batches all run in production in Innea Pro. The
-   proof table above is **not** widened here — `/sluzby/ceske-integrace` is rewritten in the
-   Opus/Fable copywriting session, and that is where the Fakturoid/Comgate rows move from "none"
-   to "the production integration in Innea Pro" (with a link to the case study). Datové schránky,
-   NEN and registr smluv stay unproven.
+   **Widened 2026-09-16** (Tomas's Innea Pro brief, documented on `/reference/innea-pro`,
+   `facts.json → projects.innea-pro.stack`): the third row above. The page now carries a "Kde to
+   máme v provozu?" section that names those integrations with a link to the case study, and a
+   plain sentence that datové schránky, registr smluv and NEN are built to order with no running
+   product behind them — the honest limit is part of the proof.
 
 3. **Numbers instead of client logos** — `/reference`. Studios have logos but NDAs stop them
    showing architecture; we have no logos and can show test counts, schema size and integrations.
