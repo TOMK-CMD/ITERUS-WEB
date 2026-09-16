@@ -23,6 +23,8 @@ const STATEMENTS: Record<Exclude<Statement, "approved">, Record<Locale, string>>
  */
 export async function HowWeWork({ statement = "approved" }: { statement?: Statement }) {
   const locale = (await getLocale()) as Locale;
-  if (statement !== "approved") return <p>{STATEMENTS[statement][locale]}</p>;
-  return <p className="text-lg">{howWeWork(locale)}</p>;
+  if (statement === "approved") return <p className="text-lg">{howWeWork(locale)}</p>;
+  // MDX passes an unchecked string; a typo must fail the build with a readable message.
+  if (!(statement in STATEMENTS)) throw new Error(`HowWeWork: unknown statement "${statement}"`);
+  return <p>{STATEMENTS[statement][locale]}</p>;
 }

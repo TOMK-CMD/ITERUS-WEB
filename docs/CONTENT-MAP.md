@@ -60,8 +60,8 @@ hook describes the orchestration mechanism, not the scale numbers Tomas supplied
 
 Card hooks carry `claims_confirmed: false`: the technical specifics were read from each project's
 own README on 2026-09-09, not re-verified by Tomas. Session C confirms them before go-live. The
-two case studies are different: their hooks and every number on their pages come from Tomas's own
-brief and measurement (2026-09-15), so `claims_confirmed` and `metrics_confirmed` are `true`.
+three case studies are different: their hooks and every number on their pages come from Tomas's
+own briefs and measurements (2026-09-15, 2026-09-16), so `claims_confirmed` and `metrics_confirmed` are `true`.
 
 **Case-study numbers (added 2026-09-16).** A case study renders its figures only through
 components that read `facts.json`: `<ProjectMetrics project="…" />` (`projects[project].metrics`)
@@ -79,7 +79,7 @@ are small — at most "první desítky uživatelů" — and nothing about paying
 Tomas confirms it in writing for a specific date. Innea and Innea Pro share one codebase, so the
 engineering numbers live on `projects.innea` and the Innea Pro page links to them instead of
 repeating them. No speed or savings claim exists to publish — none was measured. Screenshots are
-still pending for both pages (the tier table promises them; Tomas supplies them).
+still pending for all three pages (the tier table promises them; Tomas supplies them).
 
 ## Launch pages
 
