@@ -61,18 +61,22 @@ Structure (identical in both locales, headings as questions where natural):
 3. **Co jsme postavili? / What did we build?** — 4–6 bullets, named technologies, written for a
    B2B buyer rather than an engineer (explain or drop terms like "embedding clustering",
    "fail-closed", "red–green"; keep the named products and standards). No digits in prose —
-   `content-pages.test.ts` allows only years, the 116 123 helpline and scale names; a figure
-   belongs in `metrics`. No judgement of competitors or the market that the brief does not state.
+   `content-pages.test.ts` allows only years, the 116 123 helpline and the names of scales and
+   standards (its `allowedDigits` list — extend it for a new standard name, never for a figure);
+   a figure belongs in `metrics`. No judgement of competitors or the market that the brief does not state.
 4. **Čísla / The numbers** — `<ProjectMetrics project="<key>" />` + one sentence on scope.
 5. **Jak jsme pracovali? / How did we work?** — `<HowWeWork />` (approved wording, never
    paraphrased), then the concrete human/AI division from the brief, then
-   `<HowWeWork statement="review-yield" />` for the measured review-yield sentence. The founder
+   an approved supplementary statement where one fits — `<HowWeWork statement="review-yield" />`
+   (Innea) or `statement="human-lead"` (Legacy You); a new one is a `how_we_work.*_cs/en` pair
+   plus an entry in `how-we-work.tsx`, never prose. The founder
    is "technický vedoucí projektu" / "the project's technical lead" — never state or deny
    "programátor" (the test guards both locales). Do not describe how the AI's rules were derived
    if that implies reviewing users' data; name the rules, not their source, unless Tomas signs
    the sentence off.
 6. **Co dál? / What's next?** — links to the relevant service page(s) and `/contact`; the
-   product URL as a Markdown link.
+   product URL as a Markdown link. An unlaunched product gets **no launch date or quarter**
+   (Evidence Policy) — describe what gates the launch instead.
 
 Own products are "what we built", never client work. A sensitive domain (health, finance) states
 its boundary plainly ("není zdravotní služba").
