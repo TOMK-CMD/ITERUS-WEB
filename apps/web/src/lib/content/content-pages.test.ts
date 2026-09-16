@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { facts } from "@/lib/facts";
 import { PAGE_ROUTES } from "@/lib/seo/paths";
 import { listPages } from "./loader";
+import { FOUNDER_WORDING_FORBIDDEN } from "./wording-guards";
 
 /**
  * The real content tree, not fixtures: a frontmatter limit broken in content/<locale>/*.mdx used
@@ -91,27 +92,30 @@ describe("case-study prose (docs/CONTENT-MAP.md → Case-study numbers)", () => 
 describe("every page (CLAUDE.md → never state or deny that the founder is a programmer)", () => {
   // The case-study guard above bans the words outright, which only works where the prose is
   // about the founder. Elsewhere "programujeme indikátory" is a legitimate service claim, so
-  // the site-wide guard uses the subject-aware phrases from facts.test.ts instead.
-  const forbidden = [
-    /neum(ěl|ím)\s+programovat/i,
-    /nejsem\s+program(átor|ovač)/i,
-    /jsem\s+program(átor|ovač)/i,
-    /programátorsk[éá]\s+schopnosti/i,
-    /(not|never)\s+(been\s+)?a\s+(programmer|developer|coder)/i,
-    /\bI(?:'m| am)\s+a\s+(programmer|developer|coder)\b/i,
-  ];
-
-  it("never states or denies it on any published page, in either locale", async () => {
+  // the site-wide guard uses the subject-aware phrases shared with facts.test.ts — and scans
+  // title and description too, the most-quoted text on the site.
+  it("never states or denies it on any page, drafts included, in either locale", async () => {
     const pages = (
       await Promise.all(
         (["cs", "en"] as const).map((locale) => listPages(locale, { includeDrafts: true })),
       )
     ).flat();
     expect(pages.length).toBeGreaterThan(6);
+    const violations: string[] = [];
     for (const page of pages) {
-      for (const pattern of forbidden) {
-        expect(pattern.test(page.body), `${page.file}: ${pattern}`).toBe(false);
+      const text = [page.frontmatter.title, page.frontmatter.description, page.body].join("\n");
+      for (const pattern of FOUNDER_WORDING_FORBIDDEN) {
+        if (pattern.test(text)) violations.push(`${page.file}: ${pattern}`);
       }
     }
+    expect(violations).toEqual([]);
+  });
+
+  it("keeps the hand-typed count of case studies on /o-nas in step with the content tree", async () => {
+    // about.mdx says "tři" / "three" case studies; a fourth study must update that copy too.
+    const studies = (await listPages("cs", { includeDrafts: true })).filter(
+      (page) => page.frontmatter.type === "case-study",
+    );
+    expect(studies).toHaveLength(3);
   });
 });

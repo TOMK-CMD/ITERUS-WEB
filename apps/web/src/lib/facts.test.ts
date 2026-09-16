@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { FOUNDER_WORDING_FORBIDDEN } from "./content/wording-guards";
 import { facts, factOrNull, howWeWork, isTodo, legalLine, tagline } from "./facts";
 
 describe("isTodo", () => {
@@ -251,16 +252,8 @@ describe("founder story", () => {
   it("never states or denies that the founder is a programmer", () => {
     // CLAUDE.md forbids both directions. The draft is framed around time, not ability;
     // this stops a later edit from quietly crossing the line in either direction.
-    const forbidden = [
-      /neum(ěl|ím)\s+programovat/i,
-      /nejsem\s+program(átor|ovač)/i,
-      /jsem\s+program(átor|ovač)/i,
-      /programátorsk[éá]\s+schopnosti/i,
-      /(not|never)\s+a\s+(programmer|developer|coder)/i,
-      /\bI(?:'m| am)\s+a\s+(programmer|developer|coder)\b/i,
-    ];
     for (const text of [org.founder_story_cs, org.founder_story_en]) {
-      for (const pattern of forbidden) {
+      for (const pattern of FOUNDER_WORDING_FORBIDDEN) {
         expect(pattern.test(text as string), `${pattern} matched: ${text}`).toBe(false);
       }
     }
