@@ -2,6 +2,7 @@ import type {
   AboutPage,
   AggregateOffer,
   Answer,
+  Article,
   CollectionPage,
   FAQPage,
   HowTo,
@@ -254,18 +255,19 @@ export function buildHowTo(
 }
 
 export type ReferenceCard = { name: string; hook: string };
+export type ReferenceCaseStudy = ReferenceCard & { href: AppPathname };
 
 /**
- * `/reference` — CollectionPage listing the "card" tier projects (`facts.json →
- * projects[*].publish === "card"`) as SoftwareApplication entries. Case-study tier projects get
- * their own page (Article + SoftwareApplication) once written and are added to this collection
- * then — they are not represented here until they have somewhere to link to.
+ * `/reference` — CollectionPage listing the case studies that have a page (each linking to it)
+ * followed by the "card" tier projects (`facts.json → projects[*].publish === "card"`), all as
+ * SoftwareApplication entries. A case-study tier project without a page yet is simply absent.
  */
 export function buildReferencesCollection(
   locale: Locale,
   href: AppPathname,
   content: ServiceContent,
   cards: ReferenceCard[],
+  caseStudies: ReferenceCaseStudy[] = [],
 ): WithContext<CollectionPage> {
   return {
     "@context": "https://schema.org",
@@ -274,11 +276,68 @@ export function buildReferencesCollection(
     description: content.description,
     url: localizedUrl(locale, href),
     inLanguage: LANGUAGE_TAGS[locale],
-    hasPart: cards.map((card): SoftwareApplication => ({
+    hasPart: [
+      ...caseStudies.map((study): SoftwareApplication => ({
+        "@type": "SoftwareApplication",
+        name: study.name,
+        description: study.hook,
+        url: localizedUrl(locale, study.href),
+      })),
+      ...cards.map((card): SoftwareApplication => ({
+        "@type": "SoftwareApplication",
+        name: card.name,
+        description: card.hook,
+      })),
+    ],
+  };
+}
+
+export type CaseStudyContent = {
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified: string;
+};
+
+type CaseStudyProjectFacts = {
+  name: string;
+  url?: string;
+  hook_cs: string;
+  hook_en: string;
+};
+
+/**
+ * One case-study page — `Article` written and published by the organisation, `about` the product
+ * it describes (`SoftwareApplication` from `facts.json → projects[project]`, in the page's locale).
+ * Dates come from the page's frontmatter (`published`, `updated`).
+ */
+export function buildCaseStudyArticle(
+  locale: Locale,
+  href: AppPathname,
+  content: CaseStudyContent,
+  project: keyof typeof facts.projects,
+): WithContext<Article> {
+  const raw = facts.projects[project] as unknown as CaseStudyProjectFacts;
+  const url = localizedUrl(locale, href);
+  const productUrl = factOrNull(raw.url);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: content.headline,
+    description: content.description,
+    datePublished: content.datePublished,
+    dateModified: content.dateModified,
+    url,
+    mainEntityOfPage: url,
+    inLanguage: LANGUAGE_TAGS[locale],
+    author: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+    about: {
       "@type": "SoftwareApplication",
-      name: card.name,
-      description: card.hook,
-    })),
+      name: raw.name,
+      description: locale === "cs" ? raw.hook_cs : raw.hook_en,
+      ...(productUrl ? { url: productUrl } : {}),
+    } satisfies SoftwareApplication,
   };
 }
 

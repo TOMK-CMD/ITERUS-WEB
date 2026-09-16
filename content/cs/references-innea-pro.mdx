@@ -1,0 +1,66 @@
+---
+title: "Innea Pro: provozní systém pro terapeutickou praxi"
+description: "Případová studie vlastního produktu Iterus: kalendář se samoobjednáváním, AI zápisky ze sezení, fakturace podle českých pravidel a podklady pro pojišťovny."
+updated: 2026-09-16
+published: 2026-09-16
+type: case-study
+project: innea-pro
+status: published
+---
+
+Innea Pro je vlastní produkt Iterus: provozní systém pro české psychoterapeuty, psychology
+a kouče — od samostatné praxe po skupinovou. Klienti, kalendář se samoobjednáváním, zápisky ze
+sezení s AI návrhem, fakturace podle českých pravidel, podklady pro pojišťovny, supervize
+i klientský portál. Běží nad stejným jádrem jako Innea a je v provozu.
+
+## Jaký problém Innea Pro řeší?
+
+Terapeutická praxe je z velké části administrativa: objednávání a připomínky, zápisek po každém
+sezení, faktury, vyúčtování pojišťovnám, supervize a další vzdělávání — a každá z těch věcí má
+v Česku svá pravidla a své formáty. Innea Pro dává celý provoz praxe do jednoho systému, který
+české účtování a vykazování zná, a propojuje ho s klientskou aplikací Innea.
+
+## Co jsme postavili?
+
+- **Kalendář** — den, týden, měsíc; samoobjednávání klientů, SMS připomínky (BulkGate), čekací
+  listina, opakující se termíny, více poskytovatelů a místností, synchronizace s Google Calendar
+  a české svátky.
+- **Zápisky ze sezení** ve formátech SOAP, DAP, BIRP nebo volně a validované škály (PHQ-9, GAD-7
+  a další) s trendy. Nahrávání sezení se souhlasem všech účastníků → přepis → AI návrh zápisu →
+  schválení terapeutem; bez schválení se nic neuloží jako zápis.
+- **Fakturace podle českých pravidel** — PDF faktury, QR platby (SPAYD), export ISDOC/UBL,
+  dobropisy, párování plateb z Fio, platební brána Comgate, export do Fakturoidu, iDokladu
+  a Pohody, varianty DPH.
+- **Pojišťovny** — podklady pro vyúčtování a dávky ve formátech KDAVKA/FDAVKA.
+- **Práce s klientem** — domácí úkoly, terapeutické cíle, bezpečnostní plán, případová formulace.
+  **Innea Connect**: klient z aplikace Innea se může propojit se svým terapeutem, který pak před
+  sezením vidí AI shrnutí — jen s výslovným souhlasem klienta.
+- **Klientský portál** s přihlášením bez hesla (odkazem z e-mailu), bezpečné zprávy, automatizace
+  pracovních postupů, správa praxe a supervize včetně sledování dalšího vzdělávání.
+
+## Čísla
+
+<ProjectMetrics project="innea-pro" />
+
+Innea Pro sdílí kód, databázi i testy s Innea; inženýrská čísla celé platformy — testy, endpointy,
+schéma databáze — najdete v <PageLink href="/references/innea">případové studii Innea</PageLink>.
+Veřejný katalog terapeutů je v provozu od července 2026.
+
+## Jak jsme pracovali?
+
+<HowWeWork />
+
+Dělba práce je stejná jako u Innea a podrobně ji popisuje
+<PageLink href="/references/innea">její případová studie</PageLink>: člověk — technický vedoucí
+projektu — rozhodoval o architektuře, bezpečnostním modelu a procesu, Claude Code implementoval
+podle zadání s testy a review. U Innea Pro k tomu přibylo české účtování a vykazování — formáty
+ISDOC, SPAYD a KDAVKA/FDAVKA, pravidla DPH — kde o tom, co se buduje a v jakém pořadí, rozhodoval
+člověk a výsledek ověřoval na produkci stejně jako u Innea.
+
+## Co dál?
+
+Fakturoid, iDoklad, Pohoda, ISDOC, SPAYD, Fio, Comgate, Google Calendar, ARES, SMS — napojení,
+která jsou v Innea Pro v ostrém provozu, jsou totéž, co nabízíme jako
+<PageLink href="/services/czech-integrations">české integrace</PageLink>. Aplikaci najdete na
+[pro.innea.cz](https://pro.innea.cz). Potřebujete něco podobného pro svůj obor?
+<PageLink href="/contact">Napište nám</PageLink>.

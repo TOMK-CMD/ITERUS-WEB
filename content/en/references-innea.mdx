@@ -1,0 +1,87 @@
+---
+title: "Innea: AI Support Between Therapy Sessions"
+description: "Case study of an Iterus product: Czech AI support between therapy sessions with a crisis layer — what we built, repository numbers and the role of AI."
+updated: 2026-09-16
+published: 2026-09-16
+type: case-study
+project: innea
+status: published
+---
+
+Innea is an Iterus product: Czech-language AI support for people who need someone "between
+sessions" or don't have a therapist yet. Text and voice chat, mood tracking and a journal; above
+them a crisis layer designed to recognise risk signals and point to the 116 123 helpline. It is not
+a health service — it is a bridge. Live since spring 2026.
+
+## What problem does Innea solve?
+
+Between two therapy sessions there is a week, sometimes two — and what weighs on a person does not
+wait for the appointment. Whoever has no therapist yet has no such rhythm at all. Innea builds a
+safe space into that gap: a conversation in Czech that remembers context, tracks mood and flags
+themes that keep coming back.
+
+The boundary is essential. Innea is not a health service and does not pretend to be one — it is
+support between sessions, not a replacement for them. And when a conversation points to a crisis,
+the app stops being a chatbot and becomes a signpost to people: it refers to the 116 123 helpline
+and hands the case to a queue handled by a human.
+
+## What did we build?
+
+- **AI chat in Czech** with a therapeutic prompt and three-layer memory (the current conversation,
+  a semantic memory of earlier conversations, long-term memory) on the Claude API, with automatic
+  failover to another provider during an outage.
+- **Voice chat** — speech recognition and synthesis (Deepgram, ElevenLabs), falling back to text
+  for sensitive questions.
+- **Mood tracking and a journal** with short- and long-term trends and AI detection of themes that
+  keep coming back.
+- **Crisis layer**: risk-signal detection tuned to Czech → assessment by a language model → content
+  safety filter → an administrator queue with a tracked response time. Protection against alert
+  overload makes sure a full intervention is not triggered by every sentence.
+- **Subscription and a free tier** through Stripe — the crisis layer works regardless of the free
+  account's limit.
+- **Compliance**: GDPR, a completed DPIA, data export and deletion on request, and an EU AI Act
+  transparency layer — the user knows they are talking to an AI.
+
+## The numbers
+
+Innea and <PageLink href="/references/innea-pro">Innea Pro</PageLink> share one codebase, so the
+numbers below describe the whole platform — from the first commit in October 2025 to the state
+measured in September 2026.
+
+<ProjectMetrics project="innea" />
+
+We don't publish operational numbers yet (accounts, messages, sessions): these are the first few
+dozen users and the figures would not mean much yet. We'll add them once they do.
+
+## How did we work?
+
+<HowWeWork />
+
+Innea shows what that sentence means in practice.
+
+**The human — the project's technical lead** — made the architectural decisions: Next.js App
+Router, Supabase and Postgres with each user's data strictly separated in the database itself
+(row-level security), a data model for two connected applications with graduated consents. He set
+the security model — crisis gates that intervene when in doubt, audits of database permissions, a
+rule for every irreversible database change — and the process: tests written before the code
+(TDD), every change as a separate pull request with automated tests and AI review, merged only
+after human approval. He laid down the rules the AI must never break: no advice on medication, no
+reality-testing of psychoses, always a pointer to the crisis line. And he verified the result
+against reality — by hand in the browser and by checking production, which repeatedly surfaced
+defects that had passed both the tests and the AI review.
+
+**Claude Code** wrote production code, database migrations and security policies to
+specification, tests ahead of the implementation, documentation and refactors; it prepared changes
+as pull requests and delegated adversarial review to other models.
+
+<HowWeWork statement="review-yield" />
+
+## What's next?
+
+Innea is one of two products on the same core; the other is
+<PageLink href="/references/innea-pro">Innea Pro</PageLink> for therapy practices. The app lives
+at [app.innea.cz](https://app.innea.cz).
+
+We use the same approach — the Claude API with protective layers, data in the EU, tests and review
+— on client projects too: see <PageLink href="/services/ai-integration">AI integration</PageLink>,
+or simply <PageLink href="/contact">get in touch</PageLink>.

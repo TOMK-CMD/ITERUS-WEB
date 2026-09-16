@@ -1,0 +1,67 @@
+---
+title: "Innea Pro: Practice Management for Czech Therapists"
+description: "Case study of an Iterus product: a self-booking calendar, AI session notes, invoicing under Czech rules and health-insurer billing documents in one system."
+updated: 2026-09-16
+published: 2026-09-16
+type: case-study
+project: innea-pro
+status: published
+---
+
+Innea Pro is an Iterus product: a practice-operations system for Czech psychotherapists,
+psychologists and coaches — from a solo practice to a group one. Clients, a self-booking calendar,
+session notes with an AI draft, invoicing under Czech rules, health-insurer billing documents,
+supervision and a client portal. It runs on the same core as Innea and is live.
+
+## What problem does Innea Pro solve?
+
+A therapy practice is, to a large extent, administration: bookings and reminders, a note after every
+session, invoices, insurer billing, supervision and continuing education — and in the Czech
+Republic each of those comes with its own rules and formats. Innea Pro puts the whole practice into
+one system that understands Czech billing and reporting, and connects it to the Innea client app.
+
+## What did we build?
+
+- **Calendar** — day, week, month; client self-booking, SMS reminders (BulkGate), a waiting list,
+  recurring appointments, multiple providers and rooms, Google Calendar sync and Czech public
+  holidays.
+- **Session notes** in SOAP, DAP, BIRP or free format, plus validated scales (PHQ-9, GAD-7 and
+  others) with trends. Session recording with every participant's consent → transcript → AI draft
+  note → therapist approval; nothing is stored as a note without that approval.
+- **Invoicing under Czech rules** — PDF invoices, QR payments (SPAYD), ISDOC/UBL export, credit
+  notes, payment matching from Fio, the Comgate payment gateway, export to Fakturoid, iDoklad and
+  Pohoda, VAT variants.
+- **Health insurers** — billing documents and batches in the KDAVKA/FDAVKA formats.
+- **Client work** — homework, therapy goals, a safety plan, case formulation. **Innea Connect**: a
+  client from the Innea app can link to their therapist, who then sees an AI pre-session summary —
+  only with the client's explicit consent.
+- **Client portal** with passwordless sign-in (a link sent by e-mail), secure messaging, workflow
+  automation, practice administration and supervision including continuing-education tracking.
+
+## The numbers
+
+<ProjectMetrics project="innea-pro" />
+
+Innea Pro shares code, database and tests with Innea; the engineering numbers for the whole
+platform — tests, endpoints, database schema — are in the
+<PageLink href="/references/innea">Innea case study</PageLink>. The public therapist directory
+has been live since July 2026.
+
+## How did we work?
+
+<HowWeWork />
+
+The division of labour is the same as for Innea and is described in detail in
+<PageLink href="/references/innea">its case study</PageLink>: the human — the project's
+technical lead — made the decisions on architecture, security model and process, and Claude Code
+implemented to specification with tests and review. Innea Pro added Czech billing and reporting on
+top — the ISDOC, SPAYD and KDAVKA/FDAVKA formats, the VAT rules — where the human decided what
+gets built and in what order, and verified the result in production just as for Innea.
+
+## What's next?
+
+Fakturoid, iDoklad, Pohoda, ISDOC, SPAYD, Fio, Comgate, Google Calendar, ARES, SMS — the
+integrations running live in Innea Pro are the same ones we offer as
+<PageLink href="/services/czech-integrations">Czech integrations</PageLink>. The app lives at
+[pro.innea.cz](https://pro.innea.cz). Need something similar for your field?
+<PageLink href="/contact">Get in touch</PageLink>.

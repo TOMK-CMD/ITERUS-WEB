@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { mdxComponents } from "@/components/mdx";
 import { routing } from "@/i18n/routing";
+import { loadCaseStudyCatalog } from "@/lib/content/case-study-catalog";
 import { loadPage, readPage } from "@/lib/content/loader";
 import { getCardProjects } from "@/lib/content/reference-cards";
 import { buildReferencesCollection } from "@/lib/seo/json-ld";
@@ -27,7 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ReferencesPage({ params }: Props) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
-  const page = await loadPage(locale, "references", mdxComponents);
+  const [page, caseStudies] = await Promise.all([
+    loadPage(locale, "references", mdxComponents),
+    loadCaseStudyCatalog(locale),
+  ]);
   const cards = getCardProjects(locale);
 
   return (
@@ -38,6 +42,7 @@ export default async function ReferencesPage({ params }: Props) {
           "/references",
           { name: page.frontmatter.title, description: page.frontmatter.description },
           cards,
+          caseStudies,
         )}
       />
       <article className="prose-iterus">

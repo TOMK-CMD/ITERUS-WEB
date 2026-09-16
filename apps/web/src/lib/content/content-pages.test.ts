@@ -1,0 +1,79 @@
+import { describe, expect, it } from "vitest";
+import { facts } from "@/lib/facts";
+import { PAGE_ROUTES } from "@/lib/seo/paths";
+import { listPages } from "./loader";
+
+/**
+ * The real content tree, not fixtures: a frontmatter limit broken in content/<locale>/*.mdx used
+ * to surface only in `next build` (sitemap → listPages). Here it fails in `pnpm check`.
+ */
+describe("content/<locale>/*.mdx", () => {
+  it("validates every page in both locales, drafts included", async () => {
+    const [cs, en] = await Promise.all([
+      listPages("cs", { includeDrafts: true }),
+      listPages("en", { includeDrafts: true }),
+    ]);
+    expect(cs.length).toBeGreaterThan(0);
+    expect(cs.map((page) => page.slug)).toEqual(en.map((page) => page.slug));
+  });
+
+  it("registers every page slug in PAGE_ROUTES (sitemap and llms.txt would throw otherwise)", async () => {
+    for (const page of await listPages("cs", { includeDrafts: true })) {
+      expect(PAGE_ROUTES[page.slug], page.slug).toBeDefined();
+    }
+  });
+
+  it("points every case study at a case-study tier project, named after it", async () => {
+    for (const locale of ["cs", "en"] as const) {
+      const studies = (await listPages(locale, { includeDrafts: true })).filter(
+        (page) => page.frontmatter.type === "case-study",
+      );
+      expect(studies.length).toBeGreaterThan(0);
+      for (const page of studies) {
+        const project = page.frontmatter.project as keyof typeof facts.projects;
+        const record = facts.projects[project] as { publish?: unknown };
+        expect(record?.publish, `${page.file}: project "${project}"`).toBe("case-study");
+        expect(page.slug).toBe(`references-${project}`);
+      }
+    }
+  });
+});
+
+describe("case-study prose (docs/CONTENT-MAP.md → Case-study numbers)", () => {
+  // The same wording rules facts.test.ts applies to the founder story, plus the two conditions
+  // from Tomas's brief: nothing about paying users, no operational counts.
+  const forbidden = [
+    /program(átor|ovač|mer)/i,
+    /\bvývojář/i,
+    /\b(coder|developer)\b/i,
+    /platíc/i,
+    /paying/i,
+  ];
+  // Every figure renders through <ProjectMetrics /> or <HowWeWork statement="…" />; prose may
+  // carry only dates, the 116 123 helpline and scale names. Extend deliberately, not casually.
+  const allowedDigits = [/\b(19|20)\d{2}\b/g, /116 123/g, /PHQ-9/g, /GAD-7/g];
+
+  async function caseStudyBodies() {
+    const pages = await Promise.all(
+      (["cs", "en"] as const).map((locale) => listPages(locale, { includeDrafts: true })),
+    );
+    return pages.flat().filter((page) => page.frontmatter.type === "case-study");
+  }
+
+  it("never uses forbidden wording about the founder or paying users", async () => {
+    for (const page of await caseStudyBodies()) {
+      for (const pattern of forbidden) {
+        expect(pattern.test(page.body), `${page.file}: ${pattern}`).toBe(false);
+      }
+    }
+  });
+
+  it("keeps numbers out of prose — figures come from facts.json through components", async () => {
+    for (const page of await caseStudyBodies()) {
+      let prose = page.body.replace(/<[A-Z][^>]*\/>/g, ""); // self-closing MDX components
+      for (const pattern of allowedDigits) prose = prose.replace(pattern, "");
+      const leaked = prose.match(/[^\s]*\d[^\s]*/g) ?? [];
+      expect(leaked, `${page.file}: digits in prose`).toEqual([]);
+    }
+  });
+});
