@@ -43,11 +43,12 @@ describe("case-study prose (docs/CONTENT-MAP.md → Case-study numbers)", () => 
   // The same wording rules facts.test.ts applies to the founder story, plus the two conditions
   // from Tomas's brief: nothing about paying users, no operational counts.
   const forbidden = [
-    /program(átor|ovač|mer)/i,
+    /program(átor|ovač|mer|uj)/i,
     /\bvývojář/i,
-    /\b(coder|developer)\b/i,
+    /\b(coder|developer)s?\b/i,
     /platíc/i,
-    /paying/i,
+    /zaplat/i,
+    /\b(paying|paid)\b/i,
   ];
   // Every figure renders through <ProjectMetrics /> or <HowWeWork statement="…" />; prose may
   // carry only dates, the 116 123 helpline and scale names. Extend deliberately, not casually.
@@ -70,7 +71,9 @@ describe("case-study prose (docs/CONTENT-MAP.md → Case-study numbers)", () => 
 
   it("keeps numbers out of prose — figures come from facts.json through components", async () => {
     for (const page of await caseStudyBodies()) {
-      let prose = page.body.replace(/<[A-Z][^>]*\/>/g, ""); // self-closing MDX components
+      // Only the two facts-driven blocks may carry a figure; any other component's attributes
+      // stay in the text, so a digit hidden in `<Foo count="100" />` is still caught.
+      let prose = page.body.replace(/<(?:ProjectMetrics|HowWeWork)\b[^>]*\/>/g, "");
       for (const pattern of allowedDigits) prose = prose.replace(pattern, "");
       const leaked = prose.match(/[^\s]*\d[^\s]*/g) ?? [];
       expect(leaked, `${page.file}: digits in prose`).toEqual([]);

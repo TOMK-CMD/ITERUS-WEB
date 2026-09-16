@@ -21,14 +21,14 @@ rozhovor v češtině, který si pamatuje kontext, sleduje náladu a upozorní n
 vracejí.
 
 Zásadní je hranice. Innea není zdravotní služba a netváří se tak — je to podpora mezi sezeními,
-ne jejich náhrada. A když rozhovor ukáže na krizi, aplikace přestane být chatbot a stane se
-rozcestníkem k lidem: odkáže na linku 116 123 a předá případ do fronty, kterou řeší člověk.
+ne jejich náhrada. A když rozhovor ukáže na krizi, krizová vrstva odkáže na linku 116 123
+a předá případ do fronty, kterou řeší člověk.
 
 ## Co jsme postavili?
 
-- **AI chat v češtině** s terapeutickým promptem a trojvrstvou pamětí (aktuální rozhovor,
-  významová paměť předchozích rozhovorů, dlouhodobá paměť) nad Claude API, s automatickým
-  přepnutím na jiného poskytovatele při výpadku.
+- **AI chat v češtině** vedený terapeutickým rámcem rozhovoru, s trojvrstvou pamětí (aktuální
+  rozhovor, významová paměť předchozích rozhovorů, dlouhodobá paměť) nad Claude API
+  a s automatickým přepnutím na jiného poskytovatele při výpadku.
 - **Hlasový chat** — rozpoznávání i syntéza řeči (Deepgram, ElevenLabs), s návratem k textu
   u citlivých dotazů.
 - **Sledování nálady a deník** s krátkodobými i dlouhodobými trendy a AI rozpoznáváním témat,
@@ -61,7 +61,7 @@ Na Innee je vidět, co ta věta znamená v praxi.
 a Postgres s důsledným oddělením dat jednotlivých uživatelů přímo v databázi (row-level
 security), datový model dvou propojených aplikací s odstupňovanými souhlasy. Určil bezpečnostní
 model — krizové brány, které při pochybnosti zasáhnou, audity databázových oprávnění, pravidlo pro
-každou nevratnou změnu databáze — i proces: testy psané před kódem (TDD), každá změna jako
+každou nevratnou (destruktivní) změnu databáze — i proces: testy psané před kódem (TDD), každá změna jako
 samostatný pull request s automatickými testy a AI review, začleněná až po lidském schválení.
 Stanovil pravidla, která AI nesmí porušit: žádné rady o lécích, žádné testování reality
 u psychóz, vždy odkaz na krizovou linku. A ověřoval výsledek proti realitě — ručně v prohlížeči

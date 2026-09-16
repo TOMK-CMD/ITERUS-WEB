@@ -9,9 +9,9 @@ status: published
 ---
 
 Innea is an Iterus product: Czech-language AI support for people who need someone "between
-sessions" or don't have a therapist yet. Text and voice chat, mood tracking and a journal; above
-them a crisis layer designed to recognise risk signals and point to the 116 123 helpline. It is not
-a health service — it is a bridge. Live since spring 2026.
+sessions" or don't have a therapist yet. Text and voice chat, mood tracking and a journal, plus a
+crisis layer designed to recognise risk signals and point to the 116 123 helpline. It is not a
+health service — it is a bridge. Live since spring 2026.
 
 ## What problem does Innea solve?
 
@@ -22,14 +22,13 @@ themes that keep coming back.
 
 The boundary is essential. Innea is not a health service and does not pretend to be one — it is
 support between sessions, not a replacement for them. And when a conversation points to a crisis,
-the app stops being a chatbot and becomes a signpost to people: it refers to the 116 123 helpline
-and hands the case to a queue handled by a human.
+the crisis layer refers to the 116 123 helpline and hands the case to a queue handled by a human.
 
 ## What did we build?
 
-- **AI chat in Czech** with a therapeutic prompt and three-layer memory (the current conversation,
-  a semantic memory of earlier conversations, long-term memory) on the Claude API, with automatic
-  failover to another provider during an outage.
+- **AI chat in Czech** guided by a therapeutic conversation framework, with three-layer memory
+  (the current conversation, a semantic memory of earlier conversations, long-term memory) on the
+  Claude API and automatic failover to another provider during an outage.
 - **Voice chat** — speech recognition and synthesis (Deepgram, ElevenLabs), falling back to text
   for sensitive questions.
 - **Mood tracking and a journal** with short- and long-term trends and AI detection of themes that
@@ -63,7 +62,7 @@ Innea shows what that sentence means in practice.
 Router, Supabase and Postgres with each user's data strictly separated in the database itself
 (row-level security), a data model for two connected applications with graduated consents. He set
 the security model — crisis gates that intervene when in doubt, audits of database permissions, a
-rule for every irreversible database change — and the process: tests written before the code
+rule for every irreversible (destructive) database change — and the process: tests written before the code
 (TDD), every change as a separate pull request with automated tests and AI review, merged only
 after human approval. He laid down the rules the AI must never break: no advice on medication, no
 reality-testing of psychoses, always a pointer to the crisis line. And he verified the result
