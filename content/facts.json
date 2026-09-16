@@ -64,7 +64,10 @@
     "ai_review_findings_rejected_share": "2/3",
     "ai_review_findings_note": "Tomas, 2026-09-15: roughly two of three findings from delegated AI review do not survive verification against the code or a measurement — the reason a human, not the model, decides what is merged. Measured on the Innea delegation log, not a general statistic, so the published sentence is scoped to Innea. Rendered only through <HowWeWork statement=\"review-yield\" />, never retyped in prose.",
     "review_yield_cs": "Poctivý dodatek: u Innea zhruba dva ze tří nálezů AI review při ověření proti kódu neobstojí. Právě proto rozhoduje člověk — a proto na výsledku záleží, kdo ho vede.",
-    "review_yield_en": "An honest footnote: on Innea, roughly two out of three AI-review findings do not survive verification against the code. That is exactly why a human decides — and why it matters who leads the work."
+    "review_yield_en": "An honest footnote: on Innea, roughly two out of three AI-review findings do not survive verification against the code. That is exactly why a human decides — and why it matters who leads the work.",
+    "human_lead_note": "Tomas's approved wording for the Legacy You case study (brief 2026-09-16, \"poctivá věta pro web\"). Rendered through <HowWeWork statement=\"human-lead\" />.",
+    "human_lead_cs": "Kód píše AI pod lidským vedením; člověk rozhoduje, provozuje produkci a ověřuje výsledky proti realitě — a právě ta ověření opakovaně našla chyby, které automatika propustila.",
+    "human_lead_en": "AI writes the code under human direction; the human decides, runs production and verifies the results against reality — and it is exactly those checks that have repeatedly caught defects the automation let through."
   },
   "pricing": {
     "_readme": "Approved by Tomas 2026-09-09. Amounts in CZK excluding VAT. reference_rate_czk_hour is the sanity check the bands were set against, not a formula that reproduces them: implied_hours records what each band's entry price buys at that rate. Never publish a band that is not listed here.",
@@ -405,14 +408,80 @@
     "legacy-you": {
       "name": "Legacy You",
       "type": "own-product",
+      "started": "2025-11",
       "publish": "case-study",
       "status_cs": "před spuštěním",
       "status_en": "pre-launch",
-      "stack": ["Next.js", "React Native / Expo", "Supabase"],
+      "stack": [
+        "Next.js (App Router)",
+        "React Native / Expo (iOS, Android)",
+        "Supabase (Postgres, RLS, edge functions, pg_cron)",
+        "Claude API",
+        "OpenAI Whisper",
+        "ElevenLabs",
+        "Stripe",
+        "Resend",
+        "Sentry",
+        "EAS"
+      ],
       "hook_cs": "Platforma pro odkaz blízkým, navržená pro seniory: ovládání hlasem, velké dotykové cíle a přihlášení bez hesla.",
       "hook_en": "A platform for leaving messages to loved ones, designed senior-first: voice control, large touch targets and passwordless sign-in.",
-      "claims_source": "project README, read 2026-09-09",
-      "claims_confirmed": false
+      "claims_source": "Tomas, product brief 2026-09-16",
+      "claims_confirmed": true,
+      "metrics_source": "Tomas, measured in the Legacy You repository (git, find, test gates) 2026-09-16",
+      "metrics_measured": "2026-09-16",
+      "metrics_confirmed": true,
+      "metrics_note": "Pre-launch: no user or message counts exist to publish. Numbers Tomas flagged as stale in the project's own TODO.md (an older test count, an older edge-function count) are deliberately not used. No launch date is published — Evidence Policy (docs/CONTENT-MAP.md): an unlaunched product promises no availability date; the page describes what gates the launch instead (Tomas's decision 2026-09-16). Costs and vendor counts from the launch plan stay internal.",
+      "metrics": [
+        {
+          "key": "unit_tests_web",
+          "value": 1028,
+          "label_cs": "unit testů (web)",
+          "label_en": "unit tests (web)"
+        },
+        {
+          "key": "unit_tests_mobile",
+          "value": 418,
+          "label_cs": "unit testů (mobilní aplikace)",
+          "label_en": "unit tests (mobile app)"
+        },
+        {
+          "key": "e2e_tests",
+          "value": 218,
+          "label_cs": "end-to-end testů (přihlášení a veřejná část)",
+          "label_en": "end-to-end tests (sign-in and public pages)"
+        },
+        {
+          "key": "web_routes",
+          "value": 101,
+          "label_cs": "webových rout (web, dashboard, portály)",
+          "label_en": "web routes (site, dashboard, portals)"
+        },
+        {
+          "key": "mobile_screens",
+          "value": 85,
+          "label_cs": "obrazovek nativní mobilní aplikace",
+          "label_en": "native mobile-app screens"
+        },
+        {
+          "key": "edge_functions",
+          "value": 20,
+          "label_cs": "edge funkcí (Supabase)",
+          "label_en": "edge functions (Supabase)"
+        },
+        {
+          "key": "migrations",
+          "value": 55,
+          "label_cs": "databázových migrací",
+          "label_en": "database migrations"
+        },
+        {
+          "key": "commits",
+          "value": 549,
+          "label_cs": "commitů od listopadu 2025",
+          "label_en": "commits since November 2025"
+        }
+      ]
     },
     "geo-seo": {
       "name": "GEO-SEO",

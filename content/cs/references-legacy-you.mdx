@@ -1,0 +1,87 @@
+---
+title: "Legacy You: digitální odkaz navržený pro seniory"
+description: "Případová studie vlastního produktu Iterus: platforma pro zprávy blízkým doručené až po smrti — nativní mobilní aplikace, web, šifrování a ovládání hlasem."
+updated: 2026-09-16
+published: 2026-09-16
+type: case-study
+project: legacy-you
+status: published
+---
+
+Legacy You je vlastní produkt Iterus: platforma, ve které člověk nahraje zprávy blízkým — hlas,
+video, praktické informace — a ta je doručí až po jeho smrti, nikdy dřív a nikomu jinému. Je
+navržená pro seniory: ovládá se hlasem, má velké dotykové cíle a přihlášení bez hesla. Nativní
+mobilní aplikace i web jsou hotové; produkt je před spuštěním.
+
+## Jaký problém Legacy You řeší?
+
+Lidé nemají spolehlivý způsob, jak nechat blízkým poslední zprávy tak, aby se doručily ve správnou
+chvíli — po smrti, ne dřív — a jen těm, komu jsou určené. A nástroje, které se o to pokoušejí,
+bývají pro seniory neovladatelné.
+
+Legacy You na to jde obráceně: napřed senior. Uživatel nahraje zprávy, určí příjemce a důvěrníky;
+pravidelný „check-in" hlídá, že je v pořádku, a když se přestane ozývat, aplikace eskaluje
+a doručení spustí až po ověření úmrtí důvěrníky. Primárně pro aktivní seniory a lidi s vážnou
+diagnózou — účet ale typicky zakládá „sendvičová generace" svým rodičům.
+
+## Co jsme postavili?
+
+- **Nativní mobilní aplikace** pro iOS i Android (React Native, Expo) — nativní kamera, nahrávání
+  audia a videa, biometrické odemykání, klíče v hardwarovém úložišti telefonu, haptika. Sestavená
+  přes EAS a ověřená na skutečném zařízení v srpnu 2026; není to zabalený web.
+- **Webová aplikace** (Next.js) — marketingový web, dashboard, portály pro příjemce, důvěrníky
+  a dědice, veřejné stránky pro pohřební službu.
+- **Backend na Supabase** — edge funkce, izolace dat na úrovni řádků, naplánovaná pipeline pro
+  eskalaci a doručování a pravidelný health-check, který ji hlídá.
+- **Zprávy a trezor** — text, audio a video s end-to-end šifrováním, časové kapsle, pohřební
+  zprávy s jednorázovým kódem, digitální trezor bez znalosti obsahu na straně serveru
+  (zero-knowledge, AES-256-GCM), rodinný strom a přístup dědiců.
+- **Check-in a důvěrníci** — potvrzení aplikací, e-mailem nebo hlasem, eskalace v několika
+  úrovních s možností pauzy; důvěrníci rozhodují konsenzem přes vlastní portál s omezeným
+  přístupem; doručení příjemcům e-mailem, ověřené end-to-end až do cizí schránky.
+- **Hlas a přístupnost** — hlasové ovládání (Whisper → Claude → ElevenLabs), audio průvodce každou
+  obrazovkou, uložení vlastního hlasu (voice banking) a režim pro lidi, kteří o hlas mohou přijít,
+  pečovatelský mód ve třech úrovních. Přístupnost je brána, ne slib: automatický audit veřejné
+  části s nulou potvrzených porušení, kontrola dotykových cílů, fokusu a kontrastu na každé
+  chráněné obrazovce.
+- **AI Memory** — vyhledávání nad obsahem zesnulého pro pozůstalé, jen s výslovným souhlasem
+  daným za života.
+
+## Čísla
+
+<ProjectMetrics project="legacy-you" />
+
+Produkt je před spuštěním, takže žádné počty uživatelů ani zpráv neexistují — čísla výše popisují
+rozsah toho, co je postavené a otestované. Doručovací pipeline je ověřená na produkci od začátku do
+konce.
+
+## Jak jsme pracovali?
+
+<HowWeWork />
+
+<HowWeWork statement="human-lead" />
+
+**Člověk — technický vedoucí projektu** rozhodoval o produktu a bezpečnosti: senior-first principy,
+šifrovací architektura a trezor bez znalosti obsahu, konsenzus důvěrníků, co zůstane soukromé
+i po smrti. Provozoval vše, k čemu AI nemá klíče — databázový projekt a jeho tajemství, hosting
+a domény, DNS pro doručování e-mailů, rotaci klíčů, nativní buildy a účty v obchodech. Každý zápis
+do produkce a každá nevratná operace prošly jeho výslovným souhlasem. A ověřoval výsledek proti
+realitě: na skutečném telefonu, živým přihlášením na produkci, kontrolou doručení do schránek —
+právě tam se opakovaně našly vady, které prošly automatickými branami i AI review. Právní
+a compliance vrstva (smlouvy s dodavateli, souhlasy s biometrií, právní texty) je také jeho.
+
+**Claude Code** jako orchestrátor s dalšími modely na oponenturu implementoval podle testů
+(test → kód → měření), psal brány a end-to-end sondy, migrace a edge funkce; měřil místo domněnek
+(doby výpadků, kontrastní poměry, mutační testy); před každým pushem nechal vlastní změny
+adversariálně zkontrolovat více modely a každý nález ověřil spuštěním proti kódu.
+
+## Co dál?
+
+Vývoj je hotový a ověřený na produkci. Spuštění čeká na kroky mimo kód: právní review, testování
+se seniory a úpravy podle něj, ruční testy s odečítači obrazovky a review obchodů s aplikacemi.
+Stav aktualizujeme tady, až se změní.
+
+Nativní mobilní aplikace, přístupnost jako brána a šifrování s klíči na straně uživatele jsou
+totéž, co umíme postavit i pro váš produkt: viz
+<PageLink href="/services/web-applications">webové aplikace</PageLink>, nebo nám rovnou
+<PageLink href="/contact">napište</PageLink>.

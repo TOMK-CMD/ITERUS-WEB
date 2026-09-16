@@ -51,8 +51,9 @@ describe("case-study prose (docs/CONTENT-MAP.md → Case-study numbers)", () => 
     /\b(paying|paid)\b/i,
   ];
   // Every figure renders through <ProjectMetrics /> or <HowWeWork statement="…" />; prose may
-  // carry only dates, the 116 123 helpline and scale names. Extend deliberately, not casually.
-  const allowedDigits = [/\b(19|20)\d{2}\b/g, /116 123/g, /PHQ-9/g, /GAD-7/g];
+  // carry only dates, the 116 123 helpline and the names of scales and standards. Extend
+  // deliberately, not casually.
+  const allowedDigits = [/\b(19|20)\d{2}\b/g, /116 123/g, /PHQ-9/g, /GAD-7/g, /AES-256(-GCM)?/g];
 
   async function caseStudyBodies() {
     const pages = await Promise.all(
