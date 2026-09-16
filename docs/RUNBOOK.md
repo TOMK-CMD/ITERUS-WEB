@@ -4,21 +4,46 @@
 
 ## Domains & DNS
 
-| Domain     | Role                       | Registrar            | DNS                  | Notes                                                |
-| ---------- | -------------------------- | -------------------- | -------------------- | ---------------------------------------------------- |
-| iterus.cz  | primary (cs, en under /en) | TODO                 | Cloudflare (planned) | canonical host (`NEXT_PUBLIC_SITE_URL`)              |
-| iterus.io  | international alias        | TODO (already owned) | Cloudflare (planned) | open item (ADR-0003): recommended 301 → iterus.cz/en |
-| iterus.com | backorder placed? TODO     | —                    | —                    | expires 2026-09-09, status "pending transfer"        |
+| Domain     | Role                       | Registrar                     | DNS                                  | Notes                                                                    |
+| ---------- | -------------------------- | ----------------------------- | ------------------------------------ | ------------------------------------------------------------------------ |
+| iterus.cz  | primary (cs, en under /en) | Active24 (expires 2027-09-08) | Active24 (`ns1-3.websupport.cz/.eu`) | canonical host (`NEXT_PUBLIC_SITE_URL`); live on Vercel since 2026-09-16 |
+| iterus.io  | international alias        | Porkbun (already owned)       | Porkbun (parking)                    | open item (ADR-0003): recommended 301 → iterus.cz/en                     |
+| iterus.com | backorder placed? TODO     | —                             | —                                    | expires 2026-09-09, status "pending transfer"                            |
 
-If Cloudflare DNS is used, keep the records **DNS-only (grey cloud)**: behind the Cloudflare proxy
-Vercel sees Cloudflare's edge IPs in `x-real-ip`/`x-forwarded-for`, so the contact-form rate limit
-(5 requests / 10 min per IP) would lock out real visitors who share an edge, and Vercel's own edge
-caching is bypassed.
+Vercel domains for project `iterus-web` (Settings → Domains): `iterus.cz` = Production,
+`www.iterus.cz` → 308 → `iterus.cz`, `iterus-web.vercel.app` stays a production alias (no
+`noindex`; the canonical tag points every page at `iterus.cz`). Set the redirect in that order —
+apex to "No Redirect" first, then `www` → apex — or Vercel refuses the save as a redirect loop.
+
+DNS records at Active24 (admin.active24.cz → iterus.cz → DNS), as required by the Vercel domain
+page on 2026-09-16 (Vercel's newer IP range; the legacy `76.76.21.21` / `cname.vercel-dns.com`
+keep working):
+
+| Type  | Name  | Value                                  |
+| ----- | ----- | -------------------------------------- |
+| A     | `@`   | `216.150.1.1`                          |
+| CNAME | `www` | `5725df981be055d8.vercel-dns-016.com.` |
+
+No `AAAA` for `@` or `www` (Vercel does not need one; the old hosting records were removed).
+Everything else in the zone is mail (Migadu — MX, SPF/DMARC TXT, `key1-3._domainkey` CNAMEs,
+`_autodiscover`/`_submissions`/`_imaps`/`_pop3s` SRV) plus Active24 legacy subdomains
+(`admin`, `mail`, `webmail`, `smtp`, `pop3`, `imap`, wildcard `*`) — leave them alone. Active24's
+"Rychlá nastavení DNS" page offers one-click presets (Active24 Web / Mail / Webadmin, …) that
+**overwrite** A/AAAA/CNAME/MX records — never click "Nastavit" there; the "Aktivní" badge is only
+a detection of matching records, not a background service.
+
+Cloudflare is **not** in front of the site. If it ever is, keep the records DNS-only (grey cloud):
+behind the Cloudflare proxy Vercel sees Cloudflare's edge IPs in `x-real-ip`/`x-forwarded-for`, so
+the contact-form rate limit (5 requests / 10 min per IP) would lock out real visitors who share an
+edge, and Vercel's own edge caching is bypassed.
 
 ## E-mail
 
-- Provider: TODO (Migadu planned). Mailboxes: hello@iterus.cz, TODO.
-- DNS: SPF, DKIM, DMARC (`p=quarantine` after 2 weeks of monitoring) — TODO once created.
+- Provider: Migadu (its MX, DKIM CNAMEs and SRV records are in the Active24 zone as of
+  2026-09-16). Mailboxes: hello@iterus.cz, TODO — confirm which exist.
+- DNS (verified 2026-09-17): MX `aspmx1/aspmx2.migadu.com`, SPF `v=spf1 include:spf.migadu.com
+-all`, DMARC `v=DMARC1; p=quarantine` (no `rua` reporting address — add one when someone will
+  read the reports), DKIM via `key1-3._domainkey` CNAMEs.
 - Transactional (contact form): Resend, verified domain iterus.cz — TODO. The form sends from
   `CONTACT_FROM_EMAIL` (default `Iterus web <noreply@iterus.cz>`) to `CONTACT_TO_EMAIL`.
 
