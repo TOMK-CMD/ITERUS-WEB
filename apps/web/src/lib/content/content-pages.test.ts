@@ -87,3 +87,31 @@ describe("case-study prose (docs/CONTENT-MAP.md → Case-study numbers)", () => 
     }
   });
 });
+
+describe("every page (CLAUDE.md → never state or deny that the founder is a programmer)", () => {
+  // The case-study guard above bans the words outright, which only works where the prose is
+  // about the founder. Elsewhere "programujeme indikátory" is a legitimate service claim, so
+  // the site-wide guard uses the subject-aware phrases from facts.test.ts instead.
+  const forbidden = [
+    /neum(ěl|ím)\s+programovat/i,
+    /nejsem\s+program(átor|ovač)/i,
+    /jsem\s+program(átor|ovač)/i,
+    /programátorsk[éá]\s+schopnosti/i,
+    /(not|never)\s+(been\s+)?a\s+(programmer|developer|coder)/i,
+    /\bI(?:'m| am)\s+a\s+(programmer|developer|coder)\b/i,
+  ];
+
+  it("never states or denies it on any published page, in either locale", async () => {
+    const pages = (
+      await Promise.all(
+        (["cs", "en"] as const).map((locale) => listPages(locale, { includeDrafts: true })),
+      )
+    ).flat();
+    expect(pages.length).toBeGreaterThan(6);
+    for (const page of pages) {
+      for (const pattern of forbidden) {
+        expect(pattern.test(page.body), `${page.file}: ${pattern}`).toBe(false);
+      }
+    }
+  });
+});
