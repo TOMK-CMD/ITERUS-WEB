@@ -12,6 +12,7 @@ export type CaseStudyProject = keyof typeof facts.projects;
 export const CASE_STUDY_PAGES: { slug: string; href: AppPathname; project: CaseStudyProject }[] = [
   { slug: "references-innea", href: "/references/innea", project: "innea" },
   { slug: "references-innea-pro", href: "/references/innea-pro", project: "innea-pro" },
+  { slug: "references-legacy-you", href: "/references/legacy-you", project: "legacy-you" },
 ];
 
 export type CaseStudyCatalogItem = {

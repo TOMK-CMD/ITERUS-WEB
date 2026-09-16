@@ -39,6 +39,7 @@ export const routing = defineRouting({
     "/references": { cs: "/reference", en: "/references" },
     "/references/innea": { cs: "/reference/innea", en: "/references/innea" },
     "/references/innea-pro": { cs: "/reference/innea-pro", en: "/references/innea-pro" },
+    "/references/legacy-you": { cs: "/reference/legacy-you", en: "/references/legacy-you" },
   },
 });
 

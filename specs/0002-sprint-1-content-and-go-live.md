@@ -116,7 +116,9 @@ ne s vlastními odpověďmi.
    JSON-LD, čísla výhradně přes `<ProjectMetrics />` z `facts.json`, žádná provozní čísla ani
    zmínka o platících uživatelích — Tomasovy podmínky). Infrastruktura (typ `case-study`,
    `createCaseStudyPage`, `CASE_STUDY_PAGES`, `<CaseStudyList />` na `/reference`) je hotová;
-   **Legacy You čeká jen na brief**. ✅ Karty „na čem dál pracujeme" pro Koordinační kalendář, gaits, STAMIQ
+   ✅ **Legacy You hotová (2026-09-16)**: brief dodal Tomas týž den, `/reference/legacy-you`;
+   bez data spuštění (Evidence Policy — stránka popisuje, co spuštění čeká; Tomasovo rozhodnutí),
+   bez provozních čísel (před spuštěním). **Všechny tři case studies jsou na webu.** ✅ Karty „na čem dál pracujeme" pro Koordinační kalendář, gaits, STAMIQ
    a NT8-Optimizer hotové (PR #11, `/reference` ↔ `/en/references`, `CollectionPage`; tier určuje
    `facts.json → projects[*].publish`, hlídá unit test). **Iterus Platform, tender-radar a
    GEO-SEO se nezveřejňují** (rozhodnutí 2026-09-09). ✅ **Aktualizováno 2026-09-15:** viz bod 2

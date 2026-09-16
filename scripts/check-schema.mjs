@@ -37,6 +37,8 @@ const PAGES = [
   "/en/references/innea",
   "/reference/innea-pro",
   "/en/references/innea-pro",
+  "/reference/legacy-you",
+  "/en/references/legacy-you",
 ];
 
 const REQUIRED = {

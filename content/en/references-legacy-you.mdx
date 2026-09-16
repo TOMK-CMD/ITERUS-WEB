@@ -1,0 +1,89 @@
+---
+title: "Legacy You: A Digital Legacy Designed for Seniors"
+description: "Case study of an Iterus product: a platform for messages to loved ones delivered only after death — native mobile app, web, encryption and voice control."
+updated: 2026-09-16
+published: 2026-09-16
+type: case-study
+project: legacy-you
+status: published
+---
+
+Legacy You is an Iterus product: a platform where a person records messages for their loved ones —
+voice, video, practical information — delivered only after their death, never earlier and never to
+anyone else. It is designed senior-first: voice control, large touch targets and passwordless
+sign-in. The native mobile app and the web are built; the product is pre-launch.
+
+## What problem does Legacy You solve?
+
+People have no reliable way to leave their last messages to loved ones so that they arrive at the
+right moment — after death, not before — and only reach the people they are meant for. And the
+tools that attempt it tend to be unusable for seniors.
+
+Legacy You starts from the other end: the senior first. The user records messages and names
+recipients and trustees; a regular "check-in" confirms they are fine, and when they stop
+responding, the app steps up its alerts and triggers delivery only after the trustees confirm the
+death. Primarily for active seniors and people with a serious diagnosis; the expectation is that the
+"sandwich generation" will set it up for their parents.
+
+## What did we build?
+
+- **Native mobile app** for iOS and Android (React Native, Expo) — native camera, audio and video
+  recording, biometric unlock, keys in the phone's hardware key store, haptics. Built with EAS and
+  verified on a real device in August 2026; it is not a website wrapped in an app (PWA).
+- **Web application** (Next.js) — marketing site, dashboard, portals for recipients, trustees and
+  heirs, public pages for funeral services.
+- **Supabase backend** — edge functions, row-level data isolation (Row Level Security), a scheduled
+  pipeline for escalation and delivery, and a regular health check that watches it.
+- **Messages and vault** — text, audio and video with end-to-end encryption, time capsules, funeral
+  messages with a one-time code, a digital vault the server cannot read (zero-knowledge,
+  AES-256-GCM), a family tree and heir access.
+- **Check-in and trustees** — confirmation by app, e-mail or voice, alerts stepped up over several
+  levels with a pause option; trustees decide by consensus through their own scoped portal;
+  delivery to recipients by e-mail, verified into a real inbox.
+- **Voice and accessibility** — voice control (Whisper → Claude → ElevenLabs), an audio guide on
+  every screen, voice banking and a mode for people who may lose their voice, a three-level
+  caregiver mode. Accessibility is a CI requirement, not a conformance statement: an automated
+  check of the public part (axe) with no findings, plus touch-target, focus and contrast checks on
+  every protected screen; manual screen-reader tests are still ahead.
+- **AI Memory** — search over the deceased person's content for the bereaved, only with explicit
+  consent given during their lifetime.
+
+## The numbers
+
+<ProjectMetrics project="legacy-you" />
+
+The product is pre-launch; the numbers above describe the scope of what is built and tested. The
+delivery pipeline is verified in production from end to end.
+
+## How did we work?
+
+<HowWeWork />
+
+**The human — the project's technical lead** — made the product and security decisions:
+senior-first principles, the encryption architecture and the zero-knowledge vault, trustee
+consensus, what stays private even after death. He ran everything the AI holds no keys to — the
+database project and its access keys, hosting and domains, DNS for e-mail delivery, key rotation,
+native builds and the app-store accounts. Every write to production and every irreversible
+operation went through his explicit approval. He verified the result on a real phone, with live
+sign-ins on production and by checking delivery into inboxes. He also covered the legal and
+compliance layer — vendor agreements, biometric consents and legal texts with an external legal
+review.
+
+**Claude Code**, orchestrating other models for review, implemented against tests (test → code →
+measurement), wrote automated checks and end-to-end probes, migrations and edge functions;
+measured instead of assuming (timeout timings, contrast ratios, mutation tests); had its own
+changes critically reviewed by several models before every push and verified each finding by
+running it against the code.
+
+<HowWeWork statement="human-lead" />
+
+## What's next?
+
+The first version's code is finished and verified in production. Launch waits on steps outside the
+code: legal review, testing with seniors and the changes that follow, manual screen-reader tests and
+app-store review. We'll update the status here when it changes.
+
+A native mobile app, accessibility as a requirement and encryption with keys on the user's side are
+the same things we can build for your product: see
+<PageLink href="/services/web-applications">web applications</PageLink>, or simply
+<PageLink href="/contact">get in touch</PageLink>.

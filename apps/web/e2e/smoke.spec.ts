@@ -191,6 +191,18 @@ const cases: Case[] = [
     canonical: `${SITE}/en/references/innea-pro`,
     alternates: { cs: `${SITE}/reference/innea-pro`, en: `${SITE}/en/references/innea-pro` },
   },
+  {
+    path: "/reference/legacy-you",
+    locale: "cs",
+    canonical: `${SITE}/reference/legacy-you`,
+    alternates: { cs: `${SITE}/reference/legacy-you`, en: `${SITE}/en/references/legacy-you` },
+  },
+  {
+    path: "/en/references/legacy-you",
+    locale: "en",
+    canonical: `${SITE}/en/references/legacy-you`,
+    alternates: { cs: `${SITE}/reference/legacy-you`, en: `${SITE}/en/references/legacy-you` },
+  },
 ];
 
 function collectErrors(page: Page): string[] {

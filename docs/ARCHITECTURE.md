@@ -29,7 +29,7 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
     Plausible), `page.tsx` (home), `contact/`, `privacy/`, `terms/`, `services/` (overview +
     `web-applications/`, `ai-integration/`, `local-llm/`, `czech-integrations/`, `ninjatrader/`),
     `pricing/`, `about/`, `process/`, `references/` (listing + one static case-study route per
-    written-up product: `innea/`, `innea-pro/`; route folders use English-internal names; Czech
+    written-up product: `innea/`, `innea-pro/`, `legacy-you/`; route folders use English-internal names; Czech
     slugs come from the routing map), `not-found.tsx`, `[...rest]/` (404 inside a valid locale).
   - `src/app/api/contact/route.ts`, `src/app/og/route.tsx`, `src/app/icon.tsx`,
     `src/app/sitemap.ts`, `src/app/robots.ts`.
@@ -97,7 +97,7 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
 - `content/{cs,en}/*.mdx` — pages (`home`, `contact`, `privacy`, `terms`, `services`,
   `services-web-applications`, `services-ai-integration`, `services-local-llm`,
   `services-czech-integrations`, `services-ninjatrader`, `pricing`, `about`, `process`,
-  `references`; case studies `references-innea`, `references-innea-pro` — flat slugs per
+  `references`; case studies `references-innea`, `references-innea-pro`, `references-legacy-you` — flat slugs per
   ADR-0004, `references-<project>` mirrors the `facts.json` project key); `content/facts.json`.
 - `messages/{cs,en}.json` — UI strings (next-intl, typed through `AppConfig`).
 - `scripts/` — `check-i18n.mjs`, `check-schema.mjs`, `check-links.mjs`, `generate-llms-txt.mjs`

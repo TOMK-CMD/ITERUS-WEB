@@ -23,6 +23,7 @@ export const PAGE_ROUTES: Record<string, AppPathname> = {
   references: "/references",
   "references-innea": "/references/innea",
   "references-innea-pro": "/references/innea-pro",
+  "references-legacy-you": "/references/legacy-you",
 };
 
 /**

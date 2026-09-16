@@ -41,11 +41,11 @@ published without a public name, a status label and a one-line hook in both loca
 states a measurement must name where the measurement came from (`claims_source`). All of that is
 guarded by unit tests in `apps/web/src/lib/facts.test.ts`, mutation-checked on 2026-09-09.
 
-| Tier                   | `publish`    | What it shows                                                                                                           | Projects                                                                                                                           |
-| ---------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots                                                        | Innea ✅, Innea Pro ✅ (`/reference/innea`, `/reference/innea-pro`), Legacy You (`před spuštěním` — awaits its brief, no page yet) |
-| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — technical specifics only, no outcome or business metrics | Koordinační kalendář, gaits, STAMIQ, NT8-Optimizer, GEO-SEO, Iterus Platform                                                       |
-| Not published          | `false`      | —                                                                                                                       | tender-radar                                                                                                                       |
+| Tier                   | `publish`    | What it shows                                                                                                           | Projects                                                                                                                       |
+| ---------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots                                                        | Innea ✅, Innea Pro ✅ (`/reference/innea`, `/reference/innea-pro`), Legacy You ✅ (`/reference/legacy-you`, `před spuštěním`) |
+| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — technical specifics only, no outcome or business metrics | Koordinační kalendář, gaits, STAMIQ, NT8-Optimizer, GEO-SEO, Iterus Platform                                                   |
+| Not published          | `false`      | —                                                                                                                       | tender-radar                                                                                                                   |
 
 The card tier exists to show the **breadth** we can work across. It carries a technical hook
 rather than a benefit claim, because a hook ("25 Hz inertial capture", "95% Wilson interval",
@@ -60,22 +60,26 @@ hook describes the orchestration mechanism, not the scale numbers Tomas supplied
 
 Card hooks carry `claims_confirmed: false`: the technical specifics were read from each project's
 own README on 2026-09-09, not re-verified by Tomas. Session C confirms them before go-live. The
-two case studies are different: their hooks and every number on their pages come from Tomas's own
-brief and measurement (2026-09-15), so `claims_confirmed` and `metrics_confirmed` are `true`.
+three case studies are different: their hooks and every number on their pages come from Tomas's
+own briefs and measurements (2026-09-15, 2026-09-16), so `claims_confirmed` and `metrics_confirmed` are `true`.
 
 **Case-study numbers (added 2026-09-16).** A case study renders its figures only through
 components that read `facts.json`: `<ProjectMetrics project="…" />` (`projects[project].metrics`)
-and `<HowWeWork statement="review-yield" />` (`how_we_work.review_yield_cs/en`, the measured
-share of AI-review findings that fail verification — scoped to Innea, where it was measured). Prose
-carries no digits except dates, the 116 123 helpline and scale names (PHQ-9, GAD-7);
-`content-pages.test.ts` enforces this and the founder/paying-user wording rules on every
-`case-study` page in both locales. Two rules from Tomas's brief are encoded in `metrics_note`:
+and `<HowWeWork statement="…" />` — `review-yield` (`how_we_work.review_yield_cs/en`, the
+measured share of AI-review findings that fail verification, scoped to Innea where it was measured)
+and `human-lead` (`how_we_work.human_lead_cs/en`, Tomas's approved sentence on who decides and
+verifies, used on Legacy You). Prose carries no digits except dates, the 116 123 helpline and the
+names of scales and standards (PHQ-9, GAD-7, AES-256-GCM); `content-pages.test.ts` enforces this
+and the founder/paying-user wording rules on every `case-study` page in both locales. An
+unlaunched product (Legacy You) publishes no user counts and **no launch date** — the page says
+what gates the launch (legal review, senior testing, store review) instead; Tomas chose this over
+an estimated quarter on 2026-09-16. Two rules from Tomas's brief are encoded in `metrics_note`:
 operational counts (accounts, messages, appointments) are **not** recorded or published while they
 are small — at most "první desítky uživatelů" — and nothing about paying users is published unless
 Tomas confirms it in writing for a specific date. Innea and Innea Pro share one codebase, so the
 engineering numbers live on `projects.innea` and the Innea Pro page links to them instead of
 repeating them. No speed or savings claim exists to publish — none was measured. Screenshots are
-still pending for both pages (the tier table promises them; Tomas supplies them).
+still pending for all three pages (the tier table promises them; Tomas supplies them).
 
 ## Launch pages
 
@@ -210,7 +214,7 @@ fourfold. Neither reading may be published as-is. Every number in a case study i
   `/references/<project>` (cs `/reference/<project>`), flat slugs `references-<project>` that
   mirror the `facts.json` project key, one route file per page through `createCaseStudyPage`, and
   a `CASE_STUDY_PAGES` catalog that decides what `/reference` lists — a case-study tier project
-  without a page (Legacy You) is simply absent until its brief arrives. Innea and Innea Pro are
+  without a page is simply absent until its brief arrives (all three have one since 2026-09-16). Innea and Innea Pro are
   two pages because they are two products with two audiences, but the engineering numbers appear
   once (Innea) and Innea Pro links to them. The founder is "technický vedoucí projektu" / "the
   project's technical lead" — never "programátor"/"vývojář" (CLAUDE.md rule; `facts.test.ts`
