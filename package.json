@@ -22,7 +22,7 @@
     "check:schema": "node scripts/check-schema.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:quick": "pnpm typecheck && pnpm lint",
-    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm check:i18n"
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm check:i18n"
   },
   "devDependencies": {
     "@lhci/cli": "0.15.1",
