@@ -41,11 +41,11 @@ published without a public name, a status label and a one-line hook in both loca
 states a measurement must name where the measurement came from (`claims_source`). All of that is
 guarded by unit tests in `apps/web/src/lib/facts.test.ts`, mutation-checked on 2026-09-09.
 
-| Tier                   | `publish`    | What it shows                                                                                                           | Projects                                                                     |
-| ---------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots                                                        | Innea, Innea Pro, Legacy You (`před spuštěním`)                              |
-| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — technical specifics only, no outcome or business metrics | Koordinační kalendář, gaits, STAMIQ, NT8-Optimizer, GEO-SEO, Iterus Platform |
-| Not published          | `false`      | —                                                                                                                       | tender-radar                                                                 |
+| Tier                   | `publish`    | What it shows                                                                                                           | Projects                                                                                                                           |
+| ---------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Case study             | `case-study` | Full page: problem, architecture, confirmed numbers, screenshots                                                        | Innea ✅, Innea Pro ✅ (`/reference/innea`, `/reference/innea-pro`), Legacy You (`před spuštěním` — awaits its brief, no page yet) |
+| "Na čem dál pracujeme" | `card`       | One line with a status label and one concrete technical hook — technical specifics only, no outcome or business metrics | Koordinační kalendář, gaits, STAMIQ, NT8-Optimizer, GEO-SEO, Iterus Platform                                                       |
+| Not published          | `false`      | —                                                                                                                       | tender-radar                                                                                                                       |
 
 The card tier exists to show the **breadth** we can work across. It carries a technical hook
 rather than a benefit claim, because a hook ("25 Hz inertial capture", "95% Wilson interval",
@@ -58,8 +58,24 @@ rename it later without touching the tier. Iterus Platform is framed as work-in-
 hard numbers (Tomas: AI tooling value is still unproven, "good at least as an experience") — its
 hook describes the orchestration mechanism, not the scale numbers Tomas supplied internally.
 
-Every hook currently carries `claims_confirmed: false`: the technical specifics were read from each
-project's own README on 2026-09-09, not re-verified by Tomas. Session C confirms them before go-live.
+Card hooks carry `claims_confirmed: false`: the technical specifics were read from each project's
+own README on 2026-09-09, not re-verified by Tomas. Session C confirms them before go-live. The
+two case studies are different: their hooks and every number on their pages come from Tomas's own
+brief and measurement (2026-09-15), so `claims_confirmed` and `metrics_confirmed` are `true`.
+
+**Case-study numbers (added 2026-09-16).** A case study renders its figures only through
+components that read `facts.json`: `<ProjectMetrics project="…" />` (`projects[project].metrics`)
+and `<HowWeWork statement="review-yield" />` (`how_we_work.review_yield_cs/en`, the measured
+share of AI-review findings that fail verification — scoped to Innea, where it was measured). Prose
+carries no digits except dates, the 116 123 helpline and scale names (PHQ-9, GAD-7);
+`content-pages.test.ts` enforces this and the founder/paying-user wording rules on every
+`case-study` page in both locales. Two rules from Tomas's brief are encoded in `metrics_note`:
+operational counts (accounts, messages, appointments) are **not** recorded or published while they
+are small — at most "první desítky uživatelů" — and nothing about paying users is published unless
+Tomas confirms it in writing for a specific date. Innea and Innea Pro share one codebase, so the
+engineering numbers live on `projects.innea` and the Innea Pro page links to them instead of
+repeating them. No speed or savings claim exists to publish — none was measured. Screenshots are
+still pending for both pages (the tier table promises them; Tomas supplies them).
 
 ## Launch pages
 
@@ -117,8 +133,18 @@ the referenced `facts.json` key is filled and confirmed.
      `facts.json → services` and must not be offered as one; TED is an EU register, not Czech e-gov.
    - No cadence claim ("denně" / "daily") anywhere, until one is recorded in `facts.json`.
 
+   **Newly provable since 2026-09-16** (Tomas's Innea Pro brief; documented on
+   `/reference/innea-pro`, `facts.json → projects.innea-pro.stack`): Fakturoid, iDoklad and Pohoda
+   XML export, ISDOC/UBL, SPAYD QR payments, Fio payment matching, Comgate, Google Calendar,
+   BulkGate SMS and health-insurer KDAVKA/FDAVKA batches all run in production in Innea Pro. The
+   proof table above is **not** widened here — `/sluzby/ceske-integrace` is rewritten in the
+   Opus/Fable copywriting session, and that is where the Fakturoid/Comgate rows move from "none"
+   to "the production integration in Innea Pro" (with a link to the case study). Datové schránky,
+   NEN and registr smluv stay unproven.
+
 3. **Numbers instead of client logos** — `/reference`. Studios have logos but NDAs stop them
    showing architecture; we have no logos and can show test counts, schema size and integrations.
+   ✅ Shipped 2026-09-16 for Innea and Innea Pro (see "Case-study numbers" above).
 4. **On-prem LLM without an enterprise price tag** — `/sluzby/lokalni-llm`. The competing on-prem
    offer starts near 0.9M CZK; describe a realistic small-hardware deployment instead.
 5. **EU AI Act transparency shipped, not promised** — `/sluzby/ai-integrace`. Innea carries a
@@ -180,3 +206,19 @@ fourfold. Neither reading may be published as-is. Every number in a case study i
 - `/sluzby/ceske-integrace` may cite the internal tender tool **without naming it or linking it**
   ("vlastní interní nástroj, který čte TED a ISVZ") — no frequency claim, because none is recorded.
   `/sluzby/ninjatrader` may name NT8-Optimizer. Both approved by Tomas on 2026-09-09.
+- **Case studies (2026-09-16)** follow the service-page routing: static `pathnames` entries
+  `/references/<project>` (cs `/reference/<project>`), flat slugs `references-<project>` that
+  mirror the `facts.json` project key, one route file per page through `createCaseStudyPage`, and
+  a `CASE_STUDY_PAGES` catalog that decides what `/reference` lists — a case-study tier project
+  without a page (Legacy You) is simply absent until its brief arrives. Innea and Innea Pro are
+  two pages because they are two products with two audiences, but the engineering numbers appear
+  once (Innea) and Innea Pro links to them. The founder is "technický vedoucí projektu" / "the
+  project's technical lead" — never "programátor"/"vývojář" (CLAUDE.md rule; `facts.test.ts`
+  guards the founder story, `content-pages.test.ts` guards the case-study bodies). The
+  mental-health framing is stated plainly ("není zdravotní služba — most, ne náhrada"); the crisis
+  layer is described as "má rozpoznat" / "designed to recognise" — a shipped safeguard, not a
+  guarantee or a medical claim. How the AI's rules were derived is deliberately **not** described
+  (reviewing real conversations of a mental-health app is a data-processing statement Tomas has
+  to sign off on; the page names the rules, not their source). Links to `app.innea.cz` and
+  `pro.innea.cz` are published (own products, supplied by Tomas). The `/og` route has no metric
+  parameter, so case-study OG images carry the title only.

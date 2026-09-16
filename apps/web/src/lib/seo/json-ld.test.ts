@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { facts, isTodo } from "@/lib/facts";
 import {
   buildAboutPage,
+  buildCaseStudyArticle,
   buildFAQPage,
   buildHowTo,
   buildOrganization,
@@ -225,5 +226,75 @@ describe("JSON-LD builders", () => {
         { "@type": "SoftwareApplication", name: "Projekt B", description: "Hook B." },
       ],
     });
+  });
+
+  it("lists case studies in the CollectionPage first, each linking to its own page", () => {
+    const collection = buildReferencesCollection(
+      "en",
+      "/references",
+      { name: "References", description: "Description." },
+      [{ name: "Card", hook: "Card hook." }],
+      [{ name: "Innea", hook: "Innea hook.", href: "/references/innea" }],
+    );
+    expect(collection.hasPart).toEqual([
+      {
+        "@type": "SoftwareApplication",
+        name: "Innea",
+        description: "Innea hook.",
+        url: `${SITE_URL}/en/references/innea`,
+      },
+      { "@type": "SoftwareApplication", name: "Card", description: "Card hook." },
+    ]);
+  });
+
+  it("builds an Article for a case study, authored and published by the organisation", () => {
+    const article = buildCaseStudyArticle(
+      "cs",
+      "/references/innea",
+      {
+        headline: "Innea: AI podpora mezi sezeními",
+        description: "Popis.",
+        datePublished: "2026-09-16",
+        dateModified: "2026-09-17",
+      },
+      "innea",
+    );
+    expect(article).toMatchObject({
+      "@type": "Article",
+      headline: "Innea: AI podpora mezi sezeními",
+      description: "Popis.",
+      datePublished: "2026-09-16",
+      dateModified: "2026-09-17",
+      url: `${SITE_URL}/reference/innea`,
+      mainEntityOfPage: `${SITE_URL}/reference/innea`,
+      inLanguage: "cs-CZ",
+      author: { "@id": `${SITE_URL}/#organization` },
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      about: {
+        "@type": "SoftwareApplication",
+        name: facts.projects.innea.name,
+        description: facts.projects.innea.hook_cs,
+        url: facts.projects.innea.url,
+      },
+    });
+  });
+
+  it("describes the case study's product in the page's own locale", () => {
+    const content = {
+      headline: "Innea",
+      description: "Description.",
+      datePublished: "2026-09-16",
+      dateModified: "2026-09-16",
+    };
+    const cs = buildCaseStudyArticle("cs", "/references/innea", content, "innea");
+    const en = buildCaseStudyArticle("en", "/references/innea", content, "innea");
+    expect(cs.inLanguage).toBe("cs-CZ");
+    expect(en.inLanguage).toBe("en");
+    expect(en.url).toBe(`${SITE_URL}/en/references/innea`);
+    const aboutCs = cs.about as { description: string };
+    const aboutEn = en.about as { description: string };
+    expect(aboutCs.description).toBe(facts.projects.innea.hook_cs);
+    expect(aboutEn.description).toBe(facts.projects.innea.hook_en);
+    expect(aboutCs.description).not.toBe(aboutEn.description);
   });
 });

@@ -167,6 +167,30 @@ const cases: Case[] = [
     canonical: `${SITE}/en/references`,
     alternates: { cs: `${SITE}/reference`, en: `${SITE}/en/references` },
   },
+  {
+    path: "/reference/innea",
+    locale: "cs",
+    canonical: `${SITE}/reference/innea`,
+    alternates: { cs: `${SITE}/reference/innea`, en: `${SITE}/en/references/innea` },
+  },
+  {
+    path: "/en/references/innea",
+    locale: "en",
+    canonical: `${SITE}/en/references/innea`,
+    alternates: { cs: `${SITE}/reference/innea`, en: `${SITE}/en/references/innea` },
+  },
+  {
+    path: "/reference/innea-pro",
+    locale: "cs",
+    canonical: `${SITE}/reference/innea-pro`,
+    alternates: { cs: `${SITE}/reference/innea-pro`, en: `${SITE}/en/references/innea-pro` },
+  },
+  {
+    path: "/en/references/innea-pro",
+    locale: "en",
+    canonical: `${SITE}/en/references/innea-pro`,
+    alternates: { cs: `${SITE}/reference/innea-pro`, en: `${SITE}/en/references/innea-pro` },
+  },
 ];
 
 function collectErrors(page: Page): string[] {

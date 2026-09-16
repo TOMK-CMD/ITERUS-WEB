@@ -21,6 +21,8 @@ export const PAGE_ROUTES: Record<string, AppPathname> = {
   about: "/about",
   process: "/process",
   references: "/references",
+  "references-innea": "/references/innea",
+  "references-innea-pro": "/references/innea-pro",
 };
 
 /**

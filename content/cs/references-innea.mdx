@@ -1,0 +1,84 @@
+---
+title: "Innea: AI podpora mezi terapeutickými sezeními"
+description: "Případová studie vlastního produktu Iterus: česká AI podpora mezi terapeutickými sezeními s krizovou vrstvou — architektura, čísla z repozitáře a role AI."
+updated: 2026-09-16
+published: 2026-09-16
+type: case-study
+project: innea
+status: published
+---
+
+Innea je vlastní produkt Iterus: česká AI podpora pro lidi, kteří potřebují někoho „mezi sezeními"
+nebo terapeuta zatím nemají. Textový i hlasový chat, sledování nálady a deník; nad tím krizová
+vrstva, která má rozpoznat rizikové signály a odkázat na linku 116 123. Není to zdravotní služba,
+je to most. V provozu od jara 2026.
+
+## Jaký problém Innea řeší?
+
+Mezi dvěma terapeutickými sezeními je týden, někdy dva — a to, co člověka tíží, na termín nečeká.
+Kdo terapeuta zatím nemá, nemá ani tento rytmus. Innea do této mezery staví bezpečný prostor:
+rozhovor v češtině, který si pamatuje kontext, sleduje náladu a upozorní na témata, která se
+vracejí.
+
+Zásadní je hranice. Innea není zdravotní služba a netváří se tak — je to podpora mezi sezeními,
+ne jejich náhrada. A když rozhovor ukáže na krizi, krizová vrstva odkáže na linku 116 123
+a předá případ do fronty, kterou řeší člověk.
+
+## Co jsme postavili?
+
+- **AI chat v češtině** vedený terapeutickým rámcem rozhovoru, s trojvrstvou pamětí (aktuální
+  rozhovor, významová paměť předchozích rozhovorů, dlouhodobá paměť) nad Claude API
+  a s automatickým přepnutím na jiného poskytovatele při výpadku.
+- **Hlasový chat** — rozpoznávání i syntéza řeči (Deepgram, ElevenLabs), s návratem k textu
+  u citlivých dotazů.
+- **Sledování nálady a deník** s krátkodobými i dlouhodobými trendy a AI rozpoznáváním témat,
+  která se vracejí.
+- **Krizová vrstva**: detekce rizikových signálů uzpůsobená češtině → posouzení jazykovým modelem
+  → bezpečnostní filtr obsahu → fronta pro administrátora se sledovanou dobou reakce. Ochrana
+  proti zahlcení upozorněními zajišťuje, že plný zásah nespouští každá věta.
+- **Předplatné a bezplatná úroveň** přes Stripe — krizová vrstva funguje bez ohledu na limit
+  bezplatného účtu.
+- **Soulad**: GDPR, zpracované DPIA, export a smazání dat na žádost a transparenční vrstva podle
+  EU AI Act — uživatel ví, že mluví s AI.
+
+## Čísla
+
+Innea a <PageLink href="/references/innea-pro">Innea Pro</PageLink> sdílejí jeden kód; čísla níže
+proto popisují celou platformu — od prvního commitu v říjnu 2025 po stav změřený v září 2026.
+
+<ProjectMetrics project="innea" />
+
+Provozní čísla (počty účtů, zpráv, sezení) zatím nezveřejňujeme: jde o první desítky uživatelů
+a čísla by zatím neměla vypovídací hodnotu. Doplníme je, až ji mít budou.
+
+## Jak jsme pracovali?
+
+<HowWeWork />
+
+Na Innee je vidět, co ta věta znamená v praxi.
+
+**Člověk — technický vedoucí projektu** rozhodoval o architektuře: Next.js App Router, Supabase
+a Postgres s důsledným oddělením dat jednotlivých uživatelů přímo v databázi (row-level
+security), datový model dvou propojených aplikací s odstupňovanými souhlasy. Určil bezpečnostní
+model — krizové brány, které při pochybnosti zasáhnou, audity databázových oprávnění, pravidlo pro
+každou nevratnou (destruktivní) změnu databáze — i proces: testy psané před kódem (TDD), každá změna jako
+samostatný pull request s automatickými testy a AI review, začleněná až po lidském schválení.
+Stanovil pravidla, která AI nesmí porušit: žádné rady o lécích, žádné testování reality
+u psychóz, vždy odkaz na krizovou linku. A ověřoval výsledek proti realitě — ručně v prohlížeči
+a kontrolou produkce, kde se opakovaně ukázaly vady, které prošly testy i AI review.
+
+**Claude Code** psal podle zadání produkční kód, databázové migrace a bezpečnostní politiky,
+testy před implementací, dokumentaci a refaktoring; připravoval změny jako pull requesty
+a delegoval oponenturu dalším modelům.
+
+<HowWeWork statement="review-yield" />
+
+## Co dál?
+
+Innea je jeden ze dvou produktů nad stejným jádrem; druhým je
+<PageLink href="/references/innea-pro">Innea Pro</PageLink> pro terapeutické praxe. Aplikaci
+najdete na [app.innea.cz](https://app.innea.cz).
+
+Stejný postup — Claude API s ochrannými vrstvami, data v EU, testy a review — používáme
+i v klientských projektech: viz <PageLink href="/services/ai-integration">AI integrace</PageLink>,
+nebo nám rovnou <PageLink href="/contact">napište</PageLink>.

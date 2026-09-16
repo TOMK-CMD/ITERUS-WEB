@@ -27,6 +27,10 @@ const paths = [
   "/en/process",
   "/reference",
   "/en/references",
+  "/reference/innea",
+  "/en/references/innea",
+  "/reference/innea-pro",
+  "/en/references/innea-pro",
 ];
 
 for (const path of paths) {

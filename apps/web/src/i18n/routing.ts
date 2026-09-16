@@ -37,6 +37,8 @@ export const routing = defineRouting({
     "/about": { cs: "/o-nas", en: "/about" },
     "/process": { cs: "/jak-pracujeme", en: "/process" },
     "/references": { cs: "/reference", en: "/references" },
+    "/references/innea": { cs: "/reference/innea", en: "/references/innea" },
+    "/references/innea-pro": { cs: "/reference/innea-pro", en: "/references/innea-pro" },
   },
 });
 

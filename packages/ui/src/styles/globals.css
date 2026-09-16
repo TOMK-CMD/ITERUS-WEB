@@ -82,6 +82,21 @@
   & li {
     max-width: 70ch;
   }
+  /*
+   * Preflight removes list markers; Markdown lists (case studies, legal pages) need them back.
+   * Scoped to class-less lists so component grids (<ul class="grid …">) keep their own layout.
+   */
+  & ul:not([class]) {
+    list-style: disc;
+    padding-left: 1.25em;
+  }
+  & ol:not([class]) {
+    list-style: decimal;
+    padding-left: 1.25em;
+  }
+  & :is(ul, ol):not([class]) > li + li {
+    margin-top: --spacing(2);
+  }
   & a {
     color: var(--color-primary);
     text-decoration: underline;

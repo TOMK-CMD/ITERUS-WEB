@@ -121,6 +121,37 @@ describe("project publication flags", () => {
       expect(typeof record.claims_confirmed, `${key}.claims_confirmed`).toBe("boolean");
     }
   });
+
+  it("publishes case-study metrics only when Tomas confirmed them and each carries both labels", () => {
+    // <ProjectMetrics /> renders these numbers verbatim, so a measured-but-unconfirmed value
+    // (docs/CONTENT-MAP.md: "measured numbers are not confirmed numbers") must not get this far.
+    const withMetrics = Object.entries(facts.projects).filter(
+      ([, project]) => "metrics" in (project as object),
+    );
+    expect(withMetrics.length).toBeGreaterThan(0);
+    for (const [key, project] of withMetrics) {
+      const record = project as Record<string, unknown>;
+      expect(record.metrics_confirmed, `${key}.metrics_confirmed`).toBe(true);
+      expect(isTodo(record.metrics_source), `${key}.metrics_source`).toBe(false);
+      expect(record.metrics_measured, `${key}.metrics_measured`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      const metrics = record.metrics as Record<string, unknown>[];
+      expect(metrics.length).toBeGreaterThan(0);
+      const keys = new Set<string>();
+      for (const metric of metrics) {
+        expect(typeof metric.key, `${key}.metrics[].key`).toBe("string");
+        expect(keys.has(metric.key as string), `${key}.metrics duplicate ${metric.key}`).toBe(
+          false,
+        );
+        keys.add(metric.key as string);
+        expect(typeof metric.value, `${key}.metrics.${metric.key}.value`).toBe("number");
+        expect(isTodo(metric.label_cs), `${key}.metrics.${metric.key}.label_cs`).toBe(false);
+        expect(isTodo(metric.label_en), `${key}.metrics.${metric.key}.label_en`).toBe(false);
+        expect(metric.label_cs, `${key}.metrics.${metric.key} labels identical`).not.toBe(
+          metric.label_en,
+        );
+      }
+    }
+  });
 });
 
 describe("bilingual facts", () => {
