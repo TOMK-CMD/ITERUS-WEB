@@ -1,44 +1,58 @@
 ---
 title: Czech E-Government Integrations
-description: We connect software to ARES, data boxes, the contract registry and NEN. Our ARES integration runs in production in Innea.
-updated: 2026-09-13
+description: We connect software to ARES, data boxes, the contract registry and NEN. ARES, Fakturoid, ISDOC and health-insurer billing run in production in Innea Pro.
+updated: 2026-09-16
 type: page
 status: published
 ---
 
-We connect software to ARES, data boxes, the contract registry and the National Electronic Tool
-(NEN) — systems most Czech studios don't offer as a named service. Our ARES integration is in
-production, and our own internal tool reads public-tender data.
+We connect software to ARES, data boxes (datové schránky), the contract registry and the National
+Electronic Tool (NEN) — systems most studios in the Czech market don't offer as a named service.
+Our ARES integration runs in production; Czech invoicing formats, payment matching and
+health-insurer billing documents run in our product
+<PageLink href="/references/innea-pro">Innea Pro</PageLink>.
 
 ## What can we connect?
 
-We can design and build a connection to ARES (company lookup by registration number), data boxes
-(receiving and sending messages), the contract registry and NEN. Fakturoid and the GoPay or Comgate
-payment gateways are commercial services, not government systems, but we connect those too.
+We can design and build connections to ARES (company verification by IČO), data boxes (receiving
+and sending messages), the contract registry and NEN. Fakturoid and the GoPay or Comgate payment
+gateways are commercial services, not state systems, but we connect those too.
 
-## What can we show for it?
+## Where does this run in production?
 
-Our ARES integration runs in production in our own product, Innea, where it verifies companies by
-registration number at sign-up. Public-tender data is read by our own internal tool, which
-processes TED and ISVZ.
+In <PageLink href="/references/innea-pro">Innea Pro</PageLink>, the practice-operations system
+for therapists that shares its code with Innea. At registration it verifies companies by IČO
+through ARES; it issues invoices under Czech rules with a QR payment (SPAYD) and ISDOC/UBL export,
+matches payments from Fio, takes payments through Comgate, exports to Fakturoid, iDoklad and
+Pohoda, generates health-insurer billing documents including KDAVKA/FDAVKA batches, syncs with
+Google Calendar and sends SMS reminders through BulkGate. Public-procurement data is read by an
+in-house tool that processes TED and ISVZ.
+
+What we don't run in production yet, we say plainly: data boxes, the contract registry, NEN and
+GoPay we build to order — we can design and connect them, but we cannot point to a running
+product.
 
 ## Frequently asked questions
 
 <Faq>
   <FaqItem question="Can you read data from ISVZ and NEN?">
-    Our own internal tool reads public tenders from TED and ISVZ. NEN is a separate registry; we
-    design an integration to it based on your requirements.
+    From ISVZ yes, from NEN not yet. An in-house tool reads public tenders from TED and ISVZ; NEN
+    is a separate register we have no production connection to, and we design the integration
+    around what you need to read from it or write into it.
   </FaqItem>
-  <FaqItem question="Can you handle two-way data-box communication?">
-    We can design and connect two-way data-box communication (receiving and sending) to your
-    system — the exact solution is built to match what system you already have.
+  <FaqItem question="Can you handle two-way communication with a data box?">
+    Yes, receiving and sending — but as custom work, not an off-the-shelf module: we don't yet have
+    a two-way data-box connection in any product we run. We build it with tests and monitoring, the
+    same way as invoicing and insurers in Innea Pro.
   </FaqItem>
-  <FaqItem question="What if the government changes the API format?">
-    Government interfaces change with little warning — we build integrations with tests and
-    monitoring that catch a break before it causes damage.
+  <FaqItem question="What if the state changes an API format?">
+    Automated tests against the real formats and monitoring catch the change, so we know about it
+    before it does much damage, and the fix is routine maintenance, not an emergency. Changes at
+    short notice are part of how we design integrations with state interfaces from the start.
   </FaqItem>
-  <FaqItem question="How do you handle government interface outages?">
-    We assume state APIs go down occasionally — we design with a queue and retries so an outage
-    doesn't stop the whole process.
+  <FaqItem question="How do you handle outages of state interfaces?">
+    With a queue and retries: the request is stored, resent after the outage, and the process does
+    not stop. An interface outage then means a delay, not lost data — and monitoring tells you it
+    happened before your client does.
   </FaqItem>
 </Faq>

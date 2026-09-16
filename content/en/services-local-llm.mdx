@@ -1,38 +1,56 @@
 ---
 title: On-Premise LLM Deployment
 description: On-premise LLM deployment means queries and data stay on your own hardware — nothing leaves the network. Deployment starts from 350,000 CZK.
-updated: 2026-09-13
+updated: 2026-09-16
 type: page
 status: published
 ---
 
 On-premise LLM deployment means queries and data stay on your own hardware — nothing leaves the
 company network. We deploy open-source models on your own server or workstation; on-premise
-deployment starts from 350,000 CZK (hardware not included).
+deployment starts from 350,000 CZK (hardware not included). The architecture is the same as for a
+cloud API integration — only the model runs on your premises.
 
-## Who is this for?
+## Who is it for?
 
-Companies where sensitive data (health records, contracts, internal documents) must not leave the
-network, but who still want to use AI for search, classification or answering questions over their
-own documents.
+Companies where sensitive data — health records, contracts, internal documents — must not leave
+the network, yet want AI for search, categorisation or answering questions over their own
+documents. If the data may leave the network and price and answer quality matter most, a
+<PageLink href="/services/ai-integration">Claude or OpenAI API integration</PageLink> is usually
+the better fit — we'll say so on the call.
+
+## What can we show?
+
+We don't run an on-premise deployment for a client yet, and we don't claim otherwise. What we have
+is the architecture it stands on: layered conversation memory and switching between model
+providers run in production in <PageLink href="/references/innea">Innea</PageLink>; in a local
+deployment, what changes is the model provider and where it runs, not the application built
+around it.
 
 ## Frequently asked questions
 
 <Faq>
   <FaqItem question="What hardware do we need?">
-    It depends on the model size — smaller models run on a single capable GPU; larger deployments
-    we size to the performance you need.
+    For a smaller model, one server or workstation with a capable GPU; a larger model or more
+    concurrent users means more GPUs or more machines. We size the model to the task, not the
+    other way round — on the call we first establish what the model must do and derive the
+    hardware from that, which you buy yourself.
   </FaqItem>
-  <FaqItem question="Can a local model match ChatGPT?">
-    Not always on general knowledge, but on a clearly scoped company task — searching documents,
-    classification, answering from your own data — yes, and without sending data out.
+  <FaqItem question="Can a local model do what ChatGPT does?">
+    Not for general knowledge and open conversation — a smaller open-source model only keeps up
+    with the cloud where it has a narrowly defined task. Document search, categorisation, answers
+    grounded in your data: those it handles well, without the data leaving the network. Where
+    exactly the line runs for your task we verify on a sample of your data as part of discovery,
+    before anything is bought.
   </FaqItem>
-  <FaqItem question="Who updates and monitors the model?">
-    We set up monitoring and an update plan as part of the project; ongoing support is scoped
-    individually to your needs.
+  <FaqItem question="Who updates the model and who watches it?">
+    We do — monitoring and an update plan are part of the project, not an add-on: you get the same
+    automated tests and runtime watching we have on our own products. Ongoing support after
+    handover is agreed separately — from "call us when something happens" to regular maintenance.
   </FaqItem>
   <FaqItem question="Does it work without an internet connection?">
-    Yes, it can run fully offline — that's usually the main reason companies want an on-premise
-    deployment.
+    Yes, the whole thing can run disconnected from the internet — that is usually the main reason
+    companies want a local deployment. Just expect to bring model and application updates in by
+    hand; we design a procedure that manages that without opening the network.
   </FaqItem>
 </Faq>

@@ -1,38 +1,54 @@
 ---
 title: Lokální a on-premise nasazení LLM
 description: Lokální nasazení LLM znamená, že dotazy a data zůstávají na vašem hardwaru — nic neopustí síť. On-premise nasazení začíná od 350 tisíc Kč.
-updated: 2026-09-13
+updated: 2026-09-16
 type: page
 status: published
 ---
 
 Lokální nasazení LLM znamená, že dotazy a data zůstávají na vašem hardwaru — nic neopustí firemní
 síť. Nasazujeme open-source modely na vlastním serveru nebo pracovní stanici; on-premise nasazení
-začíná od 350 tisíc Kč (hardware není v ceně).
+začíná od 350 tisíc Kč (hardware není v ceně). Architektura je stejná jako u napojení na cloudové
+API, jen model běží u vás.
 
 ## Pro koho to dává smysl?
 
-Pro firmy, kde citlivá data (zdravotní záznamy, smlouvy, interní dokumenty) nesmí opustit síť, ale
-přesto chtějí těžit z AI při vyhledávání, kategorizaci nebo odpovídání na dotazy nad vlastními
-dokumenty.
+Pro firmy, kde citlivá data — zdravotní záznamy, smlouvy, interní dokumenty — nesmí opustit síť,
+ale přesto chtějí těžit z AI při vyhledávání, kategorizaci nebo odpovídání na dotazy nad vlastními
+dokumenty. Pokud data opustit síť smí a jde vám hlavně o cenu a kvalitu odpovědí, je obvykle
+vhodnější <PageLink href="/services/ai-integration">napojení na Claude nebo OpenAI API</PageLink>
+— řekneme vám to na konzultaci rovnou.
+
+## Co si můžeme doložit?
+
+Lokální nasazení pro klienta zatím v provozu nemáme a netvrdíme opak. Co máme, je architektura,
+na které stojí: vrstvená paměť rozhovorů a přepínání mezi poskytovateli modelů běží v produkci
+v <PageLink href="/references/innea">Innea</PageLink>; u lokálního nasazení se mění poskytovatel
+modelu a místo, kde běží, ne stavba aplikace kolem něj.
 
 ## Časté otázky
 
 <Faq>
   <FaqItem question="Jaký hardware na to potřebujeme?">
-    Záleží na velikosti modelu — menší modely zvládne i jedna výkonná grafická karta, větší
-    nasazení navrhneme na míru podle výkonu, který potřebujete.
+    Pro menší model stačí jeden server nebo pracovní stanice s výkonnou grafickou kartou; větší
+    model nebo více souběžných uživatelů znamená více karet nebo více strojů. Velikost modelu
+    volíme podle úlohy, ne naopak — na konzultaci nejdřív zjistíme, co má model umět, a z toho
+    odvodíme hardware, který si pořídíte.
   </FaqItem>
   <FaqItem question="Zvládne lokální model to co ChatGPT?">
-    Na obecné znalosti ne vždy, ale na jasně vymezený firemní úkol — vyhledávání v dokumentech,
-    kategorizaci, odpovědi na základě vašich dat — ano, a bez posílání dat ven.
+    Na obecné znalosti a volný rozhovor ne — menší open-source model za cloudovým nezaostává jen
+    tam, kde má úzce vymezený úkol. Vyhledávání v dokumentech, kategorizace, odpovědi na základě
+    vašich dat: to zvládne dobře, a bez toho, aby data opustila síť. Kde přesně leží hranice pro
+    vaši úlohu, ověříme na vzorku vašich dat v rámci discovery, dřív než se cokoli kupuje.
   </FaqItem>
   <FaqItem question="Kdo model aktualizuje a kdo ho hlídá?">
-    Nastavíme monitoring a plán aktualizací jako součást zakázky; průběžnou podporu řešíme
-    individuálně podle vašich potřeb.
+    My — monitoring a plán aktualizací jsou součást zakázky, ne dodatečná služba: dostanete stejné
+    automatické testy a hlídání běhu, jaké máme na vlastních produktech. Průběžnou podporu po
+    předání sjednáme zvlášť — od „voláte, když se něco děje“ po pravidelnou údržbu.
   </FaqItem>
   <FaqItem question="Jde to i bez připojení k internetu?">
-    Ano, provoz může běžet čistě offline — to bývá hlavní důvod, proč firmy o lokální nasazení
-    stojí.
+    Ano, celý provoz může běžet odpojeně od internetu — to bývá hlavní důvod, proč firmy lokální
+    nasazení chtějí. Počítejte jen s tím, že aktualizace modelu a aplikace pak přinášíte dovnitř
+    ručně; navrhneme postup, který to zvládne bez otevírání sítě.
   </FaqItem>
 </Faq>
