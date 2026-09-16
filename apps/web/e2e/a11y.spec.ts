@@ -31,6 +31,8 @@ const paths = [
   "/en/references/innea",
   "/reference/innea-pro",
   "/en/references/innea-pro",
+  "/reference/legacy-you",
+  "/en/references/legacy-you",
 ];
 
 for (const path of paths) {
