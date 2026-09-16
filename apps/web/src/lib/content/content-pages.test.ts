@@ -112,7 +112,8 @@ describe("every page (CLAUDE.md → never state or deny that the founder is a pr
   });
 
   it("keeps the hand-typed count of case studies on /o-nas in step with the content tree", async () => {
-    // about.mdx says "tři" / "three" case studies; a fourth study must update that copy too.
+    // about.mdx, services.mdx and services-web-applications.mdx hand-type "tři" / "three" case
+    // studies; a fourth study must update that copy too.
     const studies = (await listPages("cs", { includeDrafts: true })).filter(
       (page) => page.frontmatter.type === "case-study",
     );

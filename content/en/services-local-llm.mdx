@@ -22,10 +22,10 @@ the better fit — we'll say so on the call.
 ## What can we show?
 
 We don't run an on-premise deployment for a client yet, and we don't claim otherwise. What we have
-is the architecture it stands on: retrieval over own data (RAG), layered memory and switching
-between model providers run in production in <PageLink href="/references/innea">Innea</PageLink>;
-in a local deployment, what changes is the model provider and where it runs, not the application
-built around it.
+is the architecture it stands on: layered conversation memory and switching between model
+providers run in production in <PageLink href="/references/innea">Innea</PageLink>; in a local
+deployment, what changes is the model provider and where it runs, not the application built
+around it.
 
 ## Frequently asked questions
 
@@ -34,17 +34,17 @@ built around it.
     For a smaller model, one server or workstation with a capable GPU; a larger model or more
     concurrent users means more GPUs or more machines. We size the model to the task, not the
     other way round — on the call we first establish what the model must do and derive the
-    hardware from that, which you buy yourself or through us.
+    hardware from that, which you buy yourself.
   </FaqItem>
   <FaqItem question="Can a local model do what ChatGPT does?">
     Not for general knowledge and open conversation — a smaller open-source model only keeps up
     with the cloud where it has a narrowly defined task. Document search, categorisation, answers
     grounded in your data: those it handles well, without the data leaving the network. Where
-    exactly the line runs for your task we measure on a sample of your data before anything is
-    bought.
+    exactly the line runs for your task we verify on a sample of your data as part of discovery,
+    before anything is bought.
   </FaqItem>
   <FaqItem question="Who updates the model and who watches it?">
-    Monitoring and an update plan are part of the project, not an add-on: you get the same
+    We do — monitoring and an update plan are part of the project, not an add-on: you get the same
     automated tests and runtime watching we have on our own products. Ongoing support after
     handover is agreed separately — from "call us when something happens" to regular maintenance.
   </FaqItem>

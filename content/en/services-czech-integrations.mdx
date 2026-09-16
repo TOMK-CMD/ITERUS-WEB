@@ -15,30 +15,31 @@ health-insurer billing documents run in our product
 ## What can we connect?
 
 We can design and build connections to ARES (company verification by IČO), data boxes (receiving
-and sending messages), the contract registry and NEN. Alongside the state systems we connect the
-commercial services a Czech company needs for the same work: Fakturoid, iDoklad and Pohoda, the
-GoPay and Comgate payment gateways, bank APIs for payment matching and SMS gateways.
+and sending messages), the contract registry and NEN. Fakturoid and the GoPay or Comgate payment
+gateways are commercial services, not state systems, but we connect those too — and what runs in
+Innea Pro we can build again for you.
 
 ## Where does this run in production?
 
 In <PageLink href="/references/innea-pro">Innea Pro</PageLink>, the practice-operations system
-for therapists that shares its code with Innea, where ARES verifies companies by IČO at
-registration. Innea Pro issues invoices under Czech rules with a QR payment (SPAYD) and ISDOC/UBL
-export, matches payments from Fio, takes payments through Comgate, exports to Fakturoid, iDoklad
-and Pohoda, generates health-insurer billing documents including KDAVKA/FDAVKA batches, syncs
-with Google Calendar and sends SMS reminders through BulkGate. Public-procurement data is read by
-an in-house tool that processes TED and ISVZ.
+for therapists that shares its code with Innea. At registration it verifies companies by IČO
+through ARES; it issues invoices under Czech rules with a QR payment (SPAYD) and ISDOC/UBL export,
+matches payments from Fio, takes payments through Comgate, exports to Fakturoid, iDoklad and
+Pohoda, generates health-insurer billing documents including KDAVKA/FDAVKA batches, syncs with
+Google Calendar and sends SMS reminders through BulkGate. Public-procurement data is read by an
+in-house tool that processes TED and ISVZ.
 
-What we don't run in production yet, we say plainly: data boxes, the contract registry and NEN we
-build to order — we can design and connect them, but we cannot point to a running product.
+What we don't run in production yet, we say plainly: data boxes, the contract registry, NEN and
+GoPay we build to order — we can design and connect them, but we cannot point to a running
+product.
 
 ## Frequently asked questions
 
 <Faq>
   <FaqItem question="Can you read data from ISVZ and NEN?">
-    From ISVZ, yes — an in-house tool reads public tenders from TED and ISVZ. NEN is a separate
-    register we have no production connection to yet; we design the integration around what you
-    need to read from it or write into it.
+    From ISVZ yes, from NEN not yet. An in-house tool reads public tenders from TED and ISVZ; NEN
+    is a separate register we have no production connection to, and we design the integration
+    around what you need to read from it or write into it.
   </FaqItem>
   <FaqItem question="Can you handle two-way communication with a data box?">
     Yes, receiving and sending — but as custom work, not an off-the-shelf module: we don't yet have
@@ -46,14 +47,13 @@ build to order — we can design and connect them, but we cannot point to a runn
     same way as invoicing and insurers in Innea Pro.
   </FaqItem>
   <FaqItem question="What if the state changes an API format?">
-    The change shows up as a failing test or a monitoring alert, not as a wrong invoice at your
-    client. We build integrations with automated tests against the real formats and with
-    monitoring, so an interface change is caught before it does damage; the fix is routine
-    maintenance, not an emergency.
+    Automated tests against the real formats and monitoring catch the change, so we know about it
+    before it does much damage, and the fix is routine maintenance, not an emergency. Changes at
+    short notice are part of how we design integrations with state interfaces from the start.
   </FaqItem>
   <FaqItem question="How do you handle outages of state interfaces?">
     With a queue and retries: the request is stored, resent after the outage, and the process does
-    not stop. Delivery in Legacy You is built the same way — scheduled jobs that run again after an
-    outage, watched by a regular health check. An interface outage means a delay, not lost data.
+    not stop. An interface outage then means a delay, not lost data — and monitoring tells you it
+    happened before your client does.
   </FaqItem>
 </Faq>

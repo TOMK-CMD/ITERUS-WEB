@@ -15,31 +15,31 @@ a podklady pro zdravotní pojišťovny běží v našem produktu
 ## Co umíme napojit?
 
 Umíme navrhnout a postavit napojení na ARES (ověření firem podle IČO), datové schránky (příjem
-i odesílání zpráv), registr smluv a NEN. Vedle státních systémů napojujeme i komerční služby,
-které česká firma potřebuje ke stejné práci: Fakturoid, iDoklad a Pohodu, platební brány GoPay
-a Comgate, bankovní API pro párování plateb a SMS brány.
+i odesílání zpráv), registr smluv a NEN. Fakturoid a platební brány GoPay nebo Comgate jsou
+komerční služby, ne státní systémy, ale napojujeme i je — a to, co běží v Innea Pro, umíme
+postavit znovu pro vás.
 
 ## Kde to máme v provozu?
 
 V <PageLink href="/references/innea-pro">Innea Pro</PageLink>, provozním systému pro terapeutické
-praxe, který používá stejný kód jako Innea, kde ARES ověřuje firmy podle IČO při registraci.
-Innea Pro vystavuje faktury podle českých pravidel s QR platbou (SPAYD) a exportem ISDOC/UBL,
-páruje platby z Fio, přijímá platby přes Comgate, exportuje do Fakturoidu, iDokladu a Pohody,
-generuje podklady pro zdravotní pojišťovny včetně dávek KDAVKA/FDAVKA, synchronizuje kalendář
-s Google Calendar a posílá SMS připomínky přes BulkGate. Data o veřejných zakázkách čte vlastní
-interní nástroj, který zpracovává TED a ISVZ.
+praxe, který používá stejný kód jako Innea. Při registraci ověřuje firmy podle IČO přes ARES;
+faktury vystavuje podle českých pravidel s QR platbou (SPAYD) a exportem ISDOC/UBL, páruje platby
+z Fio, přijímá platby přes Comgate, exportuje do Fakturoidu, iDokladu a Pohody, generuje podklady
+pro zdravotní pojišťovny včetně dávek KDAVKA/FDAVKA, synchronizuje kalendář s Google Calendar
+a posílá SMS připomínky přes BulkGate. Data o veřejných zakázkách čte vlastní interní nástroj,
+který zpracovává TED a ISVZ.
 
-Co v provozu zatím nemáme, říkáme rovnou: datové schránky, registr smluv a NEN stavíme na
-zakázku podle vašeho zadání — umíme je navrhnout a napojit, ale nemůžeme k nim přiložit
-běžící produkt.
+Co v provozu zatím nemáme, říkáme rovnou: datové schránky, registr smluv, NEN a GoPay stavíme na
+zakázku podle vašeho zadání — umíme je navrhnout a napojit, ale nemůžeme k nim přiložit běžící
+produkt.
 
 ## Časté otázky
 
 <Faq>
   <FaqItem question="Umíte číst data z ISVZ a NEN?">
-    Z ISVZ ano — vlastní interní nástroj čte veřejné zakázky z TED a ISVZ. NEN je samostatný
-    registr, na který zatím napojení v provozu nemáme; integraci navrhneme podle toho, co z něj
-    potřebujete číst nebo do něj zapisovat.
+    Z ISVZ ano, z NEN zatím ne. Vlastní interní nástroj čte veřejné zakázky z TED a ISVZ; NEN je
+    samostatný registr, na který napojení v provozu nemáme, a integraci navrhneme podle toho, co
+    z něj potřebujete číst nebo do něj zapisovat.
   </FaqItem>
   <FaqItem question="Zvládnete obousměrnou komunikaci s datovkou?">
     Ano, příjem i odesílání zpráv — ale jako zakázku na míru, ne jako hotový modul: obousměrné
@@ -47,14 +47,13 @@ běžící produkt.
     a monitoringem stejně jako fakturaci a pojišťovny v Innea Pro.
   </FaqItem>
   <FaqItem question="Co když stát změní formát API?">
-    Změna se projeví jako spadlý test nebo alarm z monitoringu, ne jako chybná faktura u klienta.
-    Integrace stavíme s automatickými testy proti skutečným formátům a s monitoringem, takže
-    změnu rozhraní zachytíme dřív, než napáchá škodu; oprava je pak běžná údržba, ne krizový zásah.
+    Změnu zachytí automatické testy proti skutečným formátům a monitoring, takže o ní víme dřív,
+    než napáchá větší škodu, a oprava je běžná údržba, ne krizový zásah. Se změnami bez velkého
+    předstihu u státních rozhraní počítáme už v návrhu.
   </FaqItem>
   <FaqItem question="Jak řešíte výpadky státních rozhraní?">
     Frontou a opakovaným pokusem: požadavek se uloží, po výpadku se odešle znovu a proces se
-    nezastaví. Stejně je postavené doručování v Legacy You — naplánované úlohy, které se po
-    výpadku spustí znovu a které hlídá pravidelný health-check. Výpadek rozhraní znamená
-    zpoždění, ne ztracená data.
+    nezastaví. Výpadek rozhraní pak znamená zpoždění, ne ztracená data — a monitoring vám řekne,
+    že k němu došlo, dřív než klient.
   </FaqItem>
 </Faq>

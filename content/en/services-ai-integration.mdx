@@ -6,10 +6,10 @@ type: page
 status: published
 ---
 
-We connect company data to the Claude or OpenAI API through RAG or agentic workflows — with
-answer-quality controls and an EU AI Act transparency layer. Data is hosted in the EU (Frankfurt)
-and processed under GDPR; no third-party model is trained on it. We run the same architecture in
-our own product, <PageLink href="/references/innea">Innea</PageLink>.
+We connect company data to the Claude or OpenAI API — through search over your documents (RAG)
+or AI agents that carry out steps — with answer-quality controls and EU AI Act transparency. Data stays in the EU (Frankfurt) under GDPR; no third-party model is trained on it. The
+same connection, memory and protective layers run in our product
+<PageLink href="/references/innea">Innea</PageLink>.
 
 ## What's included?
 
@@ -21,11 +21,11 @@ what it may not — that is design work, not an afterthought.
 ## Where does this run in production?
 
 In <PageLink href="/references/innea">Innea</PageLink>, Czech AI support between therapy
-sessions: the Claude API with automatic failover to another provider, three-layer conversation
-memory and a crisis layer that is a textbook example of a bounded AI role — a risk signal passes
-detection, an assessment by a language model and a content safety filter, and a human in a queue
-decides on the intervention, not the model. The EU AI Act transparency layer runs there from the
-start: the user knows they are talking to an AI before the conversation begins.
+sessions, the Claude API runs with automatic failover to another provider, alongside three-layer
+conversation memory. Its crisis layer is a textbook example of a bounded AI role: a risk signal
+passes detection, an assessment by a language model and a content safety filter, and a human in a
+queue decides the follow-up. The EU AI Act transparency layer is part of the design — the user
+knows they are talking to an AI from the start of the conversation.
 
 ## Frequently asked questions
 
@@ -42,11 +42,12 @@ start: the user knows they are talking to an AI before the conversation begins.
     before the start and record which model runs in which mode.
   </FaqItem>
   <FaqItem question="What if the AI answers wrongly — who is liable?">
-    A human or a rule in the code decides, not the model. The AI gets a precisely bounded role, and
-    everything with binding consequences — a quote, a payment, a decision about a person — goes
-    through human approval or a hard check in the code; that is how the crisis layer in Innea
-    works. Where that line runs for you is the first thing we draw on the call, and its exact
-    definition belongs in the contract, not in this answer.
+    Liability is defined in the contract; in the design we make sure a mistake with consequences
+    does not happen in the first place: a human or a rule in the code decides, not the model. The
+    AI gets a precisely bounded role, and everything with binding consequences — a quote, a
+    payment, a decision about a person — goes through human approval or a hard check in the code;
+    that is how the crisis layer in Innea works. Where that line runs for you is the first thing we
+    draw on the call.
   </FaqItem>
   <FaqItem question="Do we have to tell users they are talking to an AI?">
     Yes — for a chat or an assistant the EU AI Act requires it (Article 50). We don't bolt it on as
