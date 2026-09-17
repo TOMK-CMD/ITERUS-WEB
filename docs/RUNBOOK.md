@@ -55,9 +55,15 @@ edge, and Vercel's own edge caching is bypassed.
   2026-09-09 and linked to `TOMK-CMD/ITERUS-WEB` — the first branch push produced a preview
   deployment (GitHub check "Vercel"). Root directory `apps/web`, framework Next.js (auto), default
   install/build commands (pnpm workspace detected from the root lockfile), Node 22.
-  **Known gap:** the Vercel MCP integration cannot read this project (404/403 on project and
-  deployment reads) — **Tomas:** Vercel → Integrations → the Claude/MCP integration → grant access
-  to `iterus-web`, so agents can verify previews and read logs without the dashboard.
+  **Fix applied 2026-09-17, pending restart to confirm:** the global Vercel MCP connection couldn't
+  read this project (404/403 on project and deployment reads) — there is no such grant under
+  Vercel → Settings → Integrations; that page lists Marketplace integrations, not the MCP
+  connection. The fix is `vercel link --yes --project iterus-web --team
+team_viOg0bRhbm2Grrd1eTcucU1B` (writes local `.vercel/`, gitignored) followed by `vercel mcp
+--project --clients "Claude Code"`, which rewrites this repo's MCP entry in the local Claude Code
+  config to the project-scoped endpoint `https://mcp.vercel.com/tomk-cmds-projects/iterus-web` — an
+  MCP client restart is required before this takes effect. Re-run `vercel mcp --project` if the
+  project MCP entry is ever lost (new machine, config reset).
 - Git integration: every branch → preview; `main` → production. Preview protection: Vercel
   default (team members only). PR screenshots are therefore taken locally against `next start`;
   agents verify previews through the Vercel MCP.
