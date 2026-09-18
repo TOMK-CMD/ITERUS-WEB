@@ -55,15 +55,21 @@ edge, and Vercel's own edge caching is bypassed.
   2026-09-09 and linked to `TOMK-CMD/ITERUS-WEB` — the first branch push produced a preview
   deployment (GitHub check "Vercel"). Root directory `apps/web`, framework Next.js (auto), default
   install/build commands (pnpm workspace detected from the root lockfile), Node 22.
-  **Fix applied 2026-09-17, pending restart to confirm:** the global Vercel MCP connection couldn't
-  read this project (404/403 on project and deployment reads) — there is no such grant under
-  Vercel → Settings → Integrations; that page lists Marketplace integrations, not the MCP
-  connection. The fix is `vercel link --yes --project iterus-web --team
-team_viOg0bRhbm2Grrd1eTcucU1B` (writes local `.vercel/`, gitignored) followed by `vercel mcp
---project --clients "Claude Code"`, which rewrites this repo's MCP entry in the local Claude Code
-  config to the project-scoped endpoint `https://mcp.vercel.com/tomk-cmds-projects/iterus-web` — an
-  MCP client restart is required before this takes effect. Re-run `vercel mcp --project` if the
-  project MCP entry is ever lost (new machine, config reset).
+  **Fixed 2026-09-18** — the global Vercel MCP connection couldn't read this project (404/403 on
+  project and deployment reads); there is no such grant under Vercel → Settings → Integrations,
+  that page lists Marketplace integrations, not the MCP connection. `vercel link --yes --project
+iterus-web --team team_viOg0bRhbm2Grrd1eTcucU1B` (writes local `.vercel/`, gitignored) + `vercel
+mcp --project --clients "Claude Code"` adds a second, project-scoped MCP server entry
+  (`vercel-iterus-web`, endpoint `https://mcp.vercel.com/tomk-cmds-projects/iterus-web`) to
+  `~/.claude.json`, alongside the existing general `vercel` server — needs an MCP client restart to
+  appear, and needs its own one-time OAuth login (`authenticate`/`complete_authentication` tools)
+  the first time it's used. **That project-scoped server turned out to be a dead end**: even fully
+  authenticated, `get_project`/`list_projects` return 404/empty on it. **What actually worked is the
+  general `vercel` server, called without an explicit `teamId`/`slug`** — with an explicit
+  `teamId: team_viOg0bRhbm2Grrd1eTcucU1B` it also returns 0 projects, but omitting the team
+  parameter resolves the caller's default team and lists all 10 projects including `iterus-web`
+  (`prj_1LAtDroYuASQYTcPcS4q3bvYnQMK`). Use the general `vercel` MCP tools with no team argument for
+  this project; do not rely on the project-scoped server.
 - Git integration: every branch → preview; `main` → production. Preview protection: Vercel
   default (team members only). PR screenshots are therefore taken locally against `next start`;
   agents verify previews through the Vercel MCP.
