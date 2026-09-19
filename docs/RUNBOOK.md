@@ -44,8 +44,15 @@ edge, and Vercel's own edge caching is bypassed.
 - DNS (verified 2026-09-17): MX `aspmx1/aspmx2.migadu.com`, SPF `v=spf1 include:spf.migadu.com
 -all`, DMARC `v=DMARC1; p=quarantine` (no `rua` reporting address — add one when someone will
   read the reports), DKIM via `key1-3._domainkey` CNAMEs.
-- Transactional (contact form): Resend, verified domain iterus.cz — TODO. The form sends from
-  `CONTACT_FROM_EMAIL` (default `Iterus web <noreply@iterus.cz>`) to `CONTACT_TO_EMAIL`.
+- Transactional (contact form): Resend, verified domain `iterus.cz` (verified 2026-09-19, account
+  shared with other Iterus/Innea projects). DNS records added to the Active24 zone alongside
+  Migadu without conflict — Resend's newer sending setup uses subdomain CNAMEs (`rsend`, `send`)
+  instead of a shared root SPF TXT: TXT `resend._domainkey` (DKIM), CNAME `rsend` →
+  `rsend-euw1.forge.rmta.net`, CNAME `send` → `send.forge.rmta.net`. API key
+  `iterus-web-contact-form` (Sending access only, not Full access). The form sends from
+  `CONTACT_FROM_EMAIL` (default `Iterus web <noreply@iterus.cz>`) to `CONTACT_TO_EMAIL`
+  (`tomas@iterus.cz`). End-to-end smoke test passed 2026-09-19 (Resend log id
+  `6a118b63-3a54-473e-8e09-3b071ff7d6e8`, HTTP 200).
 
 ## Hosting (Vercel)
 
@@ -140,12 +147,13 @@ Clutch — status: TODO each.
 
 ## Access
 
-| System                            | Owner | Access for agents                                                                 |
-| --------------------------------- | ----- | --------------------------------------------------------------------------------- |
-| GitHub repo `TOMK-CMD/ITERUS-WEB` | Tomas | Claude Code via `gh` + GitHub MCP (`GITHUB_PAT`, see below); Codex via GitHub app |
-| Vercel                            | Tomas | Vercel MCP (read/deploy)                                                          |
-| Linear                            | Tomas | Linear MCP                                                                        |
-| Cloudflare / Resend / Plausible   | Tomas | none (env vars only)                                                              |
+| System                            | Owner | Access for agents                                                                                              |
+| --------------------------------- | ----- | -------------------------------------------------------------------------------------------------------------- |
+| GitHub repo `TOMK-CMD/ITERUS-WEB` | Tomas | Claude Code via `gh` + GitHub MCP (`GITHUB_PAT`, see below); Codex via GitHub app                              |
+| Vercel                            | Tomas | Vercel MCP (read/deploy)                                                                                       |
+| Linear                            | Tomas | Linear MCP                                                                                                     |
+| Cloudflare Turnstile / Resend     | Tomas | Tomas logs in, agent configures via `claude-in-chrome` (2026-09-19: Turnstile widget, Resend domain + API key) |
+| Plausible                         | Tomas | none (env vars only)                                                                                           |
 
 GitHub MCP (`.mcp.json` → `github`) cannot use OAuth: GitHub's auth server does not support the
 dynamic client registration Claude Code relies on, so the server authenticates with a personal
