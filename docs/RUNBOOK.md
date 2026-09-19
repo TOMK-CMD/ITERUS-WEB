@@ -4,23 +4,55 @@
 
 ## Domains & DNS
 
-| Domain     | Role                       | Registrar            | DNS                  | Notes                                                |
-| ---------- | -------------------------- | -------------------- | -------------------- | ---------------------------------------------------- |
-| iterus.cz  | primary (cs, en under /en) | TODO                 | Cloudflare (planned) | canonical host (`NEXT_PUBLIC_SITE_URL`)              |
-| iterus.io  | international alias        | TODO (already owned) | Cloudflare (planned) | open item (ADR-0003): recommended 301 → iterus.cz/en |
-| iterus.com | backorder placed? TODO     | —                    | —                    | expires 2026-09-09, status "pending transfer"        |
+| Domain     | Role                       | Registrar                     | DNS                                  | Notes                                                                    |
+| ---------- | -------------------------- | ----------------------------- | ------------------------------------ | ------------------------------------------------------------------------ |
+| iterus.cz  | primary (cs, en under /en) | Active24 (expires 2027-09-08) | Active24 (`ns1-3.websupport.cz/.eu`) | canonical host (`NEXT_PUBLIC_SITE_URL`); live on Vercel since 2026-09-16 |
+| iterus.io  | international alias        | Porkbun (already owned)       | Porkbun (parking)                    | open item (ADR-0003): recommended 301 → iterus.cz/en                     |
+| iterus.com | backorder placed? TODO     | —                             | —                                    | expires 2026-09-09, status "pending transfer"                            |
 
-If Cloudflare DNS is used, keep the records **DNS-only (grey cloud)**: behind the Cloudflare proxy
-Vercel sees Cloudflare's edge IPs in `x-real-ip`/`x-forwarded-for`, so the contact-form rate limit
-(5 requests / 10 min per IP) would lock out real visitors who share an edge, and Vercel's own edge
-caching is bypassed.
+Vercel domains for project `iterus-web` (Settings → Domains): `iterus.cz` = Production,
+`www.iterus.cz` → 308 → `iterus.cz`, `iterus-web.vercel.app` stays a production alias (no
+`noindex`; the canonical tag points every page at `iterus.cz`). Set the redirect in that order —
+apex to "No Redirect" first, then `www` → apex — or Vercel refuses the save as a redirect loop.
+
+DNS records at Active24 (admin.active24.cz → iterus.cz → DNS), as required by the Vercel domain
+page on 2026-09-16 (Vercel's newer IP range; the legacy `76.76.21.21` / `cname.vercel-dns.com`
+keep working):
+
+| Type  | Name  | Value                                  |
+| ----- | ----- | -------------------------------------- |
+| A     | `@`   | `216.150.1.1`                          |
+| CNAME | `www` | `5725df981be055d8.vercel-dns-016.com.` |
+
+No `AAAA` for `@` or `www` (Vercel does not need one; the old hosting records were removed).
+Everything else in the zone is mail (Migadu — MX, SPF/DMARC TXT, `key1-3._domainkey` CNAMEs,
+`_autodiscover`/`_submissions`/`_imaps`/`_pop3s` SRV) plus Active24 legacy subdomains
+(`admin`, `mail`, `webmail`, `smtp`, `pop3`, `imap`, wildcard `*`) — leave them alone. Active24's
+"Rychlá nastavení DNS" page offers one-click presets (Active24 Web / Mail / Webadmin, …) that
+**overwrite** A/AAAA/CNAME/MX records — never click "Nastavit" there; the "Aktivní" badge is only
+a detection of matching records, not a background service.
+
+Cloudflare is **not** in front of the site. If it ever is, keep the records DNS-only (grey cloud):
+behind the Cloudflare proxy Vercel sees Cloudflare's edge IPs in `x-real-ip`/`x-forwarded-for`, so
+the contact-form rate limit (5 requests / 10 min per IP) would lock out real visitors who share an
+edge, and Vercel's own edge caching is bypassed.
 
 ## E-mail
 
-- Provider: TODO (Migadu planned). Mailboxes: hello@iterus.cz, TODO.
-- DNS: SPF, DKIM, DMARC (`p=quarantine` after 2 weeks of monitoring) — TODO once created.
-- Transactional (contact form): Resend, verified domain iterus.cz — TODO. The form sends from
-  `CONTACT_FROM_EMAIL` (default `Iterus web <noreply@iterus.cz>`) to `CONTACT_TO_EMAIL`.
+- Provider: Migadu (its MX, DKIM CNAMEs and SRV records are in the Active24 zone as of
+  2026-09-16). Mailboxes: hello@iterus.cz, TODO — confirm which exist.
+- DNS (verified 2026-09-17): MX `aspmx1/aspmx2.migadu.com`, SPF `v=spf1 include:spf.migadu.com
+-all`, DMARC `v=DMARC1; p=quarantine` (no `rua` reporting address — add one when someone will
+  read the reports), DKIM via `key1-3._domainkey` CNAMEs.
+- Transactional (contact form): Resend, verified domain `iterus.cz` (verified 2026-09-19, account
+  shared with other Iterus/Innea projects). DNS records added to the Active24 zone alongside
+  Migadu without conflict — Resend's newer sending setup uses subdomain CNAMEs (`rsend`, `send`)
+  instead of a shared root SPF TXT: TXT `resend._domainkey` (DKIM), CNAME `rsend` →
+  `rsend-euw1.forge.rmta.net`, CNAME `send` → `send.forge.rmta.net`. API key
+  `iterus-web-contact-form` (Sending access only, not Full access). The form sends from
+  `CONTACT_FROM_EMAIL` (default `Iterus web <noreply@iterus.cz>`) to `CONTACT_TO_EMAIL`
+  (`tomas@iterus.cz`). End-to-end smoke test passed 2026-09-19 (Resend log id
+  `6a118b63-3a54-473e-8e09-3b071ff7d6e8`, HTTP 200).
 
 ## Hosting (Vercel)
 
@@ -30,9 +62,21 @@ caching is bypassed.
   2026-09-09 and linked to `TOMK-CMD/ITERUS-WEB` — the first branch push produced a preview
   deployment (GitHub check "Vercel"). Root directory `apps/web`, framework Next.js (auto), default
   install/build commands (pnpm workspace detected from the root lockfile), Node 22.
-  **Known gap:** the Vercel MCP integration cannot read this project (404/403 on project and
-  deployment reads) — **Tomas:** Vercel → Integrations → the Claude/MCP integration → grant access
-  to `iterus-web`, so agents can verify previews and read logs without the dashboard.
+  **Fixed 2026-09-18** — the global Vercel MCP connection couldn't read this project (404/403 on
+  project and deployment reads); there is no such grant under Vercel → Settings → Integrations,
+  that page lists Marketplace integrations, not the MCP connection. `vercel link --yes --project
+iterus-web --team team_viOg0bRhbm2Grrd1eTcucU1B` (writes local `.vercel/`, gitignored) + `vercel
+mcp --project --clients "Claude Code"` adds a second, project-scoped MCP server entry
+  (`vercel-iterus-web`, endpoint `https://mcp.vercel.com/tomk-cmds-projects/iterus-web`) to
+  `~/.claude.json`, alongside the existing general `vercel` server — needs an MCP client restart to
+  appear, and needs its own one-time OAuth login (`authenticate`/`complete_authentication` tools)
+  the first time it's used. **That project-scoped server turned out to be a dead end**: even fully
+  authenticated, `get_project`/`list_projects` return 404/empty on it. **What actually worked is the
+  general `vercel` server, called without an explicit `teamId`/`slug`** — with an explicit
+  `teamId: team_viOg0bRhbm2Grrd1eTcucU1B` it also returns 0 projects, but omitting the team
+  parameter resolves the caller's default team and lists all 10 projects including `iterus-web`
+  (`prj_1LAtDroYuASQYTcPcS4q3bvYnQMK`). Use the general `vercel` MCP tools with no team argument for
+  this project; do not rely on the project-scoped server.
 - Git integration: every branch → preview; `main` → production. Preview protection: Vercel
   default (team members only). PR screenshots are therefore taken locally against `next start`;
   agents verify previews through the Vercel MCP.
@@ -103,12 +147,13 @@ Clutch — status: TODO each.
 
 ## Access
 
-| System                            | Owner | Access for agents                                                                 |
-| --------------------------------- | ----- | --------------------------------------------------------------------------------- |
-| GitHub repo `TOMK-CMD/ITERUS-WEB` | Tomas | Claude Code via `gh` + GitHub MCP (`GITHUB_PAT`, see below); Codex via GitHub app |
-| Vercel                            | Tomas | Vercel MCP (read/deploy)                                                          |
-| Linear                            | Tomas | Linear MCP                                                                        |
-| Cloudflare / Resend / Plausible   | Tomas | none (env vars only)                                                              |
+| System                            | Owner | Access for agents                                                                                              |
+| --------------------------------- | ----- | -------------------------------------------------------------------------------------------------------------- |
+| GitHub repo `TOMK-CMD/ITERUS-WEB` | Tomas | Claude Code via `gh` + GitHub MCP (`GITHUB_PAT`, see below); Codex via GitHub app                              |
+| Vercel                            | Tomas | Vercel MCP (read/deploy)                                                                                       |
+| Linear                            | Tomas | Linear MCP                                                                                                     |
+| Cloudflare Turnstile / Resend     | Tomas | Tomas logs in, agent configures via `claude-in-chrome` (2026-09-19: Turnstile widget, Resend domain + API key) |
+| Plausible                         | Tomas | none (env vars only)                                                                                           |
 
 GitHub MCP (`.mcp.json` → `github`) cannot use OAuth: GitHub's auth server does not support the
 dynamic client registration Claude Code relies on, so the server authenticates with a personal
