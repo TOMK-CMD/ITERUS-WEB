@@ -30,7 +30,7 @@ release-please maintains version + `CHANGELOG.md` from Conventional Commits.
   footer legal line, no console errors (Playwright MCP).
 - `robots.txt`, `sitemap.xml`, `llms.txt` reachable and fresh.
 - Contact form end-to-end with the test address from `docs/RUNBOOK.md`.
-- Plausible receives the pageview.
+- Umami receives the pageview.
 
 ## After
 

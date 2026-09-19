@@ -40,8 +40,9 @@ public-procurement evaluator or an LLM may read anything here.
 
 Next.js App Router (latest stable major — verify with `npm view next version`), TypeScript strict,
 Tailwind, shadcn/ui, next-intl, MDX content committed in `content/{cs,en}` (CMS decision:
-ADR-0002), Vercel Pro (region `fra1`), Plausible (cookieless), Cloudflare Turnstile, Resend,
-Cal.com. Quality: Vitest + Testing Library, Playwright (+ axe), Lighthouse CI, release-please.
+ADR-0002), Vercel Pro (region `fra1`), Umami (self-hosted, cookieless — ADR-0005), Cloudflare
+Turnstile, Resend, Cal.com. Quality: Vitest + Testing Library, Playwright (+ axe), Lighthouse CI,
+release-please.
 
 ## Repository map
 

@@ -84,17 +84,18 @@ mcp --project --clients "Claude Code"` adds a second, project-scoped MCP server 
 
 ## Environment variables (names only — values live in Vercel / local `apps/web/.env.local`)
 
-| Name                             | Where   | Purpose                                                                                             |
-| -------------------------------- | ------- | --------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`           | all     | canonical origin (default `https://iterus.cz`) — canonical, hreflang, sitemap, robots, llms.txt, OG |
-| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`   | all     | analytics domain; unset → no script                                                                 |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | all     | Turnstile widget; unset → form shows "not enabled"                                                  |
-| `TURNSTILE_SECRET_KEY`           | server  | Turnstile siteverify                                                                                |
-| `RESEND_API_KEY`                 | server  | outbound mail                                                                                       |
-| `CONTACT_TO_EMAIL`               | server  | recipient of form submissions                                                                       |
-| `CONTACT_FROM_EMAIL`             | server  | sender (verified domain); default `Iterus web <noreply@iterus.cz>`                                  |
-| `NEXT_PUBLIC_CALCOM_LINK`        | all     | Cal.com booking URL; unset → no booking CTA                                                         |
-| `INDEXNOW_KEY`                   | scripts | `scripts/indexnow.mjs`; the key file must be served at `/<key>.txt`                                 |
+| Name                             | Where   | Purpose                                                                                                             |
+| -------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`           | all     | canonical origin (default `https://iterus.cz`) — canonical, hreflang, sitemap, robots, llms.txt, OG                 |
+| `NEXT_PUBLIC_UMAMI_SCRIPT_URL`   | all     | Umami tracking script URL (self-hosted instance, e.g. `https://analytics.example.com/script.js`); unset → no script |
+| `NEXT_PUBLIC_UMAMI_WEBSITE_ID`   | all     | Umami website id for `iterus.cz` (from the Umami dashboard); unset → no script                                      |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | all     | Turnstile widget; unset → form shows "not enabled"                                                                  |
+| `TURNSTILE_SECRET_KEY`           | server  | Turnstile siteverify                                                                                                |
+| `RESEND_API_KEY`                 | server  | outbound mail                                                                                                       |
+| `CONTACT_TO_EMAIL`               | server  | recipient of form submissions                                                                                       |
+| `CONTACT_FROM_EMAIL`             | server  | sender (verified domain); default `Iterus web <noreply@iterus.cz>`                                                  |
+| `NEXT_PUBLIC_CALCOM_LINK`        | all     | Cal.com booking URL; unset → no booking CTA                                                                         |
+| `INDEXNOW_KEY`                   | scripts | `scripts/indexnow.mjs`; the key file must be served at `/<key>.txt`                                                 |
 
 Without `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` or `CONTACT_TO_EMAIL` the API answers 503
 `not_configured` and the page tells visitors the form is not enabled — never a silent success.
@@ -137,7 +138,7 @@ file** from this table when variables change; agents keep the table current.
 - Uptime: TODO (Uptime Kuma self-host planned, or Vercel checks).
 - Errors: Vercel runtime logs (`[contact] …` warnings mark form failures); consider Sentry (free
   tier) in Phase 2.
-- Analytics: Plausible dashboard — TODO URL.
+- Analytics: Umami dashboard (self-hosted, Tomas's own instance) — TODO URL.
 
 ## Search & entity accounts (owner: Tomas)
 
@@ -153,7 +154,7 @@ Clutch — status: TODO each.
 | Vercel                            | Tomas | Vercel MCP (read/deploy)                                                                                       |
 | Linear                            | Tomas | Linear MCP                                                                                                     |
 | Cloudflare Turnstile / Resend     | Tomas | Tomas logs in, agent configures via `claude-in-chrome` (2026-09-19: Turnstile widget, Resend domain + API key) |
-| Plausible                         | Tomas | none (env vars only)                                                                                           |
+| Umami (self-hosted)               | Tomas | none — Tomas's own instance, not a browser-automatable third-party signup (env vars only)                      |
 
 GitHub MCP (`.mcp.json` → `github`) cannot use OAuth: GitHub's auth server does not support the
 dynamic client registration Claude Code relies on, so the server authenticates with a personal

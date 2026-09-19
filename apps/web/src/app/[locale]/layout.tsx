@@ -4,9 +4,9 @@ import { getTranslations } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
-import { Plausible } from "@/components/plausible";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { Umami } from "@/components/umami";
 import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { buildSiteJsonLd } from "@/lib/seo/json-ld";
@@ -50,7 +50,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} className={inter.variable}>
       <body className="flex min-h-dvh flex-col antialiased">
         <JsonLd data={buildSiteJsonLd(locale)} />
-        <Plausible />
+        <Umami />
         <NextIntlClientProvider>
           <a
             href="#main"
