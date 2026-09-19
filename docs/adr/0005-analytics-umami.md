@@ -13,7 +13,8 @@ already runs Umami self-hosted for other projects, for free.
 
 ## Options considered
 
-1. **Plausible** (SaaS, EU-hosted) — zero setup once paid; recurring cost; a new third-party
+1. **Plausible** (SaaS, EU-hosted) — zero setup once paid; recurring cost (plausible.io/#pricing,
+   checked 2026-09-19: ~$9/month up to 10k monthly pageviews, 30-day trial); a new third-party
    sub-processor (Plausible Insights OÜ) to disclose in `privacy.mdx`.
 2. **Umami Cloud** — hosted, has a free tier at low volume; still a new third-party processor, and
    a second analytics account to operate alongside the self-hosted one already used elsewhere.

@@ -22,8 +22,8 @@ portal). Native Windows dev environment.
 
 Next.js (latest stable major, App Router) + TypeScript strict + Tailwind + shadcn/ui + next-intl;
 content as MDX in `content/{locale}` with zod-validated frontmatter (CMS approach: ADR-0002);
-Vercel Pro in `fra1`; Plausible (cookieless), Cloudflare Turnstile, Resend, Cal.com; Vitest,
-Playwright + axe, Lighthouse CI; release-please; pnpm workspace.
+Vercel Pro in `fra1`; Plausible (cookieless, superseded 2026-09-19 — see ADR-0005), Cloudflare
+Turnstile, Resend, Cal.com; Vitest, Playwright + axe, Lighthouse CI; release-please; pnpm workspace.
 
 ### Versions as scaffolded (2026-09-09, all pinned exactly)
 
