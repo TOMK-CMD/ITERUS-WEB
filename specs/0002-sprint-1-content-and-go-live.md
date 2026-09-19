@@ -11,7 +11,7 @@ Z placeholderu ze Sprintu 0 udělat web, který jde spustit na iterus.cz: strán
 jak pracujeme, ceny, reference (vlastní produkty) — vše v cs + en, s FAQ bloky na stránkách,
 kterých se otázky týkají, postavené na výzkumu klíčových
 slov a obsahových mezer (`docs/CONTENT-MAP.md`), s produkčními službami (Turnstile, Resend,
-Plausible) a doménami připravenými ke go-live.
+Umami) a doménami připravenými ke go-live.
 
 ## Kontext / Context
 
@@ -137,8 +137,8 @@ ne s vlastními odpověďmi.
 ### Session D — go-live (Sonnet 5 · effort `medium`, skill `release`)
 
 12. Tomas: DNS iterus.cz → Vercel (Cloudflare jen grey cloud — viz RUNBOOK), Turnstile + Resend +
-    Plausible účty a env proměnné ve Vercelu, rozhodnutí iterus.io (ADR-0003), Search Console /
-    Bing / Seznam, LinkedIn a Firmy.cz s identickými údaji (`facts.json`).
+    Umami (self-hosted, ADR-0005) účty a env proměnné ve Vercelu, rozhodnutí iterus.io (ADR-0003),
+    Search Console / Bing / Seznam, LinkedIn a Firmy.cz s identickými údaji (`facts.json`).
 13. Agent: produkční smoke podle `release` skillu, IndexNow, deployment protection preview, release
     PR (verze), CRE issue → Done.
 

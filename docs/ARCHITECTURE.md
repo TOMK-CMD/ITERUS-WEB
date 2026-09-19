@@ -19,14 +19,14 @@ Browser ──► Vercel edge/CDN ──► Next.js 16 (fra1, Node runtime)
                                   ├─ /og?title&locale      → dynamic OG image (ImageResponse)
                                   ├─ /icon                 → generated favicon
                                   └─ /sitemap.xml, /robots.txt, /llms.txt (generated in prebuild)
-Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
+Analytics: Umami (self-hosted, cookieless, env-gated)   Booking: Cal.com link (env-gated)
 ```
 
 ## Repository layout
 
 - `apps/web` — Next.js app.
   - `src/app/[locale]/` — `layout.tsx` (html lang, Inter, header, footer, site-wide JSON-LD,
-    Plausible), `page.tsx` (home), `contact/`, `privacy/`, `terms/`, `services/` (overview +
+    Umami), `page.tsx` (home), `contact/`, `privacy/`, `terms/`, `services/` (overview +
     `web-applications/`, `ai-integration/`, `local-llm/`, `czech-integrations/`, `ninjatrader/`),
     `pricing/`, `about/`, `process/`, `references/` (listing + one static case-study route per
     written-up product: `innea/`, `innea-pro/`, `legacy-you/`; route folders use English-internal names; Czech
@@ -77,7 +77,7 @@ Analytics: Plausible (cookieless, env-gated)   Booking: Cal.com link (env-gated)
   - `src/lib/facts.ts` — typed access to `content/facts.json`, `isTodo()` guard.
   - `src/components/` — `site-header`, `site-footer` (legal line), `locale-switch`,
     `contact-form` (client, Turnstile explicit render), `calcom-cta`, `legal-page`, `json-ld`,
-    `plausible`, `mdx/` (facts-driven blocks available inside MDX, incl. `Faq`/`FaqItem`,
+    `umami`, `mdx/` (facts-driven blocks available inside MDX, incl. `Faq`/`FaqItem`,
     `NotOffered`, `PricingBands`, `ProcessSteps`/`Step`, `ReferenceCards`, `CaseStudyList` (one
     card per entry of `CASE_STUDY_PAGES`, linking to the page), `ProjectMetrics` (the numbers block
     of a case study — renders `facts.json → projects[project].metrics` and throws unless

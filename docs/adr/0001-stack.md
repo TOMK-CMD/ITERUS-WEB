@@ -48,3 +48,4 @@ Playwright + axe, Lighthouse CI; release-please; pnpm workspace.
   ~$20/month (Hobby is non-commercial); Base UI is younger than Radix — watch component gaps.
 - Revisit: when the client portal starts (Phase 4) — consider a second app in the workspace;
   TypeScript 7 and pnpm 12 when their ecosystems settle.
+- Analytics superseded 2026-09-19: Umami (self-hosted), not Plausible — see ADR-0005.
